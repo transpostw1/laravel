@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\TodoController;
 use App\Http\Controllers\RatesController;
+use App\Http\Controllers\BookingsController;
 
 Route::controller(AuthController::class)->group(function () {
     Route::post('login', 'login');
@@ -27,6 +28,13 @@ Route::controller(RatesController::class)->group(function () {
     Route::get('rates/select', 'select');
     Route::get('rates/liverates', 'liverates');
     Route::get('rates/cma_rates', 'cma_rates');
+    
+}); 
+
+Route::controller(BookingsController::class)->group(function () {
+    Route::get('bookings', 'index');
+    Route::get('bookings/{id}', 'show');
+    Route::get('bookings/user/{id}', 'show');
     
 }); 
 
