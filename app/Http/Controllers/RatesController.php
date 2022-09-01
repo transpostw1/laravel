@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Rates;
+use App\Models\Port_name;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use GuzzleHttp\Client;
@@ -47,13 +48,29 @@ class RatesController extends Controller
                 else{
                     $rates->makeHidden();
                 }
+                
+               $from_port_code =  $this->port_code($request->from_port);
+               $to_port_code =  $this->port_code($request->to_port);
+
+               //print_r($this->cma_rates($from_port_code, $to_port_code));exit;
+               $cma_rates = json_decode($this->cma_rates($from_port_code, $to_port_code), true, JSON_UNESCAPED_SLASHES);
                $ratesarr = array(
                 'sheetRates' => $rates,
-                'liveRates'=> $this->cma_rates($request->from_port, $request->to_port),
+                'liveRates'=> $cma_rates,
                );
                return response()->json($ratesarr);
     }
 
+    public function port_code($portName){
+        $codes = Port_name::where('port_name','LIKE','%'.$portName.'%')->get();
+        if(count($codes)!==0){
+            return $codes[0]['port_code'];
+        }
+        else {
+            return 'False';
+        }
+        
+    }
     public function liverates(){
         $base_uri           = 'https://apis.cma-cgm.net/pricing/commercial/quotation/v2/quotations/search';
         $urlAccessToken     = 'https://auth.cma-cgm.com/as/token.oauth2';
@@ -103,7 +120,7 @@ class RatesController extends Controller
             ]
         ]);
         //$res = $client->sendAsync($request, $options)->wait();
-        return $request->getBody();
+        return $request->getBody()->getContents();
         //echo "Status: ".$request->getStatusCode()."\n";
     }
     /**
