@@ -50,7 +50,7 @@ return [
             'port' => env('DB_PORT', '3306'),
             'database' => env('DB_DATABASE', 'admin_tess'),
             'username' => env('DB_USERNAME', 'admin_tess'),
-            'password' => env('DB_PASSWORD', 'Outlook@12'),
+            'password' => env('DB_PASSWORD', 'Outlook@123'),
             'unix_socket' => env('DB_SOCKET', ''),
             'charset' => 'utf8mb4',
             'collation' => 'utf8mb4_unicode_ci',
