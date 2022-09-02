@@ -169,6 +169,10 @@ class RatesController extends Controller
                     $livedata[$i]['transit_time'] = ""; 
                     $livedata[$i]['expiry_date'] = $res->validityto;
                     $livedata[$i]['sl_logo'] =  "http://launchindia.org/transpost/logos/cma_live.png";
+                    $livedata[$i]['remarks'] =  "<li>Origin - Charges payable at Export</li>
+                                                 <li>Destination - Charges payable at Import</li>";
+                    $livedata[$i]['terms'] =  "<h2>Access the link below to understand Terms and Conditions - CMA CGM
+                    (https://www.cma-cgm.com/ebusiness/registration/terms-and-conditions)</h2>";
                     
                 }
                 //dd($livedata);
