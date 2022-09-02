@@ -69,7 +69,7 @@ class RatesController extends Controller
                     $rates->makeHidden(['_40hc', '_40gp']);
                 }
                 else{
-                    $rates->makeHidden();
+                   // $rates->makeHidden();
                 }
                 
                $from_port_code =  $this->port_code($request->from_port);
