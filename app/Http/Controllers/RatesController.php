@@ -27,7 +27,7 @@ class RatesController extends Controller
         return response()->json($rates);
     }
 
-    public function select(Request $request,){
+    public function select(Request $request){
         $endDate = Carbon::now()->addMonths(3);
         $startDate = Carbon::now();
        
@@ -51,20 +51,35 @@ class RatesController extends Controller
                 
                $from_port_code =  $this->port_code($request->from_port);
                $to_port_code =  $this->port_code($request->to_port);
-
-               //print_r($this->cma_rates($from_port_code, $to_port_code));exit;
-               $cma_rates = json_decode($this->cma_rates($from_port_code, $to_port_code), true, JSON_UNESCAPED_SLASHES);
-               $ratesarr = array(
-                'sheetRates' => $rates,
-                'liveRates'=> $cma_rates,
-               );
-               return response()->json($ratesarr);
+                $cma_live_data = $this->cma_rates($from_port_code, $to_port_code);
+               //array_push($rates, $cma_live_data);
+               foreach($cma_live_data as $v){
+                $rates[] = $v;
+               }
+               
+            //    print_r();exit;
+            //    $cma_rates = json_decode($this->cma_rates($from_port_code, $to_port_code), true, JSON_UNESCAPED_SLASHES);
+            //    $ratesarr = array(
+            //     'sheetRates' => $rates,
+            //     'liveRates'=> $cma_rates,
+            //    );
+               return response()->json($rates);
     }
 
     public function port_code($portName){
         $codes = Port_name::where('port_name','LIKE','%'.$portName.'%')->get();
         if(count($codes)!==0){
             return $codes[0]['port_code'];
+        }
+        else {
+            return 'False';
+        }
+        
+    }
+    public function port_name($portCode){
+        $codes = Port_name::where('port_code','LIKE','%'.$portCode.'%')->get();
+        if(count($codes)!==0){
+            return $codes[0]['port_name'];
         }
         else {
             return 'False';
@@ -120,7 +135,45 @@ class RatesController extends Controller
             ]
         ]);
         //$res = $client->sendAsync($request, $options)->wait();
-        return $request->getBody()->getContents();
+        $response = json_decode($request->getBody()->getContents());
+        //$data = $resp['equipmentAndBasedRates'];
+                // $resp[0]->equipmentAndBasedRates <---base rates
+                // "ID": 500,
+                // "sl_name": "COSCO",
+                // "from_port": "Jawaharlal Nehru",
+                // "to_port": "COLOMBO",
+                // "_40gp": "",
+                // "Margin": 150,
+                // "FAF": "109",
+                // "seal_charge": "5",
+                // "ECC": "",
+                // "service_mode": "",
+                // "direct_via": "",
+                // "via_port": "",
+                // "transit_time": "",
+                // "expiry_date": "2022-09-15 12:36:57",
+                // $cma_live_data = $this->cma_rates($from_port_code, $to_port_code);
+                $i=0;
+                foreach($response as $res){
+                    $livedata[$i]['sl_name'] = "CMA (live)";
+                    $livedata[$i]['from_port'] = $this->port_name($from_port);
+                    $livedata[$i]['to_port'] = $this->port_name($to_port);
+                    $livedata[$i]['cargoSize'] = $res->equipmentAndBasedRates[0]->equipmentGroupIsoCode;
+                    $livedata[$i]['Margin'] = 100;
+                    $livedata[$i]['FAF'] = "";
+                    $livedata[$i]['seal_charge'] = "";
+                    $livedata[$i]['ECC'] = "";
+                    $livedata[$i]['service_mode'] = "";
+                    $livedata[$i]['direct_via'] = "";
+                    $livedata[$i]['via_port'] = "";
+                    $livedata[$i]['transit_time'] = ""; 
+                    $livedata[$i]['expiry_date'] = $res->validityto;
+                    $livedata[$i]['sl_logo'] =  "http://launchindia.org/transpost/logos/cma_live.png";
+                    
+                }
+                //dd($livedata);
+        return $livedata;
+
         //echo "Status: ".$request->getStatusCode()."\n";
     }
     /**

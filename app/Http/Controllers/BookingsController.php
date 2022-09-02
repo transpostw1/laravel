@@ -28,15 +28,19 @@ class BookingsController extends Controller
 
     public function show($id)
     {
-        $todo = Booking::find($id);
+        $data = Booking::find($id);
         return response()->json([
             'status' => 'success',
-            'todo' => $todo,
+            'data' => $data,
         ]);
     }
 
-    public function user($id){
-        
+    public function user(Request $request){
+        $data = Booking::where('CustomerName', $request->CustomerName);
+        return response()->json([
+            'status' => 'success',
+            'data' => $data,
+        ]);
     }
     public function create()
     {
