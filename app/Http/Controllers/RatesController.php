@@ -71,15 +71,15 @@ class RatesController extends Controller
                 else{
                    // $rates->makeHidden();
                 }
-                
+                //dd($rates[0]);
                $from_port_code =  $this->port_code($request->from_port);
                $to_port_code =  $this->port_code($request->to_port);
                 $cma_live_data = $this->cma_rates($from_port_code, $to_port_code);
                //array_push($rates, $cma_live_data);
                foreach($rates as $rate){
-                $rate['base_rate'] = $rate[$cargo_type];
+                $rate['base_rate'] = $rate["_".$cargo_type];
                 $rate['Margin'] = 0;
-                $rate['total'] = $rate[$cargo_type];
+                $rate['total'] = $rate["_".$cargo_type];
                 $rate['cargoSize'] = $cargo_type;
                }
                foreach($cma_live_data as $v){
