@@ -195,7 +195,7 @@ class RatesController extends Controller
                     $livedata[$i]['cargoSize'] = $res->equipmentAndBasedRates[0]->equipmentGroupIsoCode;
                     $livedata[$i]['base_rate'] = $baserate;
                     $livedata[$i]['Margin'] = $margin;
-                    $livedata[$i]['Total'] = $total;
+                    $livedata[$i]['total'] = $total;
                     $livedata[$i]['FAF'] = "";
                     $livedata[$i]['seal_charge'] = "";
                     $livedata[$i]['ECC'] = "";
