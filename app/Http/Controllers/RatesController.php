@@ -79,7 +79,7 @@ class RatesController extends Controller
                foreach($rates as $rate){
                 $rate['base_rate'] = $rate[$cargo_type];
                 $rate['Margin'] = 0;
-                $rate['total'] = $rate['base_rate'];
+                $rate['total'] = $rate[$cargo_type];
                 $rate['cargoSize'] = $cargo_type;
                }
                foreach($cma_live_data as $v){
