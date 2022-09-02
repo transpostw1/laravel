@@ -59,13 +59,13 @@ class RatesController extends Controller
                 ->whereBetween('expiry_date', [$startDate, $endDate])
                 ->get();
                 $cargo_type = $request->cargo_type;
-                if($cargo_type==='_40hc'){
+                if($cargo_type==='40hc'){
                   $rates->makeHidden(['_20gp', '_40gp']);
                 }
-                else if($cargo_type==='_40gp'){
+                else if($cargo_type==='40gp'){
                     $rates->makeHidden(['_20gp', '_40hc']);
                 }
-                else if($cargo_type==='_20gp'){
+                else if($cargo_type==='20gp'){
                     $rates->makeHidden(['_40hc', '_40gp']);
                 }
                 else{
