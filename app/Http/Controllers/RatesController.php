@@ -50,7 +50,7 @@ class RatesController extends Controller
             exit(0);
         }
 
-        
+
         $endDate = Carbon::now()->addMonths(3);
         $startDate = Carbon::now();
        
@@ -76,6 +76,12 @@ class RatesController extends Controller
                $to_port_code =  $this->port_code($request->to_port);
                 $cma_live_data = $this->cma_rates($from_port_code, $to_port_code);
                //array_push($rates, $cma_live_data);
+               foreach($rates as $rate){
+                $rate['base_rate'] = $rate[$cargo_type];
+                $rate['Margin'] = 0;
+                $rate['total'] = $rate['base_rate'];
+                $rate['cargoSize'] = $cargo_type;
+               }
                foreach($cma_live_data as $v){
                 $rates[] = $v;
                }
@@ -175,14 +181,21 @@ class RatesController extends Controller
                 // "via_port": "",
                 // "transit_time": "",
                 // "expiry_date": "2022-09-15 12:36:57",
-                // $cma_live_data = $this->cma_rates($from_port_code, $to_port_code);
+                 //$cma_live_data = $this->cma_rates($from_port_code, $to_port_code);
+                 
                 $i=0;
                 foreach($response as $res){
+                    $baserate = $res->equipmentAndBasedRates[0]->basedRate->basicOceanFreightRate;
+                    $margin = 100;
+                    $total = $baserate+$margin;
+
                     $livedata[$i]['sl_name'] = "CMA (live)";
                     $livedata[$i]['from_port'] = $this->port_name($from_port);
                     $livedata[$i]['to_port'] = $this->port_name($to_port);
                     $livedata[$i]['cargoSize'] = $res->equipmentAndBasedRates[0]->equipmentGroupIsoCode;
-                    $livedata[$i]['Margin'] = 100;
+                    $livedata[$i]['base_rate'] = $baserate;
+                    $livedata[$i]['Margin'] = $margin;
+                    $livedata[$i]['Total'] = $total;
                     $livedata[$i]['FAF'] = "";
                     $livedata[$i]['seal_charge'] = "";
                     $livedata[$i]['ECC'] = "";
@@ -198,7 +211,7 @@ class RatesController extends Controller
                     (https://www.cma-cgm.com/ebusiness/registration/terms-and-conditions)</h2>";
                     
                 }
-                //dd($livedata);
+                // dd($response);
         return $livedata;
 
         //echo "Status: ".$request->getStatusCode()."\n";
