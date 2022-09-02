@@ -71,7 +71,7 @@ class RatesController extends Controller
                 else{
                    // $rates->makeHidden();
                 }
-                dd('cache reset');
+                //dd($rates[0]);
                $from_port_code =  $this->port_code($request->from_port);
                $to_port_code =  $this->port_code($request->to_port);
                 $cma_live_data = $this->cma_rates($from_port_code, $to_port_code);
