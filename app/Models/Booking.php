@@ -7,6 +7,19 @@ use Illuminate\Database\Eloquent\Model;
 
 class Booking extends Model
 {
+
+    protected $fillable = [
+            'CS_User',
+            'ContainerType',
+            'TypeOfOnboarding',
+            'ShippingLineName',
+            'POL',
+            'POD',
+            'BuyRate',
+            'SellRate',
+            'CustomerName'
+    ];
+
     use HasFactory;
 
     public function pol()

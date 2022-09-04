@@ -92,21 +92,51 @@ class BookingsController extends Controller
         //     'description' => 'required|string|max:255',
         // ]);
         
-        $req = '{"ID":500,"sl_name":"COSCO","from_port":"Jawaharlal Nehru","to_port":"COLOMBO","_20gp":"CASE BY CASE","Margin":0,"FAF":"109","seal_charge":"5","ECC":"","service_mode":"","direct_via":"","via_port":"","transit_time":"","expiry_date":"2022-09-15 12:36:57","sl_logo":"http://launchindia.org/transpost/logos/cosco_logo.png","remarks":"","terms":"","base_rate":"CASE BY CASE","total":"CASE BY CASE","cargoSize":"20gp","email":"test123@test.com"}';
-        $jreq = json_decode($req);
-        dd($jreq);
-        // $todo = Booking::create([
-        //     'title' => $request->title,
-        //     'description' => $request->description,
-        // ]);
+        // $req = '{"ID":500,"sl_name":"COSCO","from_port":"Jawaharlal Nehru","to_port":"COLOMBO","_20gp":"CASE BY CASE","Margin":0,"FAF":"109","seal_charge":"5","ECC":"","service_mode":"","direct_via":"","via_port":"","transit_time":"","expiry_date":"2022-09-15 12:36:57","sl_logo":"http://launchindia.org/transpost/logos/cosco_logo.png","remarks":"","terms":"","base_rate":"CASE BY CASE","total":"CASE BY CASE","cargoSize":"20gp","email":"test123@test.com"}';
+        // $jreq = json_decode($req);
+        // dd($jreq);
+        $booking = Booking::create([
+            'CS_User' => $request->ID,
+            'ContainerType' => $request->cargoSize,
+            'TypeOfOnboarding' => 'Online',
+            'ShippingLineName' => $request->sl_name,
+            'POL' => $this->port_code($request->from_port),
+            'POD' => $this->port_code($request->to_port),
+            'BuyRate' => $request->description,
+            'SellRate' => $request->description,
+            'CustomerName'=> $this->customerIdFromEmail($request->email)
+        ]);
 
-        // return response()->json([
-        //     'status' => 'success',
-        //     'message' => 'Todo created successfully',
-        //     'todo' => $todo,
-        // ]);
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Booking created successfully',
+            'Booking' => $booking,
+        ]);
 
     }
+
+
+    public function port_name($portCode){
+        $codes = Port_name::where('port_code','LIKE','%'.$portCode.'%')->get();
+        if(count($codes)!==0){
+            return $codes[0]['port_name'];
+        }
+        else {
+            return 'False';
+        }
+        
+    }
+    public function port_code($portName){
+        $codes = Port_name::where('port_name','LIKE','%'.$portName.'%')->get();
+        if(count($codes)!==0){
+            return $codes[0]['port_code'];
+        }
+        else {
+            return 'False';
+        }
+        
+    }
+
     /**
      * Store a newly created resource in storage.
      *
