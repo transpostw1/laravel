@@ -36,8 +36,8 @@ class CustomerController extends Controller
 
         return response()->json([
             'status' => 'success',
-            'message' => 'Todo created successfully',
-            'todo' => $todo,
+            'message' => 'Customer created successfully',
+            'customer' => $todo,
         ]);
     }
 
