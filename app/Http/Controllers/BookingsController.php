@@ -4,7 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Booking;
 use App\Models\Customer;
+use App\Models\Port_name;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+
 
 class BookingsController extends Controller
 {
@@ -40,8 +43,28 @@ class BookingsController extends Controller
         $userID = $this->customerIdFromEmail($request->email);
         // echo 'hi'; exit;
         //dd($userID);
-        $data = Booking::where('CustomerName', $userID)->get();
+
+        // $data = DB::table('bookings as bo')->
+        // leftJoin('port_name as pol_table', 'pol_table.ID','=','bookings.POL')->
+        // leftJoin('port_name as pod_table', 'pod_table.ID','=','bookings.POD')
+        // ->select('bo.*,', 'pol_table.port_name as POL')
+        // ->get();
+        $data = Booking::with('pol')->with('pod')->with('cs_status')->where('CustomerName', $userID)->get();
+        // $formatted_data = array()
+        // dd($data);
+        $i=0;
+        // foreach ($data as $row) {
+        //     // echo $k;
+        //     // $data['']->push(array('polname' =>$row->pol->port_name));
+        //     $data[$i]['POL_name'] = $row->pol->port_name;
+        //     $data[$i]['POD_name'] = $row->pod->port_name;
+        //     // $i++;
+        //     // echo 'POL: '.$row->pol->port_name.' ----> POD:'.$row->pod->port_name.' <br>';
+        // }
         //dd($data);
+
+        // $data = Booking::with('pol')->where('CustomerName', $userID)->get();
+        // dd($data->pol->port_name);
         return response()->json([
             'status' => 'success',
             'data' => $data,
