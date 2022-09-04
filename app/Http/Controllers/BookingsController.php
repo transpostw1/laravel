@@ -36,7 +36,7 @@ class BookingsController extends Controller
     }
 
     public function user(Request $request){
-        $data = Booking::where('CustomerName', $request->CustomerName);
+        $data = Booking::where('CustomerName', $request->email);
         return response()->json([
             'status' => 'success',
             'data' => $data,
@@ -46,17 +46,36 @@ class BookingsController extends Controller
     {
         //
     }
+    public function store(Request $request)
+    {
+        // $request->validate([
+        //     'title' => 'required|string|max:255',
+        //     'description' => 'required|string|max:255',
+        // ]);
+        
 
+        $todo = Booking::create([
+            'title' => $request->title,
+            'description' => $request->description,
+        ]);
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Todo created successfully',
+            'todo' => $todo,
+        ]);
+
+    }
     /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
-        //
-    }
+    // public function store(Request $request)
+    // {
+    //     //
+    // }
 
     /**
      * Display the specified resource.
