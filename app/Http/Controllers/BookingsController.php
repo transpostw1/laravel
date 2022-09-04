@@ -36,7 +36,8 @@ class BookingsController extends Controller
     }
 
     public function user(Request $request){
-        $data = Booking::where('CustomerName', $request->email);
+        $userID = $this->customerIdFromEmail($request->email);
+        $data = Booking::where('CustomerName', $userID);
         return response()->json([
             'status' => 'success',
             'data' => $data,
@@ -45,6 +46,17 @@ class BookingsController extends Controller
     public function create()
     {
         //
+    }
+
+    public function customerIdFromEmail($email){
+        $codes = Port_name::where('customer','LIKE','%'.$email.'%')->get();
+        if(count($codes)!==0){
+            return $codes[0]['ID'];
+        }
+        else {
+            return 'False';
+        }
+        
     }
     public function store(Request $request)
     {
