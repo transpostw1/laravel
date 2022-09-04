@@ -41,7 +41,7 @@ class BookingsController extends Controller
         // echo 'hi'; exit;
         //dd($userID);
         $data = Booking::where('CustomerName', $userID)->get();
-        dd($data);
+        //dd($data);
         return response()->json([
             'status' => 'success',
             'data' => $data,
