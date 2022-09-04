@@ -33,8 +33,8 @@ Route::controller(RatesController::class)->group(function () {
 
 Route::controller(BookingsController::class)->group(function () {
     Route::get('bookings', 'index');
-    Route::get('bookings/{id}', 'show');
-    Route::get('bookings/user/{email}', 'show');
+    Route::get('bookings/select/{id}', 'show');
+    Route::get('bookings/user/', 'user');
     
 }); 
 

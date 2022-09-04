@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Booking;
+use App\Models\Customer;
 use Illuminate\Http\Request;
 
 class BookingsController extends Controller
@@ -37,7 +38,10 @@ class BookingsController extends Controller
 
     public function user(Request $request){
         $userID = $this->customerIdFromEmail($request->email);
-        $data = Booking::where('CustomerName', $userID);
+        // echo 'hi'; exit;
+        //dd($userID);
+        $data = Booking::where('CustomerName', $userID)->get();
+        dd($data);
         return response()->json([
             'status' => 'success',
             'data' => $data,
@@ -49,7 +53,7 @@ class BookingsController extends Controller
     }
 
     public function customerIdFromEmail($email){
-        $codes = Port_name::where('customer','LIKE','%'.$email.'%')->get();
+        $codes = Customer::where('email','LIKE','%'.$email.'%')->get();
         if(count($codes)!==0){
             return $codes[0]['ID'];
         }
