@@ -6,6 +6,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\TodoController;
 use App\Http\Controllers\RatesController;
 use App\Http\Controllers\BookingsController;
+use App\Http\Controllers\CustomerController;
 
 Route::controller(AuthController::class)->group(function () {
     Route::post('login', 'login');
@@ -35,9 +36,15 @@ Route::controller(BookingsController::class)->group(function () {
     Route::get('bookings', 'index');
     Route::get('bookings/select/{id}', 'show');
     Route::get('bookings/user/', 'user');
+    Route::post('bookings/store/', 'store');
     
 }); 
 
-Route::middleware('auth:api')->group(function () {
-	// JWT protected routes
-});
+Route::controller(CustomerController::class)->group(function () {
+    Route::post('customer/store/', 'store');
+    
+}); 
+
+// Route::middleware('auth:api')->group(function () {
+// 	// JWT protected routes
+// });

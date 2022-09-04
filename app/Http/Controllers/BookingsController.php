@@ -92,17 +92,19 @@ class BookingsController extends Controller
         //     'description' => 'required|string|max:255',
         // ]);
         
+        $req = '{"ID":500,"sl_name":"COSCO","from_port":"Jawaharlal Nehru","to_port":"COLOMBO","_20gp":"CASE BY CASE","Margin":0,"FAF":"109","seal_charge":"5","ECC":"","service_mode":"","direct_via":"","via_port":"","transit_time":"","expiry_date":"2022-09-15 12:36:57","sl_logo":"http://launchindia.org/transpost/logos/cosco_logo.png","remarks":"","terms":"","base_rate":"CASE BY CASE","total":"CASE BY CASE","cargoSize":"20gp","email":"test123@test.com"}';
+        $jreq = json_decode($req);
+        dd($jreq);
+        // $todo = Booking::create([
+        //     'title' => $request->title,
+        //     'description' => $request->description,
+        // ]);
 
-        $todo = Booking::create([
-            'title' => $request->title,
-            'description' => $request->description,
-        ]);
-
-        return response()->json([
-            'status' => 'success',
-            'message' => 'Todo created successfully',
-            'todo' => $todo,
-        ]);
+        // return response()->json([
+        //     'status' => 'success',
+        //     'message' => 'Todo created successfully',
+        //     'todo' => $todo,
+        // ]);
 
     }
     /**
