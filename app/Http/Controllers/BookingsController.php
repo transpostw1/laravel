@@ -97,6 +97,7 @@ class BookingsController extends Controller
         // $jreq = json_decode($req);
         // dd($jreq);
         $booking = Booking::create([
+            'ID' => NULL,
             'CS_User' => $request->ID,
             'ContainerType' => $request->cargoSize,
             'TypeOfOnboarding' => 'Online',
