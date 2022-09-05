@@ -9,6 +9,7 @@ class Booking extends Model
 {
 
     protected $fillable = [
+            'ID',
             'CS_User',
             'ContainerType',
             'TypeOfOnboarding',
