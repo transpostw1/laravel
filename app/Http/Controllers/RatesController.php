@@ -80,7 +80,7 @@ class RatesController extends Controller
                 $rate['base_rate'] = $rate["_".$cargo_type];
                 $rate['Margin'] = 0;
                 $rate['total'] = $rate["_".$cargo_type];
-                $rate['cargoSize'] = $cargo_type;
+                $rate['cargo_size'] = $cargo_type;
                }
                foreach($cma_live_data as $v){
                 $rates[] = $v;
@@ -192,7 +192,7 @@ class RatesController extends Controller
                     $livedata[$i]['sl_name'] = "CMA (live)";
                     $livedata[$i]['from_port'] = $this->port_name($from_port);
                     $livedata[$i]['to_port'] = $this->port_name($to_port);
-                    $livedata[$i]['cargoSize'] = $res->equipmentAndBasedRates[0]->equipmentGroupIsoCode;
+                    $livedata[$i]['cargo_size'] = strtolower($res->equipmentAndBasedRates[0]->equipmentGroupIsoCode);
                     $livedata[$i]['base_rate'] = $baserate;
                     $livedata[$i]['Margin'] = $margin;
                     $livedata[$i]['total'] = $total;
