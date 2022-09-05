@@ -116,8 +116,8 @@ class BookingsController extends Controller
 
     }
 
-    public function timeline(){
-        $stage = Booking_stage::with('status')->get();
+    public function timeline(Request $request){
+        $stage = Booking_stage::with('status')->where('bookingID','='.$request->bookingID)->get();
         return response()->json([
             'status' => 'success',
             'data' => $stage,
