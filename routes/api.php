@@ -37,6 +37,7 @@ Route::controller(BookingsController::class)->group(function () {
     Route::get('bookings/select/{id}', 'show');
     Route::get('bookings/user/', 'user');
     Route::post('bookings/store/', 'store');
+    Route::get('bookings/timeline/', 'timeline');
     
 }); 
 

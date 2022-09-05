@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Booking;
 use App\Models\Customer;
 use App\Models\Port_name;
+use App\Models\Booking_stage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -100,8 +101,8 @@ class BookingsController extends Controller
             'ContainerType' => $request->cargoSize,
             'TypeOfOnboarding' => 'Online',
             'ShippingLineName' => $request->sl_name,
-            'POL' => $this->port_code($request->from_port),
-            'POD' => $this->port_code($request->to_port),
+            'POL' => $this->port_id($request->from_port),
+            'POD' => $this->port_id($request->to_port),
             'BuyRate' => $request->description,
             'SellRate' => $request->description,
             'CustomerName'=> $this->customerIdFromEmail($request->email)
@@ -115,6 +116,13 @@ class BookingsController extends Controller
 
     }
 
+    public function timeline(){
+        $stage = Booking_stage::with('status')->get();
+        return response()->json([
+            'status' => 'success',
+            'data' => $stage,
+        ]);
+    }
 
     public function port_name($portCode){
         $codes = Port_name::where('port_code','LIKE','%'.$portCode.'%')->get();
@@ -130,6 +138,17 @@ class BookingsController extends Controller
         $codes = Port_name::where('port_name','LIKE','%'.$portName.'%')->get();
         if(count($codes)!==0){
             return $codes[0]['port_code'];
+        }
+        else {
+            return 'False';
+        }
+        
+    }
+
+    public function port_id($portName){
+        $codes = Port_name::where('port_name','LIKE','%'.$portName.'%')->get();
+        if(count($codes)!==0){
+            return $codes[0]['ID'];
         }
         else {
             return 'False';
