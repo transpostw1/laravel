@@ -121,6 +121,7 @@ class BookingsController extends Controller
         $stage = Booking_stage::with('status')->where('bookingID', '=', $request->bookingID)->get();
         return response()->json([
             'status' => 'success',
+            'bookingID' => $request->bookingID,
             'data' => $stage,
         ]);
     }
