@@ -188,7 +188,7 @@ class RatesController extends Controller
                     $baserate = $res->equipmentAndBasedRates[0]->basedRate->basicOceanFreightRate;
                     $margin = 100;
                     $total = $baserate+$margin;
-
+                    $livedata[$i]['ID'] = 'CMA'.$res->quoteLineId;
                     $livedata[$i]['sl_name'] = "CMA (live)";
                     $livedata[$i]['from_port'] = $this->port_name($from_port);
                     $livedata[$i]['to_port'] = $this->port_name($to_port);
