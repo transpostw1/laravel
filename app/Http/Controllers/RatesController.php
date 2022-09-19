@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Rates;
+use App\Models\Surcharge;
+use App\Models\Rate_surcharge;
 use App\Models\Port_name;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
@@ -28,37 +30,22 @@ class RatesController extends Controller
     }
 
     public function select(Request $request){
-
-        // if (isset($_SERVER['HTTP_ORIGIN'])) {
-        //     // Decide if the origin in $_SERVER['HTTP_ORIGIN'] is one
-        //     // you want to allow, and if so:
-        //     header("Access-Control-Allow-Origin: {$_SERVER['HTTP_ORIGIN']}");
-        //     header('Access-Control-Allow-Credentials: true');
-        //     header('Access-Control-Max-Age: 86400');    // cache for 1 day
-        // }
         
-        // // Access-Control headers are received during OPTIONS requests
-        // if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
-            
-        //     if (isset($_SERVER['HTTP_ACCESS_CONTROL_REQUEST_METHOD']))
-        //         // may also be using PUT, PATCH, HEAD etc
-        //         header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
-            
-        //     if (isset($_SERVER['HTTP_ACCESS_CONTROL_REQUEST_HEADERS']))
-        //         header("Access-Control-Allow-Headers: {$_SERVER['HTTP_ACCESS_CONTROL_REQUEST_HEADERS']}");
-        
-        //     exit(0);
-        // }
-
-
         $endDate = Carbon::now()->addMonths(3);
         $startDate = Carbon::now();
-       
-        $rates = Rates::where('from_port', $request->from_port)
+
+        $rates = Rates::with('rate_surcharge:amount,currency', 'surcharge:Code,Name,Term')->where('from_port', $request->from_port)
                 ->where('to_port', $request->to_port)
                 ->whereBetween('expiry_date', [$startDate, $endDate])
                 ->get();
+
+        
+              $surcharges = $rates->pluck( 'surcharge' );
+        
+
+              //return response()->json($surcharges); exit;
                 $cargo_type = $request->cargo_type;
+                 
                 if($cargo_type==='40hc'){
                   $rates->makeHidden(['_20gp', '_40gp']);
                 }
@@ -71,27 +58,57 @@ class RatesController extends Controller
                 else{
                    // $rates->makeHidden();
                 }
-                //dd($rates[0]);
-               $from_port_code =  $this->port_code($request->from_port);
-               $to_port_code =  $this->port_code($request->to_port);
+                //return response()->json($rates);
+                 //dd($rates);
+                $from_port_code =  $this->port_code($request->from_port);
+                $to_port_code =  $this->port_code($request->to_port);
                 $cma_live_data = $this->cma_rates($from_port_code, $to_port_code);
-               //array_push($rates, $cma_live_data);
+               
                foreach($rates as $rate){
                 $rate['base_rate'] = $rate["_".$cargo_type];
+                
                 $rate['Margin'] = 0;
                 $rate['total'] = $rate["_".$cargo_type];
                 $rate['cargo_size'] = $cargo_type;
+                $rateArr = array();
+
+                    if(isset($rate['surcharge'])){
+                       
+                        // $i=0;
+                        // foreach($rate['surcharge'] as $sur){
+                        //     $rateArr['surcharge'][$i]['Code'] = $sur->Code;
+                        //     $rateArr['surcharge'][$i]['Name'] = $sur->Name;
+                        //     $i++;
+                        // }
+                        // foreach($rate['rate_surcharge'] as $rsur){
+                        //     $rateArr['surcharge'][$i]['Amount'] = $rsur->amount;
+                        //     $rateArr['surcharge'][$i]['Currency'] = $rsur->currency;
+                        //     $i++;
+                        // }
+                        $surcharge = $rate['surcharge'];
+                        $surchargeRate = $rate['rate_surcharge'];
+                        for ($i=0; $i < count($rate['surcharge']); $i++) { 
+                            $rateArr['surcharge'][$i]['Code'] = $surcharge[$i]->Code;
+                            $rateArr['surcharge'][$i]['Name'] = $surcharge[$i]->Name;
+                            $rateArr['surcharge'][$i]['Amount'] = $surchargeRate[$i]->amount;
+                            $rateArr['surcharge'][$i]['Currency'] = $surchargeRate[$i]->currency;
+                        }
+                        // echo $i; exit;
+                        unset($rate['surcharge']);
+                        unset($rate['rate_surcharge']);
+                        $rate['additionalCosts'] = $rateArr;
+                    }
+                    else{
+                        $rate['surcharge'] = NULL;
+                    }
+                
+
+                  
+                
                }
                foreach($cma_live_data as $v){
                 $rates[] = $v;
                }
-               
-            //    print_r();exit;
-            //    $cma_rates = json_decode($this->cma_rates($from_port_code, $to_port_code), true, JSON_UNESCAPED_SLASHES);
-            //    $ratesarr = array(
-            //     'sheetRates' => $rates,
-            //     'liveRates'=> $cma_rates,
-            //    );
                return response()->json($rates);
     }
 
