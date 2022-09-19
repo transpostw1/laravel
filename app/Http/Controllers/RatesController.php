@@ -73,27 +73,16 @@ class RatesController extends Controller
                 $rateArr = array();
 
                     if(isset($rate['surcharge'])){
-                       
-                        // $i=0;
-                        // foreach($rate['surcharge'] as $sur){
-                        //     $rateArr['surcharge'][$i]['Code'] = $sur->Code;
-                        //     $rateArr['surcharge'][$i]['Name'] = $sur->Name;
-                        //     $i++;
-                        // }
-                        // foreach($rate['rate_surcharge'] as $rsur){
-                        //     $rateArr['surcharge'][$i]['Amount'] = $rsur->amount;
-                        //     $rateArr['surcharge'][$i]['Currency'] = $rsur->currency;
-                        //     $i++;
-                        // }
                         $surcharge = $rate['surcharge'];
                         $surchargeRate = $rate['rate_surcharge'];
-                        for ($i=0; $i < count($rate['surcharge']); $i++) { 
-                            $rateArr['surcharge'][$i]['Code'] = $surcharge[$i]->Code;
-                            $rateArr['surcharge'][$i]['Name'] = $surcharge[$i]->Name;
-                            $rateArr['surcharge'][$i]['Amount'] = $surchargeRate[$i]->amount;
-                            $rateArr['surcharge'][$i]['Currency'] = $surchargeRate[$i]->currency;
+                        for ($i=0; $i < count($rate['surcharge']); $i++) {
+                            $rateArr[$i]['id'] = $i; 
+                            $rateArr[$i]['code'] = $surcharge[$i]->Code;
+                            $rateArr[$i]['name'] = $surcharge[$i]->Name;
+                            $rateArr[$i]['amount'] = $surchargeRate[$i]->amount;
+                            $rateArr[$i]['currency'] = $surchargeRate[$i]->currency;
+                            
                         }
-                        // echo $i; exit;
                         unset($rate['surcharge']);
                         unset($rate['rate_surcharge']);
                         $rate['additionalCosts'] = $rateArr;
