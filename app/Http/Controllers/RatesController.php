@@ -215,9 +215,12 @@ class RatesController extends Controller
                                                  <li>Destination - Charges payable at Import</li>";
                     $livedata[$i]['terms'] =  "<h2>Access the link below to understand Terms and Conditions - CMA CGM
                     (https://www.cma-cgm.com/ebusiness/registration/terms-and-conditions)</h2>";
+
+                    $livedata['additionalCosts'] = [];
                     
                 }
                 // dd($response);
+                
         return $livedata;
 
         //echo "Status: ".$request->getStatusCode()."\n";
