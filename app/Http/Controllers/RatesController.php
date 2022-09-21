@@ -216,7 +216,7 @@ class RatesController extends Controller
                     $livedata[$i]['terms'] =  "<h2>Access the link below to understand Terms and Conditions - CMA CGM
                     (https://www.cma-cgm.com/ebusiness/registration/terms-and-conditions)</h2>";
 
-                    $livedata['additionalCosts'] = [];
+                    $livedata[$i]['additionalCosts'] = [];
                     
                 }
                 // dd($response);
