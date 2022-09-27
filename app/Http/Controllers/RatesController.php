@@ -34,7 +34,7 @@ class RatesController extends Controller
         $endDate = Carbon::now()->addMonths(3);
         $startDate = Carbon::now();
 
-        $rates = Rates::with('rate_surcharge:amount,currency', 'surcharge:Code,Name,Term')->where('from_port', $request->from_port)
+        $rates = Rates::with('rate_surcharge:amount,currency', 'surcharge:Code,Name,Term')->where('from_port', 'like', '%'.$request->from_port.'%')
                 ->where('to_port', $request->to_port)
                 ->whereBetween('expiry_date', [$startDate, $endDate])
                 ->get();
@@ -43,6 +43,7 @@ class RatesController extends Controller
               $surcharges = $rates->pluck( 'surcharge' );
         
 
+               //dd($rates);
               //return response()->json($surcharges); exit;
                 $cargo_type = $request->cargo_type;
                  
@@ -65,6 +66,9 @@ class RatesController extends Controller
                 $cma_live_data = $this->cma_rates($from_port_code, $to_port_code);
                
                foreach($rates as $rate){
+                $stringID = $rate['ID'];
+                unset($rate['ID']);
+                $rate['id'] = 'TRA'.$stringID;
                 $rate['base_rate'] = $rate["_".$cargo_type];
                 
                 $rate['Margin'] = 0;
@@ -190,11 +194,12 @@ class RatesController extends Controller
                  //$cma_live_data = $this->cma_rates($from_port_code, $to_port_code);
                  
                 $i=0;
+                $livedata = array();
                 foreach($response as $res){
                     $baserate = $res->equipmentAndBasedRates[0]->basedRate->basicOceanFreightRate;
                     $margin = 100;
                     $total = $baserate+$margin;
-                    $livedata[$i]['ID'] = 'CMA'.$res->quoteLineId;
+                    $livedata[$i]['id'] = 'CMA'.$res->quoteLineId;
                     $livedata[$i]['sl_name'] = "CMA (live)";
                     $livedata[$i]['from_port'] = $this->port_name($from_port);
                     $livedata[$i]['to_port'] = $this->port_name($to_port);
