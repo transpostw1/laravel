@@ -48,8 +48,11 @@ Route::controller(CustomerController::class)->group(function () {
 }); 
 
 //Route::get('/search', [Select2SearchController::class, 'index']);
-Route::get('/ajax-autocomplete-search', [PortsController::class, 'selectSearch']);
-
+// Route::get('/ajax-autocomplete-search', [PortsController::class, 'selectSearch']);
+Route::controller(PortsController::class)->group(function () {
+    Route::get('ajax-autocomplete-search', 'selectSearch');
+    
+}); 
 // Route::middleware('auth:api')->group(function () {
 // 	// JWT protected routes
 // });
