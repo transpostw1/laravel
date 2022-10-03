@@ -30,7 +30,7 @@ class PortsController extends Controller
     	$ports = [];
         if($request->has('q')){
             $search = $request->q;
-            $movies =Port_name::select("id", "port_name")
+            $movies =Port_name::select("id", "port_name", "port_code", "country", "country_code")
             		->where('port_name', 'LIKE', "%$search%")
                     ->orWhere('port_code', 'LIKE', "%$search%")
             		->get();
