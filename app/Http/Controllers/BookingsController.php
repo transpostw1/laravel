@@ -113,7 +113,7 @@ class BookingsController extends Controller
             'status' => 'success',
             'message' => 'Booking created successfully',
             'Booking' => $booking,
-            'html' => '<a href="google.com">Click to take some action</a>',
+            
         ]);
 
     }
@@ -125,6 +125,7 @@ class BookingsController extends Controller
             'status' => 'success',
             'bookingID' => $request->bookingID,
             'data' => $stage,
+            'html' => '<a href="google.com">Click to take some action</a>',
         ]);
     }
 

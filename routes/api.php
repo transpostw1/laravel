@@ -7,6 +7,7 @@ use App\Http\Controllers\TodoController;
 use App\Http\Controllers\RatesController;
 use App\Http\Controllers\BookingsController;
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\PortsController;
 
 Route::controller(AuthController::class)->group(function () {
     Route::post('login', 'login');
@@ -45,6 +46,9 @@ Route::controller(CustomerController::class)->group(function () {
     Route::post('customer/store/', 'store');
     
 }); 
+
+//Route::get('/search', [Select2SearchController::class, 'index']);
+Route::get('/ajax-autocomplete-search', [PortsController::class, 'selectSearch']);
 
 // Route::middleware('auth:api')->group(function () {
 // 	// JWT protected routes
