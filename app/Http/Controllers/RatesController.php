@@ -39,7 +39,7 @@ class RatesController extends Controller
                 ->whereBetween('expiry_date', [$startDate, $endDate])
                 ->get();
 
-        
+        // dd($rates);
               $surcharges = $rates->pluck( 'surcharge' );
         
 
@@ -106,6 +106,7 @@ class RatesController extends Controller
     }
 
     public function port_code($portName){
+        return $portName;
         $codes = Port_name::where('port_name','LIKE','%'.$portName.'%')->get();
         if(count($codes)!==0){
             return $codes[0]['port_code'];
