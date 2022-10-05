@@ -184,11 +184,11 @@ $bookingData = array(
 	$customer = DB::table('customer')->where('ID', $cusID)->first();
 	
 	$booking['requestid'] = $bid;
-	$booking['POL'] = $bkng->get('POL');
-	$booking['POD'] = $bkng->get('POD');
-    $booking['ContainerCount'] = $bkng->get('ContainerCount');
-    $booking['commodity'] = $bkng->get('commodity');
-    $booking['SellRate'] = $bkng->get('SellRate');
+	$booking['POL'] = $bkng->POL;
+	$booking['POD'] = $bkng->POD;
+    $booking['ContainerCount'] = $bkng->ContainerCount;
+    $booking['commodity'] = $bkng->commodity;
+    $booking['SellRate'] = $bkng->SellRate;
 	
 	$user['name'] = $customer->name;
 	$user['email'] = $customer->email;
