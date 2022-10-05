@@ -182,7 +182,7 @@ $bookingData = array(
       $bkng = Booking::where('ID',$bid)->get();
       
 	$cusID = $bkng->get('CustomerName');
-	$customer = DB::table('customer')->where('ID', $cusID)->first();
+	$customer = DB::table('customer')->where('ID', $cusID)->toSql();
 	dd($customer);
 	$booking['requestid'] = $bid;
 	$booking['POL'] = $bkng->get('POL');
