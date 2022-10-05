@@ -179,11 +179,9 @@ $bookingData = array(
     public function sendEmail($bid)
     {
       //$user = auth()->user();
-      $bkng = DB::table('bookings')->where('ID', $bid)->first();
-
-      dd($bkng->CustomerName);  
+    $bkng = DB::table('bookings')->where('ID', $bid)->first();  
 	$cusID = $bkng->CustomerName;
-	$customer = DB::table('customer')->where('ID', $cusID)->toSql();
+	$customer = DB::table('customer')->where('ID', $cusID)->first();
 	
 	$booking['requestid'] = $bid;
 	$booking['POL'] = $bkng->get('POL');
@@ -194,7 +192,7 @@ $bookingData = array(
 	
 	$user['name'] = $customer->name;
 	$user['email'] = $customer->email;
-	
+	dd($booking);
       Mail::to($user['email'])->send(new RequestNotify($booking));
  		if (Mail::failures()) {
 				return ['message'=>'mail not sent','status'=>'failure'];
