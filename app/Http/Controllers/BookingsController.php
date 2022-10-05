@@ -152,14 +152,14 @@ class BookingsController extends Controller
 // );
 
 
-        $booking = Booking::create($bookingData);
+        //$booking = Booking::create($bookingData);
 
-        return response()->json([
-            'status' => 'success',
-            'message' => 'Booking created successfully',
-            'Booking' => $booking,
+        // return response()->json([
+        //     'status' => 'success',
+        //     'message' => 'Booking created successfully',
+        //     'Booking' => $booking,
             
-        ]);
+        // ]);
 
     }
 
