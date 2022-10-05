@@ -8,6 +8,7 @@ use App\Models\Port_name;
 use App\Models\Booking_stage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 
 
 class BookingsController extends Controller
@@ -88,6 +89,8 @@ class BookingsController extends Controller
     }
     public function store(Request $request)
     {
+        $date = Carbon::now();
+        $now = $date->format("Y-m-d");
         // $request->validate([
         //     'title' => 'required|string|max:255',
         //     'description' => 'required|string|max:255',
@@ -96,18 +99,59 @@ class BookingsController extends Controller
         // $req = '{"ID":500,"sl_name":"COSCO","from_port":"Jawaharlal Nehru","to_port":"COLOMBO","_20gp":"CASE BY CASE","Margin":0,"FAF":"109","seal_charge":"5","ECC":"","service_mode":"","direct_via":"","via_port":"","transit_time":"","expiry_date":"2022-09-15 12:36:57","sl_logo":"http://launchindia.org/transpost/logos/cosco_logo.png","remarks":"","terms":"","base_rate":"CASE BY CASE","total":"CASE BY CASE","cargoSize":"20gp","email":"test123@test.com"}';
         // $jreq = json_decode($req);
         // dd($jreq);
-        $booking = Booking::create([
-            
-            'CS_User' => $request->ID,
-            'ContainerType' => $request->cargoSize,
-            'TypeOfOnboarding' => 'Online',
-            'ShippingLineName' => $request->sl_name,
-            'POL' => $this->port_id($request->from_port),
-            'POD' => $this->port_id($request->to_port),
-            'BuyRate' => $request->description,
-            'SellRate' => $request->description,
-            'CustomerName'=> $this->customerIdFromEmail($request->email)
-        ]);
+
+        // {
+        //     "sl_name": "NVOCC",
+        //     "from_port": "INNSA",
+        //     "to_port": "KEMBA",
+        //     "_20gp": 3207,
+        //     "Margin": 0,
+        //     "FAF": "",
+        //     "seal_charge": "",
+        //     "ECC": "",
+        //     "service_mode": "",
+        //     "direct_via": "",
+        //     "via_port": "",
+        //     "transit_time": "",
+        //     "expiry_date": "2022-10-31 00:00:00",
+        //     "sl_logo": "http://launchindia.org/transpost/logos/MYMSC.png",
+        //     "remarks": "",
+        //     "terms": "",
+        //     "commodity": "FAK",
+        //     "id": "TRA10122",
+        //     "base_rate": 3207,
+        //     "total": 3207,
+        //     "cargo_size": "20gp",
+        //     "additionalCosts": [],
+        //     "email": "masoodahmed@transpost.co",
+        //     "commodityDetails": {
+        //       "loadingDate": "2022-10-29",
+        //       "commodityName": "Rice",
+        //       "containerCount": "56000",
+        //       "weight": "25"
+        //     }
+        //   }
+
+        
+$bookingData = array(
+    'CS_User' => $request->ID,
+    'DateOfBooking' => $now,
+    'ContainerType' => $request->cargoSize,
+    'TypeOfOnboarding' => 'Online',
+    'ShippingLineName' => $request->sl_name,
+    'POL' => $this->port_id($request->from_port),
+    'POD' => $this->port_id($request->to_port),
+    'BuyRate' => $request->description,
+    'SellRate' => $request->description,
+    'ContainerCount' => $commodity->containerCount,
+    'commodity' => $commodity->containerName,
+    'weight' => $commodity->weight,
+    'CustomerName'=> $this->customerIdFromEmail($request->email) 
+
+);
+dd($bookingData);
+
+        $booking = Booking::create($bookingData);
 
         return response()->json([
             'status' => 'success',
