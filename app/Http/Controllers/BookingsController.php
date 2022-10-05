@@ -178,16 +178,17 @@ $bookingData = array(
     public function sendEmail($bkng)
     {
       //$user = auth()->user();
-      //dd($booking);
+      
 	$cusID = $bkng->get('CustomerName');
-	$customer = DB::table('customer')->where('ID', $cusID)->toSql();
+    dd($cusID);
+	$customer = DB::table('customer')->where('ID', $cusID)->first();
 	
 	$booking['requestid'] = $bkng->get('ID');
 	$booking['POL'] = $bkng->get('POL');
 	$booking['POD'] = $bkng->get('POD');
     $booking['ContainerCount'] = $bkng->get('ContainerCount');
     $booking['commodity'] = $bkng->get('commodity');
-    $booking['SellRate'] = $bkng->get('SellRate');
+    $booking['SellRate'] = $request->get('SellRate');
 	
 	$user['name'] = $customer->name;
 	$user['email'] = $customer->email;
