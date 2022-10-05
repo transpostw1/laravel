@@ -111,7 +111,7 @@ a, a:hover {
 			padding-top: 25px;
 			color: #000000;
 			font-family: sans-serif;" class="header">
-				Dear {{ $user['name'] }}
+				Dear {{ $booking['user']['name'] }}
 		</td>
 	</tr>
 	
