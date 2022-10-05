@@ -192,7 +192,7 @@ $bookingData = array(
 	
 	$user['name'] = $customer->name;
 	$user['email'] = $customer->email;
-	dd($booking);
+	
       Mail::to($user['email'])->send(new RequestNotify($booking));
  		if (Mail::failures()) {
 				return ['message'=>'mail not sent','status'=>'failure'];
