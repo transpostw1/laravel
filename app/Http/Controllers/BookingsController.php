@@ -90,7 +90,7 @@ class BookingsController extends Controller
     public function store(Request $request)
     {
         $date = Carbon::now();
-        $now = $date->format("Y.m.d");
+        $now = $date->format("Y-m-d");
         // dd($now);
         // $request->validate([
         //     'title' => 'required|string|max:255',
