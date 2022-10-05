@@ -133,7 +133,7 @@ class BookingsController extends Controller
         //   }
 
        // $commodity = json_decode($request->commodityDetails);
-        //dd();     
+       // dd($this->port_id_from_code($request->from_port));     
 $bookingData = array(
     'CS_User' => $request->ID,
     'DateOfBooking' => $now,
@@ -207,7 +207,7 @@ dd($bookingData);
     }
 
     public function port_id_from_code($portCode){
-        $codes = Port_name::where('port_name','LIKE','%'.$portCode.'%')->get();
+        $codes = Port_name::where('port_code','LIKE','%'.$portCode.'%')->get();
         if(count($codes)!==0){
             return $codes[0]['ID'];
         }
