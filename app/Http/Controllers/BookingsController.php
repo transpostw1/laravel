@@ -154,7 +154,7 @@ $bookingData = array(
 
 //dd($bookingData); 
         $booking = Booking::create($bookingData);
-        sendmail($booking);
+        $this->sendmail($booking);
         return response()->json([
             'status' => 'success',
             'message' => 'Booking created successfully',
