@@ -152,7 +152,7 @@ $bookingData = array(
 
 );
 
-// dd($bookingData); 
+dd($bookingData); 
         $booking = Booking::create($bookingData);
 
         return response()->json([
