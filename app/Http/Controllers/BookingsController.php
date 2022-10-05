@@ -154,14 +154,8 @@ $bookingData = array(
 
 //dd($bookingData); 
         $booking = Booking::create($bookingData);
-        $bkng['requestid'] = $booking->ID;
-        $bkng['POL'] = $booking->POL;
-        $bkng['POD'] = $bkng->POD;
-        $bkng['ContainerCount'] = $bkng->ContainerCount;
-        $bkng['commodity'] = $bkng->commodity;
-        $bkng['SellRate'] = $request->SellRate;
-        //$this->sendEmail($booking);
-        dd($bkng);
+        $this->sendEmail($booking->ID);
+        //dd($bkng);
         return response()->json([
             'status' => 'success',
             'message' => 'Booking created successfully',
@@ -182,10 +176,11 @@ $bookingData = array(
         ]);
     }
 
-    public function sendEmail($bkng)
+    public function sendEmail($bid)
     {
       //$user = auth()->user();
-      
+      $bkng = Booking::where('ID',$bid)->get();
+      dd($bkng);
 	$cusID = $bkng->get('CustomerName');
     dd($bkng->get('CS_User'));
 	$customer = DB::table('customer')->where('ID', $cusID)->first();
