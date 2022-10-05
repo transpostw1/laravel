@@ -9,8 +9,23 @@ class Booking extends Model
 {
     protected $primaryKey = 'ID';
 
+    // 'CS_User' => $request->id,
+    // 'DateOfBooking' => $now,
+    // 'ContainerType' => $request->cargoSize,
+    // 'TypeOfOnboarding' => 'Online',
+    // 'ShippingLineName' => $request->sl_name,
+    // 'POL' => $this->port_id_from_code($request->from_port),
+    // 'POD' => $this->port_id_from_code($request->to_port),
+    // 'BuyRate' => $request->description,
+    // 'SellRate' => $request->total,
+    // 'ContainerCount' => $request->commodityDetails['containerCount'],
+    // 'commodity' => $request->commodityDetails['commodityName'],
+    // 'weight' => $request->commodityDetails['weight'],
+    // 'CustomerName'=> $this->customerIdFromEmail($request->email) 
+
     protected $fillable = [
             'CS_User',
+            'DateOfBooking',
             'ContainerType',
             'TypeOfOnboarding',
             'ShippingLineName',
@@ -18,7 +33,10 @@ class Booking extends Model
             'POD',
             'BuyRate',
             'SellRate',
-            'CustomerName'
+            'ContainerCount',
+            'commodity',
+            'CustomerName',
+            'weight',
     ];
 
     use HasFactory;
