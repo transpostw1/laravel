@@ -158,7 +158,7 @@ $bookingData = array(
         return response()->json([
             'status' => 'success',
             'message' => 'Booking created successfully',
-            'Booking' => $booking->id,
+            'Booking' => $booking->ID,
             
         ]);
 
