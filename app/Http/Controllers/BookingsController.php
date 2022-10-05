@@ -132,25 +132,25 @@ class BookingsController extends Controller
             // }
         //   }
 
-        $commodity = json_decode($request->commodityDetails);
-        
-$bookingData = array(
-    'CS_User' => $request->ID,
-    'DateOfBooking' => $now,
-    'ContainerType' => $request->cargoSize,
-    'TypeOfOnboarding' => 'Online',
-    'ShippingLineName' => $request->sl_name,
-    'POL' => $this->port_id($request->from_port),
-    'POD' => $this->port_id($request->to_port),
-    'BuyRate' => $request->description,
-    'SellRate' => $request->description,
-    'ContainerCount' => $commodity->containerCount,
-    'commodity' => $commodity->commodityName,
-    'weight' => $commodity->weight,
-    'CustomerName'=> $this->customerIdFromEmail($request->email) 
+       // $commodity = json_decode($request->commodityDetails);
+        dd($request->commodityDetails);     
+// $bookingData = array(
+//     'CS_User' => $request->ID,
+//     'DateOfBooking' => $now,
+//     'ContainerType' => $request->cargoSize,
+//     'TypeOfOnboarding' => 'Online',
+//     'ShippingLineName' => $request->sl_name,
+//     'POL' => $this->port_id($request->from_port),
+//     'POD' => $this->port_id($request->to_port),
+//     'BuyRate' => $request->description,
+//     'SellRate' => $request->description,
+//     'ContainerCount' => $commodity->containerCount,
+//     'commodity' => $commodity->commodityName,
+//     'weight' => $commodity->weight,
+//     'CustomerName'=> $this->customerIdFromEmail($request->email) 
 
-);
-dd($bookingData);
+// );
+
 
         //$booking = Booking::create($bookingData);
 
