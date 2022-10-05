@@ -141,12 +141,14 @@ a, a:hover {
 			font-family: sans-serif;" class="paragraph">
                 <p>
 				 Your Request for booking {{$booking['requestid']}} has been recieved, you will soon get a confirmation email with CRO.
-                
-                 From Port- {{$booking['POL']}}
-                 To Port- {{$booking['POD']}}
-                 No Of Containers - {{$booking['ContainerCount']}}
-                 Commodity - {{$booking['commodity']}}
-                 Total Amount - {{$booking['SellRate']}}
+                <br>
+                <ul>
+                 <li>From Port- {{$booking['POL']}}</li>
+                 <li>To Port- {{$booking['POD']}}</li>
+                 <li>No Of Containers - {{$booking['ContainerCount']}}</li>
+                 <li> Commodity - {{$booking['commodity']}}</li>
+                 <li> Total Amount - {{$booking['SellRate']}}</li>
+                </ul>
                 </p>  
                 <p>
                  Login to <a href="https://weship.transpost.co/">https://weship.transpost.co/ </a> to track status and manage your booking
