@@ -197,7 +197,7 @@ $bookingData = array(
 	$booking['user']['email'] = $customer->email;
 	
       
- 		if (Mail::to($booking['user']['email'])->subject("Booking Request Recieved")->send(new RequestNotify($booking))) {
+ 		if (Mail::to($booking['user']['email'])->send(new RequestNotify($booking))) {
             return ['message'=>'mail sent','status'=>'success'];
 			}else{
 				return ['message'=>'mail not sent','status'=>'failure'];
