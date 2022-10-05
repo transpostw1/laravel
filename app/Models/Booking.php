@@ -23,21 +23,23 @@ class Booking extends Model
     // 'weight' => $request->commodityDetails['weight'],
     // 'CustomerName'=> $this->customerIdFromEmail($request->email) 
 
-    protected $fillable = [
-            'CS_User',
-            'DateOfBooking',
-            'ContainerType',
-            'TypeOfOnboarding',
-            'ShippingLineName',
-            'POL',
-            'POD',
-            'BuyRate',
-            'SellRate',
-            'ContainerCount',
-            'commodity',
-            'CustomerName',
-            'weight',
-    ];
+    // protected $fillable = [
+    //         'CS_User',
+    //         'DateOfBooking',
+    //         'ContainerType',
+    //         'TypeOfOnboarding',
+    //         'ShippingLineName',
+    //         'POL',
+    //         'POD',
+    //         'BuyRate',
+    //         'SellRate',
+    //         'ContainerCount',
+    //         'commodity',
+    //         'CustomerName',
+    //         'weight',
+    // ];
+    protected $guarded = ['ID'];
+
 
     use HasFactory;
 
