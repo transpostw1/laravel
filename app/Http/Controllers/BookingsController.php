@@ -178,7 +178,7 @@ $bookingData = array(
     public function sendEmail($booking)
     {
       //$user = auth()->user();
-      dd($booking);
+      //dd($booking);
 	$cusID = $request->get('CustomerName');
 	$customer = DB::table('customer')->where('ID', $cusID)->first();
 	
