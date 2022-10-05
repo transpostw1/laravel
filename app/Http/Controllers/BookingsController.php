@@ -179,8 +179,9 @@ $bookingData = array(
     public function sendEmail($bid)
     {
       //$user = auth()->user();
-      $bkng = Booking::where('ID',$bid)->first();
-      dd($bkng->CustomerName());  
+      $bkng = DB::table('bookings')->where('ID', $cusID)->toSql();
+
+      dd($bkng->CustomerName);  
 	$cusID = $bkng->CustomerName;
 	$customer = DB::table('customer')->where('ID', $cusID)->toSql();
 	
