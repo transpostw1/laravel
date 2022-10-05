@@ -189,7 +189,7 @@ $bookingData = array(
 	$booking['POD'] = $bkng->get('POD');
     $booking['ContainerCount'] = $bkng->get('ContainerCount');
     $booking['commodity'] = $bkng->get('commodity');
-    $booking['SellRate'] = $request->get('SellRate');
+    $booking['SellRate'] = $bkng->get('SellRate');
 	
 	$user['name'] = $customer->name;
 	$user['email'] = $customer->email;
