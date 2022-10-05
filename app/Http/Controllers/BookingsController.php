@@ -124,33 +124,33 @@ class BookingsController extends Controller
         //     "cargo_size": "20gp",
         //     "additionalCosts": [],
         //     "email": "masoodahmed@transpost.co",
-        //     "commodityDetails": {
-        //       "loadingDate": "2022-10-29",
-        //       "commodityName": "Rice",
-        //       "containerCount": "56000",
-        //       "weight": "25"
-        //     }
+            // "commodityDetails": {
+            //   "loadingDate": "2022-10-29",
+            //   "commodityName": "Rice",
+            //   "containerCount": "56000",
+            //   "weight": "25"
+            // }
         //   }
 
         $commodity = json_decode($request->commodityDetails);
-        dd($commodity);
-// $bookingData = array(
-//     'CS_User' => $request->ID,
-//     'DateOfBooking' => $now,
-//     'ContainerType' => $request->cargoSize,
-//     'TypeOfOnboarding' => 'Online',
-//     'ShippingLineName' => $request->sl_name,
-//     'POL' => $this->port_id($request->from_port),
-//     'POD' => $this->port_id($request->to_port),
-//     'BuyRate' => $request->description,
-//     'SellRate' => $request->description,
-//     'ContainerCount' => $commodity->containerCount,
-//     'commodity' => $commodity->containerName,
-//     'weight' => $commodity->weight,
-//     'CustomerName'=> $this->customerIdFromEmail($request->email) 
+        
+$bookingData = array(
+    'CS_User' => $request->ID,
+    'DateOfBooking' => $now,
+    'ContainerType' => $request->cargoSize,
+    'TypeOfOnboarding' => 'Online',
+    'ShippingLineName' => $request->sl_name,
+    'POL' => $this->port_id($request->from_port),
+    'POD' => $this->port_id($request->to_port),
+    'BuyRate' => $request->description,
+    'SellRate' => $request->description,
+    'ContainerCount' => $commodity->containerCount,
+    'commodity' => $commodity->commodityName,
+    'weight' => $commodity->weight,
+    'CustomerName'=> $this->customerIdFromEmail($request->email) 
 
-// );
-
+);
+dd($bookingData);
 
         //$booking = Booking::create($bookingData);
 
