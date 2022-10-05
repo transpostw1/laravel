@@ -65,7 +65,7 @@ a, a:hover {
 			<!-- Set text color to background color -->
 			<div style="display: none; visibility: hidden; overflow: hidden; opacity: 0; font-size: 1px; line-height: 1px; height: 0; max-height: 0; max-width: 0;
 			color: #F0F0F0;" class="preheader">
-				Dear {{ $user['name'] }}, <br>
+				Dear {{ $booking['user']['name'] }}, <br>
 
                 Thank you for your booking.
                 

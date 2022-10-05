@@ -192,10 +192,10 @@ $bookingData = array(
     $booking['commodity'] = $bkng->commodity;
     $booking['SellRate'] = $bkng->SellRate;
 	
-	$user['name'] = $customer->name;
-	$user['email'] = $customer->email;
+	$booking['user']['name'] = $customer->name;
+	$booking['user']['email'] = $customer->email;
 	
-      Mail::to($user['email'])->send(new RequestNotify($booking));
+      Mail::to($booking['user']['email'])->send(new RequestNotify($booking));
  		if (Mail::failures()) {
 				return ['message'=>'mail not sent','status'=>'failure'];
 			}else{
