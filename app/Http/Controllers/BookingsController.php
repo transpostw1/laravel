@@ -175,19 +175,19 @@ $bookingData = array(
         ]);
     }
 
-    public function sendEmail($booking)
+    public function sendEmail($bkng)
     {
       //$user = auth()->user();
       //dd($booking);
-	$cusID = $request->get('CustomerName');
+	$cusID = $bkng->get('CustomerName');
 	$customer = DB::table('customer')->where('ID', $cusID)->first();
 	
-	$booking['requestid'] = $request->get('ID');
-	$booking['POL'] = $request->get('POL');
-	$booking['POD'] = $request->get('POD');
-    $booking['ContainerCount'] = $request->get('ContainerCount');
-    $booking['commodity'] = $request->get('commodity');
-    $booking['SellRate'] = $request->get('SellRate');
+	$booking['requestid'] = $bkng->get('ID');
+	$booking['POL'] = $bkng->get('POL');
+	$booking['POD'] = $bkng->get('POD');
+    $booking['ContainerCount'] = $bkng->get('ContainerCount');
+    $booking['commodity'] = $bkng->get('commodity');
+    $booking['SellRate'] = $bkng->get('SellRate');
 	
 	$user['name'] = $customer->name;
 	$user['email'] = $customer->email;
