@@ -180,10 +180,10 @@ $bookingData = array(
     {
       //$user = auth()->user();
       $bkng = Booking::where('ID',$bid)->get();
-      
+      dd($bkng);  
 	$cusID = $bkng->CustomerName;
 	$customer = DB::table('customer')->where('ID', $cusID)->toSql();
-	dd($customer);
+	
 	$booking['requestid'] = $bid;
 	$booking['POL'] = $bkng->get('POL');
 	$booking['POD'] = $bkng->get('POD');
