@@ -140,8 +140,8 @@ $bookingData = array(
     'ContainerType' => $request->cargoSize,
     'TypeOfOnboarding' => 'Online',
     'ShippingLineName' => $request->sl_name,
-    'POL' => $this->port_id($request->from_port),
-    'POD' => $this->port_id($request->to_port),
+    'POL' => $this->port_id_from_code($request->from_port),
+    'POD' => $this->port_id_from_code($request->to_port),
     'BuyRate' => $request->description,
     'SellRate' => $request->description,
     'ContainerCount' => $request->commodityDetails['containerCount'],
@@ -197,6 +197,17 @@ dd($bookingData);
 
     public function port_id($portName){
         $codes = Port_name::where('port_name','LIKE','%'.$portName.'%')->get();
+        if(count($codes)!==0){
+            return $codes[0]['ID'];
+        }
+        else {
+            return 'False';
+        }
+        
+    }
+
+    public function port_id_from_code($portCode){
+        $codes = Port_name::where('port_name','LIKE','%'.$portCode.'%')->get();
         if(count($codes)!==0){
             return $codes[0]['ID'];
         }
