@@ -180,7 +180,7 @@ $bookingData = array(
       //$user = auth()->user();
       //dd($booking);
 	$cusID = $bkng->get('CustomerName');
-	$customer = DB::table('customer')->where('ID', $cusID)->first();
+	$customer = DB::table('customer')->where('ID', $cusID)->toSql();
 	
 	$booking['requestid'] = $bkng->get('ID');
 	$booking['POL'] = $bkng->get('POL');
