@@ -8,6 +8,7 @@ use App\Http\Controllers\RatesController;
 use App\Http\Controllers\BookingsController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\PortsController;
+use App\Http\Controllers\SendEmailController;
 
 Route::controller(AuthController::class)->group(function () {
     Route::post('login', 'login');
@@ -56,3 +57,6 @@ Route::controller(PortsController::class)->group(function () {
 // Route::middleware('auth:api')->group(function () {
 // 	// JWT protected routes
 // });
+
+
+Route::get('send-email', [SendEmailController::class, 'index']);

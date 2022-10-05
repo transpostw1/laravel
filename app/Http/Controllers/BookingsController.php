@@ -138,7 +138,7 @@ class BookingsController extends Controller
 $bookingData = array(
     'CS_User' => $request->id,
     'DateOfBooking' => $now,
-    'ContainerType' => $request->cargoSize,
+    'ContainerType' => $request->cargo_size,
     'TypeOfOnboarding' => 'Online',
     'ShippingLineName' => $request->sl_name,
     'POL' => $this->port_id_from_code($request->from_port),
@@ -154,7 +154,7 @@ $bookingData = array(
 
 //dd($bookingData); 
         $booking = Booking::create($bookingData);
-
+        sendmail($booking);
         return response()->json([
             'status' => 'success',
             'message' => 'Booking created successfully',
@@ -173,6 +173,31 @@ $bookingData = array(
             'data' => $stage,
             'html' => '<a href="google.com">Click to take some action</a>',
         ]);
+    }
+
+    public function sendEmail($request)
+    {
+      //$user = auth()->user();
+	$cusID = $request->get('CustomerName');
+	$customer = DB::table('customer')->where('ID', $cusID)->first();
+	
+	$booking['requestid'] = $request->get('ID');
+	$booking['POL'] = $request->get('POL');
+	$booking['POD'] = $request->get('POD');
+    $booking['ContainerCount'] = $request->get('ContainerCount');
+    $booking['commodity'] = $request->get('commodity');
+    $booking['SellRate'] = $request->get('SellRate');
+	
+	$user['name'] = $customer->name;
+	$user['email'] = $customer->email;
+	//dd($user['email']);
+      Mail::to($user['email'])->send(new RequestNotify($booking));
+ 		if (Mail::failures()) {
+				return ['message'=>'mail not sent','status'=>'failure'];
+			}else{
+				return ['message'=>'mail sent','status'=>'success'];
+			 }
+      
     }
 
     public function port_name($portCode){
