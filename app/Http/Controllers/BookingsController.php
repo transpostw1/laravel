@@ -133,7 +133,7 @@ class BookingsController extends Controller
         //   }
 
        // $commodity = json_decode($request->commodityDetails);
-        dd($request->commodityDetails);     
+        dd($request->commodityDetails['commodityName']);     
 // $bookingData = array(
 //     'CS_User' => $request->ID,
 //     'DateOfBooking' => $now,
