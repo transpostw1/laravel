@@ -175,10 +175,10 @@ $bookingData = array(
         ]);
     }
 
-    public function sendEmail($request)
+    public function sendEmail($booking)
     {
       //$user = auth()->user();
-      dd($request->get('CustomerName'));
+      dd($booking);
 	$cusID = $request->get('CustomerName');
 	$customer = DB::table('customer')->where('ID', $cusID)->first();
 	
