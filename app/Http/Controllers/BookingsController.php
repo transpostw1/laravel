@@ -156,12 +156,13 @@ $bookingData = array(
 
 //dd($bookingData); 
         $booking = Booking::create($bookingData);
-        $this->sendEmail($booking->ID);
+        $mailstatus = $this->sendEmail($booking->ID);
         //dd($bkng);
         return response()->json([
             'status' => 'success',
             'message' => 'Booking created successfully',
             'Booking' => $booking,
+            'MailStatus'=>$mailstatus
             
         ]);
 
@@ -195,11 +196,11 @@ $bookingData = array(
 	$booking['user']['name'] = $customer->name;
 	$booking['user']['email'] = $customer->email;
 	
-      Mail::to($booking['user']['email'])->send(new RequestNotify($booking));
- 		if (Mail::failures()) {
-				return ['message'=>'mail not sent','status'=>'failure'];
+      
+ 		if (Mail::to($booking['user']['email'])->send(new RequestNotify($booking))) {
+            return ['message'=>'mail sent','status'=>'success'];
 			}else{
-				return ['message'=>'mail sent','status'=>'success'];
+				return ['message'=>'mail not sent','status'=>'failure'];
 			 }
       
     }
