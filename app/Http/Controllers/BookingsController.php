@@ -9,6 +9,8 @@ use App\Models\Booking_stage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
+use Mail;
+use App\Mail\RequestNotify;
 
 
 class BookingsController extends Controller
