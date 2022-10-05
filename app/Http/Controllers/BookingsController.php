@@ -154,11 +154,11 @@ $bookingData = array(
 
 //dd($bookingData); 
         $booking = Booking::create($bookingData);
-        $this->sendEmail($booking);
+        //$this->sendEmail($booking);
         return response()->json([
             'status' => 'success',
             'message' => 'Booking created successfully',
-            'Booking' => $booking,
+            'Booking' => $booking->id,
             
         ]);
 
