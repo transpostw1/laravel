@@ -181,7 +181,7 @@ $bookingData = array(
       //$user = auth()->user();
       $bkng = Booking::where('ID',$bid)->get();
       
-	$cusID = $bkng->get('CustomerName');
+	$cusID = $bkng->CustomerName;
 	$customer = DB::table('customer')->where('ID', $cusID)->toSql();
 	dd($customer);
 	$booking['requestid'] = $bid;
