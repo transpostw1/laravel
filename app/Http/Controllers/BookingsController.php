@@ -180,12 +180,11 @@ $bookingData = array(
     {
       //$user = auth()->user();
       $bkng = Booking::where('ID',$bid)->get();
-      dd($bkng);
+      
 	$cusID = $bkng->get('CustomerName');
-    dd($bkng->get('CS_User'));
 	$customer = DB::table('customer')->where('ID', $cusID)->first();
 	
-	$booking['requestid'] = $bkng->get('ID');
+	$booking['requestid'] = $bid;
 	$booking['POL'] = $bkng->get('POL');
 	$booking['POD'] = $bkng->get('POD');
     $booking['ContainerCount'] = $bkng->get('ContainerCount');
@@ -194,7 +193,7 @@ $bookingData = array(
 	
 	$user['name'] = $customer->name;
 	$user['email'] = $customer->email;
-	//dd($user['email']);
+	dd($booking);
       Mail::to($user['email'])->send(new RequestNotify($booking));
  		if (Mail::failures()) {
 				return ['message'=>'mail not sent','status'=>'failure'];
