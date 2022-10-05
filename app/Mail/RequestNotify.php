@@ -28,7 +28,7 @@ class RequestNotify extends Mailable
      */
     public function build()
     {
-        $dd($booking);
+        dd($booking);
         return $this->subject('Booking Request Recieved')->view('emails.newrequest');
     }
 }
