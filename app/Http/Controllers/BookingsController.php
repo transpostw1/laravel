@@ -154,11 +154,18 @@ $bookingData = array(
 
 //dd($bookingData); 
         $booking = Booking::create($bookingData);
+        $bkng['requestid'] = $booking->ID;
+        $bkng['POL'] = $booking->POL;
+        $bkng['POD'] = $bkng->POD;
+        $bkng['ContainerCount'] = $bkng->ContainerCount;
+        $bkng['commodity'] = $bkng->commodity;
+        $bkng['SellRate'] = $request->SellRate;
         //$this->sendEmail($booking);
+        dd($bkng);
         return response()->json([
             'status' => 'success',
             'message' => 'Booking created successfully',
-            'Booking' => $booking->ID,
+            'Booking' => $booking,
             
         ]);
 
