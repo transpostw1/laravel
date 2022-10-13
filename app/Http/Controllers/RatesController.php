@@ -63,7 +63,7 @@ class RatesController extends Controller
                  //dd($rates);
                 $from_port_code =  $this->port_code($request->from_port);
                 $to_port_code =  $this->port_code($request->to_port);
-                $cma_live_data = $this->cma_rates($from_port_code, $to_port_code);
+               // $cma_live_data = $this->cma_rates($from_port_code, $to_port_code);
                
                foreach($rates as $rate){
                 $stringID = $rate['ID'];
@@ -99,9 +99,9 @@ class RatesController extends Controller
                   
                 
                }
-               foreach($cma_live_data as $v){
-                $rates[] = $v;
-               }
+            //    foreach($cma_live_data as $v){
+            //     $rates[] = $v;
+            //    }
                return response()->json($rates);
     }
 
