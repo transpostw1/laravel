@@ -174,27 +174,10 @@ class RatesController extends Controller
                 ]
             ]
         ]);
-        //$res = $client->sendAsync($request, $options)->wait();
-        $response = json_decode($request->getBody()->getContents());
-        //$data = $resp['equipmentAndBasedRates'];
-                // $resp[0]->equipmentAndBasedRates <---base rates
-                // "ID": 500,
-                // "sl_name": "COSCO",
-                // "from_port": "Jawaharlal Nehru",
-                // "to_port": "COLOMBO",
-                // "_40gp": "",
-                // "Margin": 150,
-                // "FAF": "109",
-                // "seal_charge": "5",
-                // "ECC": "",
-                // "service_mode": "",
-                // "direct_via": "",
-                // "via_port": "",
-                // "transit_time": "",
-                // "expiry_date": "2022-09-15 12:36:57",
-                 //$cma_live_data = $this->cma_rates($from_port_code, $to_port_code);
-                 
-                $i=0;
+
+        try {
+            $response = json_decode($request->getBody()->getContents());
+            $i=0;
                 $livedata = array();
                 foreach($response as $res){
                     $baserate = $res->equipmentAndBasedRates[0]->basedRate->basicOceanFreightRate;
@@ -228,6 +211,30 @@ class RatesController extends Controller
                 // dd($response);
                 
         return $livedata;
+        } catch (ClientErrorResponseException $exception) {
+            return  $exception->getResponse()->getBody(true);
+        }
+        //$res = $client->sendAsync($request, $options)->wait();
+        
+        //$data = $resp['equipmentAndBasedRates'];
+                // $resp[0]->equipmentAndBasedRates <---base rates
+                // "ID": 500,
+                // "sl_name": "COSCO",
+                // "from_port": "Jawaharlal Nehru",
+                // "to_port": "COLOMBO",
+                // "_40gp": "",
+                // "Margin": 150,
+                // "FAF": "109",
+                // "seal_charge": "5",
+                // "ECC": "",
+                // "service_mode": "",
+                // "direct_via": "",
+                // "via_port": "",
+                // "transit_time": "",
+                // "expiry_date": "2022-09-15 12:36:57",
+                 //$cma_live_data = $this->cma_rates($from_port_code, $to_port_code);
+                 
+                
 
         //echo "Status: ".$request->getStatusCode()."\n";
     }
