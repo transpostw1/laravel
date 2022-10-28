@@ -93,7 +93,7 @@ class BookingsController extends Controller
     {
         $date = Carbon::now();
         $now = $date->format("Y-m-d");
-        // dd($now);
+        //dd($request->commodityDetails);
         // $request->validate([
         //     'title' => 'required|string|max:255',
         //     'description' => 'required|string|max:255',
@@ -135,8 +135,9 @@ class BookingsController extends Controller
             // }
         //   }
 
-       // $commodity = json_decode($request->commodityDetails);
-       // dd($this->port_id_from_code($request->from_port));     
+        $commodity = json_decode($request->commodityDetails);
+       //dd($commodity->commodityName);    
+        
 $bookingData = array(
     'CS_User' => $request->id,
     'DateOfBooking' => $now,
@@ -147,9 +148,9 @@ $bookingData = array(
     'POD' => $this->port_id_from_code($request->to_port),
     'BuyRate' => $request->description,
     'SellRate' => $request->total,
-    'ContainerCount' => $request->commodityDetails['containerCount'],
-    'commodity' => $request->commodityDetails['commodityName'],
-    'weight' => $request->commodityDetails['weight'],
+    'ContainerCount' => $commodity->containerCount,
+    'commodity' => $commodity->commodityName,
+    'weight' => $commodity->weight,
     'CustomerName'=> $this->customerIdFromEmail($request->email) 
 
 );
