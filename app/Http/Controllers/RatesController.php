@@ -39,7 +39,7 @@ class RatesController extends Controller
                 ->whereBetween('expiry_date', [$startDate, $endDate])
                 ->get();
 
-        // dd($rates);
+        // dd($rates); s
               $surcharges = $rates->pluck( 'surcharge' );
         
 
