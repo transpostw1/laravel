@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Rates;
+use App\Models\Surcharge;
+use App\Models\Rate_surcharge;
 use App\Models\Port_name;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
@@ -27,44 +29,97 @@ class RatesController extends Controller
         return response()->json($rates);
     }
 
-    public function select(Request $request,){
+    public function select(Request $request){
+        
         $endDate = Carbon::now()->addMonths(3);
         $startDate = Carbon::now();
-       
-        $rates = Rates::where('from_port', $request->from_port)
+
+        $rates = Rates::with('rate_surcharge:amount,currency', 'surcharge:Code,Name,Term')->where('from_port', 'like', '%'.$request->from_port.'%')
                 ->where('to_port', $request->to_port)
                 ->whereBetween('expiry_date', [$startDate, $endDate])
                 ->get();
+
+        // dd($rates); s
+              $surcharges = $rates->pluck( 'surcharge' );
+        
+
+               //dd($rates);
+              //return response()->json($surcharges); exit;
                 $cargo_type = $request->cargo_type;
-                if($cargo_type==='_40hc'){
+                 
+                if($cargo_type==='40hc'){
                   $rates->makeHidden(['_20gp', '_40gp']);
                 }
-                else if($cargo_type==='_40gp'){
+                else if($cargo_type==='40gp'){
                     $rates->makeHidden(['_20gp', '_40hc']);
                 }
-                else if($cargo_type==='_20gp'){
+                else if($cargo_type==='20gp'){
                     $rates->makeHidden(['_40hc', '_40gp']);
                 }
                 else{
-                    $rates->makeHidden();
+                   // $rates->makeHidden();
                 }
+                //return response()->json($rates);
+                 //dd($rates);
+                $from_port_code =  $this->port_code($request->from_port);
+                $to_port_code =  $this->port_code($request->to_port);
+               // $cma_live_data = $this->cma_rates($from_port_code, $to_port_code);
+               
+               foreach($rates as $rate){
+                $stringID = $rate['ID'];
+                unset($rate['ID']);
+                $rate['id'] = 'TRA'.$stringID;
+                $rate['base_rate'] = $rate["_".$cargo_type];
                 
-               $from_port_code =  $this->port_code($request->from_port);
-               $to_port_code =  $this->port_code($request->to_port);
+                $rate['Margin'] = 0;
+                $rate['total'] = $rate["_".$cargo_type];
+                $rate['cargo_size'] = $cargo_type;
+                $rateArr = array();
 
-               //print_r($this->cma_rates($from_port_code, $to_port_code));exit;
-               $cma_rates = json_decode($this->cma_rates($from_port_code, $to_port_code), true, JSON_UNESCAPED_SLASHES);
-               $ratesarr = array(
-                'sheetRates' => $rates,
-                'liveRates'=> $cma_rates,
-               );
-               return response()->json($ratesarr);
+                    if(isset($rate['surcharge'])){
+                        $surcharge = $rate['surcharge'];
+                        $surchargeRate = $rate['rate_surcharge'];
+                        for ($i=0; $i < count($rate['surcharge']); $i++) {
+                            $rateArr[$i]['id'] = $i; 
+                            $rateArr[$i]['code'] = $surcharge[$i]->Code;
+                            $rateArr[$i]['name'] = $surcharge[$i]->Name;
+                            $rateArr[$i]['amount'] = $surchargeRate[$i]->amount;
+                            $rateArr[$i]['currency'] = $surchargeRate[$i]->currency;
+                            
+                        }
+                        unset($rate['surcharge']);
+                        unset($rate['rate_surcharge']);
+                        $rate['additionalCosts'] = $rateArr;
+                    }
+                    else{
+                        $rate['surcharge'] = NULL;
+                    }
+                
+
+                  
+                
+               }
+            //    foreach($cma_live_data as $v){
+            //     $rates[] = $v;
+            //    }
+               return response()->json($rates);
     }
 
     public function port_code($portName){
+        return $portName;
         $codes = Port_name::where('port_name','LIKE','%'.$portName.'%')->get();
         if(count($codes)!==0){
             return $codes[0]['port_code'];
+        }
+        else {
+            return 'False';
+        }
+        
+    }
+    public function port_name($portCode){
+        $codes = Port_name::where('port_code','LIKE','%'.$portCode.'%')->get();
+        if(count($codes)!==0){
+            return $codes[0]['port_name'];
         }
         else {
             return 'False';
@@ -119,8 +174,68 @@ class RatesController extends Controller
                 ]
             ]
         ]);
+
+        try {
+            $response = json_decode($request->getBody()->getContents());
+            $i=0;
+                $livedata = array();
+                foreach($response as $res){
+                    $baserate = $res->equipmentAndBasedRates[0]->basedRate->basicOceanFreightRate;
+                    $margin = 100;
+                    $total = $baserate+$margin;
+                    $livedata[$i]['id'] = 'CMA'.$res->quoteLineId;
+                    $livedata[$i]['sl_name'] = "CMA (live)";
+                    $livedata[$i]['from_port'] = $this->port_name($from_port);
+                    $livedata[$i]['to_port'] = $this->port_name($to_port);
+                    $livedata[$i]['cargo_size'] = strtolower($res->equipmentAndBasedRates[0]->equipmentGroupIsoCode);
+                    $livedata[$i]['base_rate'] = $baserate;
+                    $livedata[$i]['Margin'] = $margin;
+                    $livedata[$i]['total'] = $total;
+                    $livedata[$i]['FAF'] = "";
+                    $livedata[$i]['seal_charge'] = "";
+                    $livedata[$i]['ECC'] = "";
+                    $livedata[$i]['service_mode'] = "";
+                    $livedata[$i]['direct_via'] = "";
+                    $livedata[$i]['via_port'] = "";
+                    $livedata[$i]['transit_time'] = ""; 
+                    $livedata[$i]['expiry_date'] = $res->validityto;
+                    $livedata[$i]['sl_logo'] =  "http://launchindia.org/transpost/logos/cma_live.png";
+                    $livedata[$i]['remarks'] =  "<li>Origin - Charges payable at Export</li>
+                                                 <li>Destination - Charges payable at Import</li>";
+                    $livedata[$i]['terms'] =  "<h2>Access the link below to understand Terms and Conditions - CMA CGM
+                    (https://www.cma-cgm.com/ebusiness/registration/terms-and-conditions)</h2>";
+
+                    $livedata[$i]['additionalCosts'] = [];
+                    
+                }
+                // dd($response);
+                
+        return $livedata;
+        } catch (ClientErrorResponseException $exception) {
+            return  $exception->getResponse()->getBody(true);
+        }
         //$res = $client->sendAsync($request, $options)->wait();
-        return $request->getBody()->getContents();
+        
+        //$data = $resp['equipmentAndBasedRates'];
+                // $resp[0]->equipmentAndBasedRates <---base rates
+                // "ID": 500,
+                // "sl_name": "COSCO",
+                // "from_port": "Jawaharlal Nehru",
+                // "to_port": "COLOMBO",
+                // "_40gp": "",
+                // "Margin": 150,
+                // "FAF": "109",
+                // "seal_charge": "5",
+                // "ECC": "",
+                // "service_mode": "",
+                // "direct_via": "",
+                // "via_port": "",
+                // "transit_time": "",
+                // "expiry_date": "2022-09-15 12:36:57",
+                 //$cma_live_data = $this->cma_rates($from_port_code, $to_port_code);
+                 
+                
+
         //echo "Status: ".$request->getStatusCode()."\n";
     }
     /**
