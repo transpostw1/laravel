@@ -15,12 +15,13 @@ class Rates extends Model
     public function surcharge()
     {
         //return $this->hasManyThrough('App\Models\Rate_surcharge', 'App\Models\Surcharge');
-        return $this->hasManyThrough(
-            Surcharge::Class,
-            Rate_surcharge::Class,
-            'rates_id',
-            'ID'
-         );
+       // return $this->hasManyThrough(
+         //   Surcharge::Class,
+          //  Rate_surcharge::Class,
+          //  'rates_id',
+          //  'ID'
+        // );
+        return $this->belongsToMany(Surcharge::class)->withPivot(['rates_id','surcharge_id']);
 
     }
 
