@@ -32,7 +32,7 @@ class Rates extends Model
             Surcharge::Class,
             Rate_surcharge::Class,
             'rates_id',
-            'surcharge_id'
+            'ID'
          );
 
     }
