@@ -243,10 +243,10 @@ class RatesController extends Controller
        $pdf = PDF::loadView('pdf', ['customer' => $customer]);
        $string = Str::random(8);
        Storage::disk('public')->put('files/'.$string.'.pdf', $pdf->output());
-       $myFile = public_path('files/'.$string.'.pdf');
+       $filename = ($string.'.pdf');
        //$pdf->SetTitle('Tranpost');
         //return view('pdf', ['customer' => $customer]);
-        return response()->json($myFile);
+        return response()->json($filename);
     }
     /**
      * Show the form for creating a new resource.

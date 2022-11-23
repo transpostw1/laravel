@@ -32,18 +32,17 @@ return [
 
         'local' => [
             'driver' => 'local',
-            'root' => public_path(),
+            'root' => storage_path('app'),
             'throw' => false,
         ],
 
         'public' => [
             'driver' => 'local',
-            'root' => public_path(),
-            'url' => env('APP_URL'),
+            'root' =>('app/public'),
+            'url' => env('APP_URL').'/storage',
             'visibility' => 'public',
             'throw' => false,
         ],
-
         's3' => [
             'driver' => 's3',
             'key' => env('AWS_ACCESS_KEY_ID'),
