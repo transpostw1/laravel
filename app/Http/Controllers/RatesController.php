@@ -70,20 +70,20 @@ class RatesController extends Controller
                 unset($rate['ID']);
                 $rate['id'] = 'TRA'.$stringID;
                 $rate['base_rate'] = $rate["_".$cargo_type];
-                
                 $rate['Margin'] = 0;
-                $rate['total'] = $rate["_".$cargo_type];
                 $rate['cargo_size'] = $cargo_type;
                 $rateArr = array();
 
                     if(isset($rate['surcharge'])){
                         $surcharge = $rate['surcharge'];
                         $surchargeRate = $rate['rate_surcharge'];
+                        $sum =0;
                         for ($i=0; $i < count($rate['surcharge']); $i++) {
                             $rateArr[$i]['id'] = $i; 
                             $rateArr[$i]['code'] = $surcharge[$i]->Code;
                             $rateArr[$i]['name'] = $surcharge[$i]->Name;
                             $rateArr[$i]['amount'] = $surchargeRate[$i]->amount;
+                            $sum += $surchargeRate[$i]->amount;
                             $rateArr[$i]['currency'] = $surchargeRate[$i]->currency;
                             
                         }
@@ -94,7 +94,7 @@ class RatesController extends Controller
                     else{
                         $rate['surcharge'] = NULL;
                     }
-                
+                    $rate['total'] = $rate["_".$cargo_type] + $sum;
 
                   
                 
