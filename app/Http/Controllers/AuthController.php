@@ -1,6 +1,15 @@
 <?php
 
 namespace App\Http\Controllers;
+<<<<<<< HEAD
+
+use Illuminate\Http\Request;
+
+class AuthController extends Controller
+{
+    //
+}
+=======
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -91,3 +100,4 @@ class AuthController extends Controller
     }
 
 }
+>>>>>>> 14a5155b1d6e14637b51e92cffbc1e8db6858b67

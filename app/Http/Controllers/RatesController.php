@@ -9,11 +9,14 @@ use App\Models\Port_name;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use GuzzleHttp\Client;
-
+use PDF;
 use kamermans\OAuth2\GrantType\ClientCredentials;
 use kamermans\OAuth2\OAuth2Middleware;
 use kamermans\OAuth2\GrantType\PasswordCredentials;
 use GuzzleHttp\HandlerStack;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Response;
 class RatesController extends Controller
 {
     /**
@@ -30,7 +33,7 @@ class RatesController extends Controller
     }
 
     public function select(Request $request){
-        
+
         $endDate = Carbon::now()->addMonths(3);
         $startDate = Carbon::now();
 
@@ -39,14 +42,14 @@ class RatesController extends Controller
                 ->whereBetween('expiry_date', [$startDate, $endDate])
                 ->get();
 
-        // dd($rates); s
+        // dd($rates);
               $surcharges = $rates->pluck( 'surcharge' );
-        
+
 
                //dd($rates);
               //return response()->json($surcharges); exit;
                 $cargo_type = $request->cargo_type;
-                 
+
                 if($cargo_type==='40hc'){
                   $rates->makeHidden(['_20gp', '_40gp']);
                 }
@@ -64,7 +67,7 @@ class RatesController extends Controller
                 $from_port_code =  $this->port_code($request->from_port);
                 $to_port_code =  $this->port_code($request->to_port);
                // $cma_live_data = $this->cma_rates($from_port_code, $to_port_code);
-               
+
                foreach($rates as $rate){
                 $stringID = $rate['ID'];
                 unset($rate['ID']);
@@ -74,18 +77,18 @@ class RatesController extends Controller
                 $rate['cargo_size'] = $cargo_type;
                 $rateArr = array();
 
+
                     if(isset($rate['surcharge'])){
                         $surcharge = $rate['surcharge'];
                         $surchargeRate = $rate['rate_surcharge'];
                         $sum =0;
                         for ($i=0; $i < count($rate['surcharge']); $i++) {
-                            $rateArr[$i]['id'] = $i; 
+                            $rateArr[$i]['id'] = $i;
                             $rateArr[$i]['code'] = $surcharge[$i]->Code;
                             $rateArr[$i]['name'] = $surcharge[$i]->Name;
                             $rateArr[$i]['amount'] = $surchargeRate[$i]->amount;
                             $sum += $surchargeRate[$i]->amount;
                             $rateArr[$i]['currency'] = $surchargeRate[$i]->currency;
-                            
                         }
                         unset($rate['surcharge']);
                         unset($rate['rate_surcharge']);
@@ -95,13 +98,7 @@ class RatesController extends Controller
                         $rate['surcharge'] = NULL;
                     }
                     $rate['total'] = $rate["_".$cargo_type] + $sum;
-
-                  
-                
-               }
-            //    foreach($cma_live_data as $v){
-            //     $rates[] = $v;
-            //    }
+   }
                return response()->json($rates);
     }
 
@@ -114,7 +111,7 @@ class RatesController extends Controller
         else {
             return 'False';
         }
-        
+
     }
     public function port_name($portCode){
         $codes = Port_name::where('port_code','LIKE','%'.$portCode.'%')->get();
@@ -124,7 +121,7 @@ class RatesController extends Controller
         else {
             return 'False';
         }
-        
+
     }
     public function liverates(){
         $base_uri           = 'https://apis.cma-cgm.net/pricing/commercial/quotation/v2/quotations/search';
@@ -146,7 +143,7 @@ class RatesController extends Controller
             "client_id"         => "beapp-nebiar",
             "grant_type" => "client_credentials",
             "client_secret" => "CH9jwuggOswm2UArgKvNs88AnE0BSdlXigbg52lvhTkkG56kIwQUED2MjOpWT91p",
-            "scope" => "quotation:be" 
+            "scope" => "quotation:be"
         ];
         $grant_type = new ClientCredentials($reauth_client, $reauth_config);
         $oauth = new OAuth2Middleware($grant_type);
@@ -197,7 +194,7 @@ class RatesController extends Controller
                     $livedata[$i]['service_mode'] = "";
                     $livedata[$i]['direct_via'] = "";
                     $livedata[$i]['via_port'] = "";
-                    $livedata[$i]['transit_time'] = ""; 
+                    $livedata[$i]['transit_time'] = "";
                     $livedata[$i]['expiry_date'] = $res->validityto;
                     $livedata[$i]['sl_logo'] =  "http://launchindia.org/transpost/logos/cma_live.png";
                     $livedata[$i]['remarks'] =  "<li>Origin - Charges payable at Export</li>
@@ -206,16 +203,16 @@ class RatesController extends Controller
                     (https://www.cma-cgm.com/ebusiness/registration/terms-and-conditions)</h2>";
 
                     $livedata[$i]['additionalCosts'] = [];
-                    
+
                 }
                 // dd($response);
-                
+
         return $livedata;
         } catch (ClientErrorResponseException $exception) {
             return  $exception->getResponse()->getBody(true);
         }
         //$res = $client->sendAsync($request, $options)->wait();
-        
+
         //$data = $resp['equipmentAndBasedRates'];
                 // $resp[0]->equipmentAndBasedRates <---base rates
                 // "ID": 500,
@@ -233,10 +230,23 @@ class RatesController extends Controller
                 // "transit_time": "",
                 // "expiry_date": "2022-09-15 12:36:57",
                  //$cma_live_data = $this->cma_rates($from_port_code, $to_port_code);
-                 
-                
+
+
 
         //echo "Status: ".$request->getStatusCode()."\n";
+    }
+    public function pdf(Request $request)
+    {
+        $data = file_get_contents(public_path() . "/json/rates.json");
+        //$customer = json_decode(($request->getContents()), true);
+        $customer = json_decode($data, true);
+       $pdf = PDF::loadView('pdf', ['customer' => $customer]);
+       $string = Str::random(8);
+       Storage::put('files/'.$string.'.pdf', $pdf->output());
+       $myFile = storage_path('app/files/'.$string.'.pdf');
+       //$pdf->SetTitle('Tranpost');
+        //return view('pdf', ['customer' => $customer]);
+        return response()->json($myFile);
     }
     /**
      * Show the form for creating a new resource.

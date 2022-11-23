@@ -1,0 +1,58 @@
+{
+  "ECC": "",
+  "FAF": "",
+  "Margin": 0,
+  "additionalCosts": [
+    {
+      "amount": 12,
+      "basis": "per container",
+      "buyRate": 12,
+      "chargeName": "Late Gate Fee",
+      "code": "LGC",
+      "currency": "USD",
+      "id": 0,
+      "name": "Late Gate Fee",
+      "netBuyRate": 12,
+      "netSellRate": 102,
+      "quantity": 1,
+      "sellRate": 102
+    },
+    {
+      "amount": 12,
+      "basis": "per vehicle",
+      "buyRate": 12,
+      "chargeName": "Cancellation Fee",
+      "code": "CLL",
+      "currency": "USD",
+      "id": 1,
+      "name": "Cancellation Fee",
+      "netBuyRate": 12,
+      "netSellRate": 120,
+      "quantity": 1,
+      "sellRate": 120
+    }
+  ],
+
+  "base_rate": 350,
+  "cargo_size": "20gp",
+  "commodity": "FAK",
+  "direct_via": "",
+  "expiry_date": "2022-11-30 00:00:00",
+  "from_port": "INNSA",
+  "id": "TRA891",
+  "isEditing": true,
+  "quoteId": "TRA891",
+  "remarks": "",
+  "seal_charge": "",
+  "service_mode": "",
+  "sl_logo": "http://launchindia.org/transpost/logos/cosco_logo.png",
+  "sl_name": "Emirates Shipping Line",
+  "sum_buy": 350,
+  "sum_sell": 350,
+  "terms": "",
+  "to_port": "AEJEA",
+  "total": 350,
+  "transit_time": "",
+  "via_port": "",
+  "_20gp": 350
+}
