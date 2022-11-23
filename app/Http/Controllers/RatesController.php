@@ -97,16 +97,11 @@ class RatesController extends Controller
                     else{
                         $rate['surcharge'] = NULL;
                     }
-
                     $rate['total'] = $rate["_".$cargo_type] + $sum;
-
-
-
-
-               }
-            //    foreach($cma_live_data as $v){
+   //    foreach($cma_live_data as $v){
             //     $rates[] = $v;
             //    }
+   }
                return response()->json($rates);
     }
 
