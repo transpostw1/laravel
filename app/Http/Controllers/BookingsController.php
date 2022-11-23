@@ -87,15 +87,15 @@ class BookingsController extends Controller
         else {
             return 'False';
         }
-        
+
     }
     public function store(Request $request)
     {
         $date = Carbon::now();
         $now = $date->format("Y-m-d");
         $commodity = json_decode($request->commodityDetails);
-       //dd($this->customerIdFromEmail($request->email));    
-        
+       //dd($this->customerIdFromEmail($request->email));
+
 $bookingData = array(
     'CS_User' => $request->id,
     'DateOfBooking' => $now,
@@ -109,11 +109,11 @@ $bookingData = array(
     'ContainerCount' => $commodity->containerCount,
     'commodity' => $commodity->commodityName,
     'weight' => $commodity->weight,
-    'CustomerName'=> $this->customerIdFromEmail($request->email) 
+    'CustomerName'=> $this->customerIdFromEmail($request->email)
 
 );
 
-//dd($bookingData); 
+//dd($bookingData);
         $booking = Booking::create($bookingData);
         $mailstatus = $this->sendEmail($booking->ID);
         //dd($bkng);
@@ -122,7 +122,7 @@ $bookingData = array(
             'message' => 'Booking created successfully',
             'Booking' => $booking,
             'MailStatus'=>$mailstatus
-            
+
         ]);
 
     }
@@ -141,7 +141,7 @@ $bookingData = array(
     public function sendEmail($bid)
     {
       //$user = auth()->user();
-    $bkng = DB::table('bookings')->where('ID', $bid)->first();  
+    $bkng = DB::table('bookings')->where('ID', $bid)->first();
 	$cusID = $bkng->CustomerName;
 	$customer = DB::table('customer')->where('ID', $cusID)->first();
 	//dd($bkng);
@@ -151,17 +151,17 @@ $bookingData = array(
     $booking['ContainerCount'] = $bkng->ContainerCount;
     $booking['commodity'] = $bkng->commodity;
     $booking['SellRate'] = $bkng->SellRate;
-	
+
 	$booking['user']['name'] = $customer->name;
 	$booking['user']['email'] = $customer->email;
-	
-      
+
+
  		if (Mail::to($booking['user']['email'])->send(new RequestNotify($booking))) {
             return ['message'=>'mail sent','status'=>'success'];
 			}else{
 				return ['message'=>'mail not sent','status'=>'failure'];
 			 }
-      
+
     }
 
     public function port_name($portCode){
@@ -172,7 +172,7 @@ $bookingData = array(
         else {
             return 'False';
         }
-        
+
     }
     public function port_code($portName){
         $codes = Port_name::where('port_name','LIKE','%'.$portName.'%')->get();
@@ -182,7 +182,7 @@ $bookingData = array(
         else {
             return 'False';
         }
-        
+
     }
 
     public function port_id($portName){
@@ -193,7 +193,7 @@ $bookingData = array(
         else {
             return 'False';
         }
-        
+
     }
 
     public function port_id_from_code($portCode){
@@ -204,7 +204,7 @@ $bookingData = array(
         else {
             return 'False';
         }
-        
+
     }
 
     /**

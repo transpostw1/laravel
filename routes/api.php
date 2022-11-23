@@ -24,15 +24,16 @@ Route::controller(TodoController::class)->group(function () {
     Route::get('todo/{id}', 'show');
     Route::put('todo/{id}', 'update');
     Route::delete('todo/{id}', 'destroy');
-}); 
+});
 
 Route::controller(RatesController::class)->group(function () {
     Route::get('rates', 'index');
     Route::get('rates/select', 'select');
     Route::get('rates/liverates', 'liverates');
     Route::get('rates/cma_rates', 'cma_rates');
-    
-}); 
+    Route::post('rates/pdf', 'pdf');
+
+});
 
 Route::controller(BookingsController::class)->group(function () {
     Route::get('bookings', 'index');
@@ -40,20 +41,20 @@ Route::controller(BookingsController::class)->group(function () {
     Route::get('bookings/user/', 'user');
     Route::post('bookings/store/', 'store');
     Route::get('bookings/timeline/', 'timeline');
-    
-}); 
+
+});
 
 Route::controller(CustomerController::class)->group(function () {
     Route::post('customer/store/', 'store');
-    
-}); 
+
+});
 
 //Route::get('/search', [Select2SearchController::class, 'index']);
 // Route::get('/ajax-autocomplete-search', [PortsController::class, 'selectSearch']);
 Route::controller(PortsController::class)->group(function () {
     Route::get('ajax-autocomplete-search', 'selectSearch');
-    
-}); 
+
+});
 // Route::middleware('auth:api')->group(function () {
 // 	// JWT protected routes
 // });
