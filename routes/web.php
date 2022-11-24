@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\SendEmailController;
+//use App\Http\Controllers\SendEmailController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -23,4 +23,4 @@ Route::get('/clear-cache', function() {
 
 
 
-Route::get('send-email', [SendEmailController::class, 'index']);
+//Route::get('send-email', [SendEmailController::class, 'index']);
