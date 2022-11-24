@@ -175,7 +175,7 @@
                         <?php
                             $sum = 0;
                             foreach($customer['additionalCosts'] as $cust){
-                                $sum += $cust['amount'];
+                                $sum += $cust['sellRate'];
                             }
                             print("Total:".$sum." USD");
                         ?>
@@ -202,7 +202,7 @@
                         {{$cust['quantity']}}
                     </td>
                     <td style="text-align:right;">
-                        {{$cust['amount']}} USD
+                        {{$cust['netSellRate']}} USD
                     </td>
                 </tr>
                 @endforeach
