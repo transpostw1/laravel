@@ -242,16 +242,13 @@ class RatesController extends Controller
         $customer = json_decode($data, true);
        $pdf = PDF::loadView('pdf', ['customer' => $customer]);
        $string = Str::random(8);
-       Storage::disk('public')->put('files/'.$string.'.pdf', $pdf->output());
-       $filename = ($string.'.pdf');
+       Storage::disk('quotes')->put($string.'.pdf', $pdf->output());
+        $filename = ($string.'.pdf');
        //$pdf->SetTitle('Tranpost');
         //return view('pdf', ['customer' => $customer]);
         return response()->json($filename);
     }
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
+     /* @return \Illuminate\Http\Response
      */
     public function create()
     {
