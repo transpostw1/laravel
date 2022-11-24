@@ -253,7 +253,12 @@
                     {{$cust['chargeName']}}
                     </td>
                     <td style="text-align:center;">
-                        {{$cust['basis']}}
+                        <?php if (isset($cust['basis'])) {
+                            print($cust['basis']);
+                        }
+                        else{
+                            print($cust['basis']);
+                        } ?>
                     </td>
                     <td style="text-align:center;">
                         {{$customer['cargo_size']}}
