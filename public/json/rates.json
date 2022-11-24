@@ -28,8 +28,7 @@
       "name": "Cancellation Fee",
       "netBuyRate": 12,
       "netSellRate": 120,
-      "quantity": 1,
-      "sellRate": 120
+      "quantity": 1
     }
   ],
 
