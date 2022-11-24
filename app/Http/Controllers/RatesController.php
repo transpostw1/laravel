@@ -244,7 +244,7 @@ class RatesController extends Controller
        $string = Str::random(8);
        Storage::disk('quotes')->put($string.'.pdf', $pdf->output());
         $filename = ($string.'.pdf');
-       //$pdf->SetTitle('Tranpost');
+  //$pdf->SetTitle('Tranpost');
         //return view('pdf', ['customer' => $customer]);
         return response()->json($filename);
     }
