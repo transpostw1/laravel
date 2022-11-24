@@ -102,7 +102,7 @@
                         <b>Free Days</b>
                     </td>
                     <td>
-
+                        -
                     </td>
                     <td>
                         <b>Sailing Date</b>
@@ -175,7 +175,12 @@
                         <?php
                             $sum = 0;
                             foreach($customer['additionalCosts'] as $cust){
-                                $sum += $cust['sellRate'];
+                                if (isset($cust['sellRate'])) {
+                                    $sum += $cust['sellRate'];
+                                }
+                                else{
+                                    $sum += $cust['amount'];
+                                }
                             }
                             print("Total:".$sum." USD");
                         ?>
@@ -196,13 +201,28 @@
                         {{$cust['currency']}}
                     </td>
                     <td style="text-align:center;">
-                        {{$cust['sellRate']}}
+                        <?php if (isset($cust['sellRate'])) {
+                            print($cust['sellRate']);
+                        }
+                        else{
+                            print($cust['amount']);
+                        } ?>
                     </td>
                     <td style="text-align:center;">
-                        {{$cust['quantity']}}
+                        <?php if (isset($cust['quantity'])) {
+                            print($cust['quantity']);
+                        }
+                        else{
+                            print(1);
+                        } ?>
                     </td>
                     <td style="text-align:right;">
-                        {{$cust['netSellRate']}} USD
+                        <?php if (isset($cust['sellRate']) and isset($cust['quantity']) ) {
+                            print($cust['sellRate']*$cust['quantity']);
+                        }
+                        else{
+                            print($cust['amount']*1);
+                        } ?>
                     </td>
                 </tr>
                 @endforeach
