@@ -38,7 +38,7 @@ return [
 
         'quotes' => [
             'driver' => 'local',
-            'root' => storage_path('app/files/quotes'),
+            'root' => storage_path('/quotes'),
             'throw' => false,
         ],
 

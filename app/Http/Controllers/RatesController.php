@@ -237,10 +237,12 @@ class RatesController extends Controller
     }
     public function pdf(Request $request)
     {
-        $data = file_get_contents(public_path() . "/json/rates.json");
+        //$data = file_get_contents(public_path() . "/json/rates.json");
         //$customer = json_decode(($request->getContents()), true);
-        $customer = json_decode($data, true);
-       $pdf = PDF::loadView('pdf', ['customer' => $customer]);
+
+        //$customer = json_decode($data, true);
+        //dd($data);
+       $pdf = PDF::loadView('pdf', ['customer' => $request]);
        $string = Str::random(8);
        Storage::disk('quotes')->put($string.'.pdf', $pdf->output());
         $filename = ($string.'.pdf');
