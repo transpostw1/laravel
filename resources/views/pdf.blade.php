@@ -3,7 +3,7 @@
 <style>
 
     td{
-        width: 102px;
+        width: 120px;
         height: 40px;
         font-size: 1em;
     }
@@ -128,30 +128,86 @@
         <table id="charges" cellspacing="0">
             <th>
                 <tr style="background-color:black;color:black;border-radius: 4em;">
-                    <td style="color:white;width:120px;">
+                    <td style="color:white;width:130px;">
                         <b>Charges</b>
                     </td>
-                    <td style="color:white;width:90px;text-align:center;">
+                    <td style="color:white;width:100px;text-align:center;">
                         <b>Basis</b>
                     </td>
-                    <td style="color:white;width:50px;text-align:center;">
+                    <td style="color:white;width:60px;text-align:center;">
                         <b>Container Type</b>
                     </td>
-                    <td style="color:white;width:50px;text-align:center;">
+                    <td style="color:white;width:60px;text-align:center;">
                         <b>Currency</b>
                     </td>
-                    <td style="color:white;width:80px;text-align:center;">
+                    <td style="color:white;width:90px;text-align:center;">
                         <b>Unit Price</b>
                     </td>
-                    <td style="color:white;width:50px;text-align:center;">
+                    <td style="color:white;width:60px;text-align:center;">
                         <b>Quantity</b>
                     </td>
-                    <td style="color:white;width:120px;text-align:right;">
+                    <td style="color:white;width:130px;text-align:right;">
                         <b>Amount</b>
                     </td>
                 </tr>
             </th>
             <tbody>
+                <tr style="background-color:gainsboro;">
+                    <td>
+                    ::Main Freight::
+                    </td>
+                    <td style="text-align:center;">
+
+                    </td>
+                    <td style="text-align:center;">
+
+                    </td>
+                    <td style="text-align:center;">
+
+                    </td>
+                    <td style="text-align:center;">
+
+                    </td>
+                    <td style="text-align:center;">
+
+                    </td>
+                    <td style="text-align:right;">
+                        Total:{{$customer['base_rate']}} USD
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Basic Ocean Freight
+                    </td>
+                    <td style="text-align:center;">
+                        per equipment
+                    </td>
+                    <td style="text-align:center;">
+                        {{$customer['cargo_size']}}
+                    </td>
+                    <td style="text-align:center;">
+                        <?php if(isset($cust['currency'])){
+                            print(isset($cust['currency']));
+                        }
+                        else{
+                            print('USD');
+                        }
+                        ?>
+                    </td>
+                    <td style="text-align:center;">
+                        {{$customer['base_rate']}}
+                    </td>
+                    <td style="text-align:center;">
+                        1
+                    </td>
+                    <td style="text-align:right;">
+                        {{$customer['base_rate']}} USD
+                    </td>
+                </tr>
+                <?php $sum = 0;
+                if(isset($customer['additionalCosts'])){
+
+                 ?>
                 <tr style="background-color:gainsboro;">
                     <td>
                     ::Origin Charges::
@@ -173,19 +229,24 @@
                     </td>
                     <td style="text-align:right;">
                         <?php
-                            $sum = 0;
-                            foreach($customer['additionalCosts'] as $cust){
+                        foreach($customer['additionalCosts'] as $cust){
                                 if (isset($cust['sellRate'])) {
                                     $sum += $cust['sellRate'];
                                 }
                                 else{
                                     $sum += $cust['amount'];
                                 }
+
                             }
                             print("Total:".$sum." USD");
+                        }
+                        else{
+                            print("Total: 0 USD");
+                        }
                         ?>
                     </td>
                 </tr>
+                <?php if(isset($customer['additionalCosts'])){ ?>
                 @foreach ($customer['additionalCosts'] as $cust)
                 <tr style="border-radius: 100px;">
                     <td>
@@ -226,52 +287,7 @@
                     </td>
                 </tr>
                 @endforeach
-                <tr style="background-color:gainsboro;">
-                    <td>
-                    ::Main Freight::
-                    </td>
-                    <td style="text-align:center;">
-
-                    </td>
-                    <td style="text-align:center;">
-
-                    </td>
-                    <td style="text-align:center;">
-
-                    </td>
-                    <td style="text-align:center;">
-
-                    </td>
-                    <td style="text-align:center;">
-
-                    </td>
-                    <td style="text-align:right;">
-                        Total:{{$customer['base_rate']}} USD
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        Basic Ocean Freight
-                    </td>
-                    <td style="text-align:center;">
-                        per equipment
-                    </td>
-                    <td style="text-align:center;">
-                        {{$customer['cargo_size']}}
-                    </td>
-                    <td style="text-align:center;">
-                        {{$cust['currency']}}
-                    </td>
-                    <td style="text-align:center;">
-                        {{$customer['base_rate']}}
-                    </td>
-                    <td style="text-align:center;">
-                        1
-                    </td>
-                    <td style="text-align:right;">
-                        {{$customer['base_rate']}} USD
-                    </td>
-                </tr>
+                <?php } ?>
             </tbody>
         </table>
         <table id="total">
