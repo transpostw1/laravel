@@ -62,39 +62,75 @@
                         <b>Linear Name</b>
                     </td>
                     <td>
-                        {{$customer['sl_name']}}
+                        <?php if(isset($customer['sl_name'])){
+                            print(isset($customer['sl_name']));
+                        }
+                        else{
+                            print('-');
+                        }
+                        ?>
                     </td>
                     <td>
                         <b>Origin</b>
                     </td>
                     <td>
-                        {{$customer['from_port']}}
+                        <?php if(isset($customer['from_port'])){
+                            print(isset($customer['from_port']));
+                        }
+                        else{
+                            print('-');
+                        }
+                        ?>
                     </td>
                     <td>
                         <b>Destination</b>
                     </td>
                     <td>
-                        {{$customer['to_port']}}
-                    </td>
+                        <?php if(isset($customer['to_port'])){
+                            print(isset($customer['to_port']));
+                        }
+                        else{
+                            print('-');
+                        }
+                        ?>
+                     </td>
                 </tr>
                 <tr>
                     <td>
                         <b>Cargo Type</b>
                     </td>
                     <td>
-                        {{$customer['cargo_size']}}
+                        <?php if(isset($customer['cargo_size'])){
+                            print(isset($customer['cargo_size']));
+                        }
+                        else{
+                            print('-');
+                        }
+                        ?>
                     </td>
                     <td>
                         <b>Service Type</b>
                     </td>
                     <td>
-                        {{$customer['service_mode']}}
+                        <?php if(isset($customer['service_mode'])){
+                            print(isset($customer['service_mode']));
+                        }
+                        else{
+                            print('-');
+                        }
+                        ?>
                     </td>
                     <td>
                         <b>Transit Time</b>
                     </td>
                     <td>
-                        {{$customer['transit_time']}}
+                        <?php if(isset($customer['transit_time'])){
+                            print(isset($customer['transit_time']));
+                        }
+                        else{
+                            print('-');
+                        }
+                        ?>
                     </td>
                 </tr>
                 <tr>
@@ -102,13 +138,25 @@
                         <b>Free Days</b>
                     </td>
                     <td>
-                        -
+                        <?php if(isset($customer['free_days'])){
+                            print(isset($customer['free_days']));
+                        }
+                        else{
+                            print('-');
+                        }
+                        ?>
                     </td>
                     <td>
                         <b>Sailing Date</b>
                     </td>
                     <td>
-                        N/A
+                        <?php if(isset($customer['sailing_date'])){
+                            print(isset($customer['sailing_date']));
+                        }
+                        else{
+                            print('N/A');
+                        }
+                        ?>
                     </td>
                     <td>
                         <b>Expiry Date</b>
@@ -183,7 +231,13 @@
                         per equipment
                     </td>
                     <td style="text-align:center;">
-                        {{$customer['cargo_size']}}
+                        <?php if(isset($customer['cargo_size'])){
+                            print(isset($customer['cargo_size']));
+                        }
+                        else{
+                            print('-');
+                        }
+                        ?>
                     </td>
                     <td style="text-align:center;">
                         <?php if(isset($cust['currency'])){
@@ -250,7 +304,12 @@
                 @foreach ($customer['additionalCosts'] as $cust)
                 <tr style="border-radius: 100px;">
                     <td>
-                    {{$cust['chargeName']}}
+                        <?php if (isset($cust['chargeName'])) {
+                            print($cust['chargeName']);
+                        }
+                        else{
+                            print('-');
+                        } ?>
                     </td>
                     <td style="text-align:center;">
                         <?php if (isset($cust['basis'])) {
@@ -261,10 +320,21 @@
                         } ?>
                     </td>
                     <td style="text-align:center;">
-                        {{$customer['cargo_size']}}
+                        <?php if(isset($customer['cargo_size'])){
+                            print(isset($customer['cargo_size']));
+                        }
+                        else{
+                            print('-');
+                        }
+                        ?>
                     </td>
                     <td style="text-align:center;">
-                        {{$cust['currency']}}
+                        <?php if (isset($cust['currency'])) {
+                            print($cust['currency']);
+                        }
+                        else{
+                            print('USD');
+                        } ?>
                     </td>
                     <td style="text-align:center;">
                         <?php if (isset($cust['sellRate'])) {
