@@ -314,7 +314,7 @@
                             print($cust['chargeName']);
                         }
                         else{
-                            print($cust['sl_name']);
+                            print($cust['name']);
                         } ?>
                     </td>
                     <td style="text-align:center;">
@@ -360,12 +360,10 @@
                     </td>
                     <td style="text-align:right;">
                         <?php if (isset($cust['sellRate']) and isset($cust['quantity']) ) {
-                            $var = $cust['sellRate']*$cust['quantity'];
-                            print($var."USD");
+                            print($cust['sellRate']*$cust['quantity']);
                         }
                         else{
-                            $var = $cust['amount']*1;
-                            print($var."USD");
+                            print($cust['amount']*1);
                         } ?>
                     </td>
                 </tr>
