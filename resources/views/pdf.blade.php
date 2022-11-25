@@ -259,7 +259,7 @@
                     </td>
                 </tr>
                 <?php $sum = 0;
-                if(isset($customer['additionalCosts'])==0){
+                if(empty($customer['additionalCosts'])){
 
                  ?>
                 <tr style="background-color:gainsboro;">
@@ -293,13 +293,11 @@
 
                             }
                             print("Total:".$sum." USD");
-                        }
-                        else{
-                            print("Total: 0 USD");
-                        }
+
                         ?>
                     </td>
                 </tr>
+                <?php } ?>
                 <?php if(isset($customer['additionalCosts'])){ ?>
                 @foreach ($customer['additionalCosts'] as $cust)
                 <tr style="border-radius: 100px;">
