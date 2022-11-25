@@ -11,6 +11,9 @@ class Customer extends Model
         'name',
         'email', 
         'phone',
+        'companyName',
+        'gst_certificate',
+        'pan_card',
         'contact_person'
     ];
 
