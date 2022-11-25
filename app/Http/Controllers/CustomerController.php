@@ -29,7 +29,7 @@ class CustomerController extends Controller
         // ]);
 
         $customer = Customer::create([
-            'name' => $request->fullName,
+            'fullName' => $request->fullName,
             'email' => $request->email,
             'phone' => $request->phoneNumber,
             'companyName'=>$request->companyName,
