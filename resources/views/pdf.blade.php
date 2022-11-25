@@ -1,5 +1,6 @@
 <html>
 <head>
+    <title>Quotation</title>
 <style>
 
     td{
@@ -29,7 +30,6 @@
     #total td{
         width: 360px;
     }
-
     </style>
 </head>
 <body>
@@ -38,12 +38,12 @@
         <tr>
             <td>
                 <?php if(isset($customer['sl_logo'])){ ?>
-                <img style="width:150px;" src="{{$customer['sl_logo']}}" alt="Company Logo">
+                <img style="width:150px;" src="{{public_path("/image/yourlogo.png")}}" alt=" Your Company Logo">
                 <?php
                 }
                 else{
                 ?>
-                <img style="width:150px;" src="{{public_path("/image/transpostlogo.png")}}" alt="Company Logo">
+                <img style="width:150px;" src="{{public_path("/image/yourlogo.png")}}" alt=" Your Company Logo">
                 <?php }
                 ?>
             </td>
@@ -67,7 +67,7 @@
             <tbody>
                 <tr>
                     <td>
-                        <b>Linear Name</b>
+                        <b>Carrier Name</b>
                     </td>
                     <td>
                         <?php if(isset($customer['sl_name'])){
@@ -183,26 +183,26 @@
 
         <table id="charges" cellspacing="0">
             <th>
-                <tr style="background-color:black;color:black;border-radius: 4em;">
-                    <td style="color:white;width:150px;">
+                <tr style="background-color:#01a77e;color:black;border-radius: 50px;">
+                    <td style="color:white;width:150px;font-size:14px;">
                         <b>Charges</b>
                     </td>
-                    <td style="color:white;width:100px;text-align:center;">
+                    <td style="color:white;width:100px;text-align:center;font-size:14px;">
                         <b>Basis</b>
                     </td>
-                    <td style="color:white;width:80px;text-align:center;">
+                    <td style="color:white;width:80px;text-align:center;font-size:14px;">
                         <b>Container Type</b>
                     </td>
-                    <td style="color:white;width:80px;text-align:center;">
+                    <td style="color:white;width:80px;text-align:center;font-size:14px;">
                         <b>Currency</b>
                     </td>
-                    <td style="color:white;width:120px;text-align:center;">
+                    <td style="color:white;width:120px;text-align:center;font-size:14px;">
                         <b>Unit Price</b>
                     </td>
-                    <td style="color:white;width:60px;text-align:center;">
+                    <td style="color:white;width:60px;text-align:center;font-size:14px;">
                         <b>Quantity</b>
                     </td>
-                    <td style="color:white;width:130px;text-align:right;">
+                    <td style="color:white;width:130px;text-align:right;font-size:14px;">
                         <b>Amount</b>
                     </td>
                 </tr>
@@ -298,9 +298,13 @@
                                 else{
                                     $sum += $cust['amount'];
                                 }
-
-                            }
+                                if(isset($cust['quantity'])){
+                                    $var = $sum * $cust['quantity'];
+                                    print("Total:".$var." USD");
+                                }
                             print("Total:".$sum." USD");
+                            }
+
 
                         ?>
                     </td>
@@ -360,10 +364,12 @@
                     </td>
                     <td style="text-align:right;">
                         <?php if (isset($cust['sellRate']) and isset($cust['quantity']) ) {
-                            print($cust['sellRate']*$cust['quantity']);
+                            $var = $cust['sellRate']*$cust['quantity'];
+                            print($var." USD");
                         }
                         else{
-                            print($cust['amount']*1);
+                            $var = $cust['amount']*1;
+                            print($var." USD");
                         } ?>
                     </td>
                 </tr>
@@ -384,7 +390,17 @@
                 </tr>
             </tbody>
         </table>
-
-
+        <div>
+        <p style="font-size:12px;">
+            <?php if(!empty($customer['remarks'])) {
+                ?>
+                <h4><b>Remarks:</b></h4>
+                {{$customer['remarks']}}
+                <?php } ?>
+        </p>
+        </div>
+        <div style="text-align: center;">
+            <h3><b>Thank you for your business</b></h3>
+        </div>
 </body>
 </html>
