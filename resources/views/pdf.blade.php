@@ -257,7 +257,7 @@
                             print($cust['basis']);
                         }
                         else{
-                            print($cust['basis']);
+                            print('-');
                         } ?>
                     </td>
                     <td style="text-align:center;">
