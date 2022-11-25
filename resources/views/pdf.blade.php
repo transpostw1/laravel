@@ -27,7 +27,7 @@
     }
 
     #total td{
-        width: 340px;
+        width: 360px;
     }
 
     </style>
@@ -38,12 +38,12 @@
         <tr>
             <td>
                 <?php if(isset($customer['sl_logo'])){ ?>
-                <img style="width:100px;" src="{{$customer['sl_logo']}}" alt="Company Logo">
+                <img style="width:150px;" src="{{$customer['sl_logo']}}" alt="Company Logo">
                 <?php
                 }
                 else{
                 ?>
-                <img style="width:100px;" src="{{public_path("/image/transpostlogo.png")}}" alt="Company Logo">
+                <img style="width:150px;" src="{{public_path("/image/transpostlogo.png")}}" alt="Company Logo">
                 <?php }
                 ?>
             </td>
