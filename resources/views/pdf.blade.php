@@ -63,7 +63,7 @@
                     </td>
                     <td>
                         <?php if(isset($customer['sl_name'])){
-                            print(isset($customer['sl_name']));
+                            print($customer['sl_name']);
                         }
                         else{
                             print('-');
@@ -75,7 +75,7 @@
                     </td>
                     <td>
                         <?php if(isset($customer['from_port'])){
-                            print(isset($customer['from_port']));
+                            print($customer['from_port']);
                         }
                         else{
                             print('-');
@@ -87,7 +87,7 @@
                     </td>
                     <td>
                         <?php if(isset($customer['to_port'])){
-                            print(isset($customer['to_port']));
+                            print($customer['to_port']);
                         }
                         else{
                             print('-');
@@ -101,7 +101,7 @@
                     </td>
                     <td>
                         <?php if(isset($customer['cargo_size'])){
-                            print(isset($customer['cargo_size']));
+                            print($customer['cargo_size']);
                         }
                         else{
                             print('-');
@@ -113,7 +113,7 @@
                     </td>
                     <td>
                         <?php if(isset($customer['service_mode'])){
-                            print(isset($customer['service_mode']));
+                            print($customer['service_mode']);
                         }
                         else{
                             print('-');
@@ -125,7 +125,7 @@
                     </td>
                     <td>
                         <?php if(isset($customer['transit_time'])){
-                            print(isset($customer['transit_time']));
+                            print($customer['transit_time']);
                         }
                         else{
                             print('-');
@@ -139,7 +139,7 @@
                     </td>
                     <td>
                         <?php if(isset($customer['free_days'])){
-                            print(isset($customer['free_days']));
+                            print($customer['free_days']);
                         }
                         else{
                             print('-');
@@ -151,7 +151,7 @@
                     </td>
                     <td>
                         <?php if(isset($customer['sailing_date'])){
-                            print(isset($customer['sailing_date']));
+                            print($customer['sailing_date']);
                         }
                         else{
                             print('N/A');
@@ -232,7 +232,7 @@
                     </td>
                     <td style="text-align:center;">
                         <?php if(isset($customer['cargo_size'])){
-                            print(isset($customer['cargo_size']));
+                            print($customer['cargo_size']);
                         }
                         else{
                             print('-');
@@ -241,7 +241,7 @@
                     </td>
                     <td style="text-align:center;">
                         <?php if(isset($cust['currency'])){
-                            print(isset($cust['currency']));
+                            print($cust['currency']);
                         }
                         else{
                             print('USD');
@@ -259,7 +259,7 @@
                     </td>
                 </tr>
                 <?php $sum = 0;
-                if(isset($customer['additionalCosts'])){
+                if(isset($customer['additionalCosts'])==0){
 
                  ?>
                 <tr style="background-color:gainsboro;">
@@ -321,7 +321,7 @@
                     </td>
                     <td style="text-align:center;">
                         <?php if(isset($customer['cargo_size'])){
-                            print(isset($customer['cargo_size']));
+                            print($customer['cargo_size']);
                         }
                         else{
                             print('-');
