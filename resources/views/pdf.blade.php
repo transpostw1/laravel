@@ -387,7 +387,7 @@
         </table>
         <div>
         <p style="font-size:12px;">
-            <?php if(isset($customer['remarks'])) {
+            <?php if(!empty($customer['remarks'])) {
                 ?>
                 <h4><b>Remarks:</b></h4>
                 {{$customer['remarks']}}
