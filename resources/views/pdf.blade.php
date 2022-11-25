@@ -361,11 +361,11 @@
                     <td style="text-align:right;">
                         <?php if (isset($cust['sellRate']) and isset($cust['quantity']) ) {
                             $var = $cust['sellRate']*$cust['quantity'];
-                            print($var."USD");
+                            print($var." USD");
                         }
                         else{
                             $var = $cust['amount']*1;
-                            print($var."USD");
+                            print($var." USD");
                         } ?>
                     </td>
                 </tr>
@@ -386,7 +386,17 @@
                 </tr>
             </tbody>
         </table>
-
-
+        <div>
+        <h4><b>Remarks:</b></h4>
+        <p style="font-size:12px;">
+            <?php if(isset($customer['remarks'])) {
+                ?>
+                {{$customer['remarks']}}
+                <?php } ?>
+        </p>
+        </div>
+        <div style="text-align: center;">
+            <h3><b>Thank you for your business</b></h3>
+        </div>
 </body>
 </html>
