@@ -299,13 +299,9 @@
                                     $sum += $cust['amount'];
                                 }
 
-                          //  if(isset($cust['quantity'])){
-                            //print("Total:".$sum*$cust['quantity']." USD");
-                           // }
-                           // else{
-                                print("Total:".$sum." USD");
-                           // }
-                        }
+                            }
+                            print("Total:".$sum." USD");
+
                         ?>
                     </td>
                 </tr>
@@ -318,7 +314,7 @@
                             print($cust['chargeName']);
                         }
                         else{
-                            print($cust['name']);
+                            print($cust['sl_name']);
                         } ?>
                     </td>
                     <td style="text-align:center;">
@@ -364,10 +360,12 @@
                     </td>
                     <td style="text-align:right;">
                         <?php if (isset($cust['sellRate']) and isset($cust['quantity']) ) {
-                            print($cust['sellRate']*$cust['quantity']);
+                            $var = $cust['sellRate']*$cust['quantity'];
+                            print($var."USD");
                         }
                         else{
-                            print($cust['amount']*1." USD");
+                            $var = $cust['amount']*1;
+                            print($var."USD");
                         } ?>
                     </td>
                 </tr>
