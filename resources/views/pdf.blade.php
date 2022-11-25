@@ -302,7 +302,9 @@
                                     $var = $sum * $cust['quantity'];
                                     print("Total:".$var." USD");
                                 }
-                            print("Total:".$sum." USD");
+                                else{
+                                    print("Total:".$sum." USD");
+                                }
                             }
 
 
