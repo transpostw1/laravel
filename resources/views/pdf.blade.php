@@ -299,13 +299,9 @@
                                     $sum += $cust['amount'];
                                 }
 
-                          //  if(isset($cust['quantity'])){
-                            //print("Total:".$sum*$cust['quantity']." USD");
-                           // }
-                           // else{
-                                print("Total:".$sum." USD");
-                           // }
-                        }
+                            }
+                            print("Total:".$sum." USD");
+
                         ?>
                     </td>
                 </tr>
@@ -367,7 +363,7 @@
                             print($cust['sellRate']*$cust['quantity']);
                         }
                         else{
-                            print($cust['amount']*1." USD");
+                            print($cust['amount']*1);
                         } ?>
                     </td>
                 </tr>
