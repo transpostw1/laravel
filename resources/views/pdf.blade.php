@@ -67,7 +67,7 @@
             <tbody>
                 <tr>
                     <td>
-                        <b>Linear Name</b>
+                        <b>Carrier Name</b>
                     </td>
                     <td>
                         <?php if(isset($customer['sl_name'])){
@@ -298,9 +298,13 @@
                                 else{
                                     $sum += $cust['amount'];
                                 }
-
-                            }
+                                if(isset($cust['quantity'])){
+                                    $var = $sum * $cust['quantity'];
+                                    print("Total:".$var." USD");
+                                }
                             print("Total:".$sum." USD");
+                            }
+
 
                         ?>
                     </td>
