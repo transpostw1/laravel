@@ -74,7 +74,7 @@
                             print($customer['sl_name']);
                         }
                         else{
-                            print('-');
+                            print($customer['name']);
                         }
                         ?>
                     </td>
