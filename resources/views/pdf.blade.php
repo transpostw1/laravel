@@ -38,12 +38,12 @@
         <tr>
             <td>
                 <?php if(isset($customer['sl_logo'])){ ?>
-                <img style="width:150px;" src="{{public_path("/image/tf.png")}}" alt=" Your Company Logo">
+                <img style="width:150px;" src="{{public_path("/image/yourlogo.png")}}" alt=" Your Company Logo">
                 <?php
                 }
                 else{
                 ?>
-                <img style="width:150px;" src="{{public_path("/image/tf.png")}}" alt=" Your Company Logo">
+                <img style="width:150px;" src="{{public_path("/image/yourlogo.png")}}" alt=" Your Company Logo">
                 <?php }
                 ?>
             </td>
