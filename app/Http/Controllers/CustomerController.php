@@ -44,7 +44,7 @@ class CustomerController extends Controller
             $kyc_status = True;
         }
         else{
-            $message = 'Account Created, Please complete your all KYC to Access All features.';
+            $message = 'Account Created, Please complete your KYC to Access All features.';
             $kyc_status = False;
         }
        
