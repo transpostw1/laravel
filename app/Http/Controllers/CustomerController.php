@@ -39,10 +39,20 @@ class CustomerController extends Controller
             
         ]);
 
+        if($request->gst && $request->pan){
+            $message = 'Customer Created Successfully, KYC Submitted.';
+            $kyc_status = True;
+        }
+        else{
+            $message = 'Account Created, Please complete your KYC to Access All features.';
+            $kyc_status = False;
+        }
+       
         return response()->json([
             'status' => 'success',
-            'message' => 'Customer created successfully',
+            'message' => $message,
             'customer' => $customer,
+            'KYC' => $kyc_status
         ]);
     }
 
