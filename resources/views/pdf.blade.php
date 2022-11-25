@@ -74,7 +74,7 @@
                             print($customer['sl_name']);
                         }
                         else{
-                            print($customer['name']);
+                            print('-');
                         }
                         ?>
                     </td>
@@ -300,8 +300,12 @@
                                 }
 
                             }
-                            print("Total:".$sum." USD");
-
+                            if(isset($cust['quantity'])){
+                            print("Total:".$sum*$cust['quantity']." USD");
+                            }
+                            else{
+                                print("Total:".$sum." USD");
+                            }
                         ?>
                     </td>
                 </tr>
@@ -314,7 +318,7 @@
                             print($cust['chargeName']);
                         }
                         else{
-                            print('-');
+                            print($cust['name']);
                         } ?>
                     </td>
                     <td style="text-align:center;">
@@ -363,7 +367,7 @@
                             print($cust['sellRate']*$cust['quantity']);
                         }
                         else{
-                            print($cust['amount']*1);
+                            print($cust['amount']*1." USD");
                         } ?>
                     </td>
                 </tr>
