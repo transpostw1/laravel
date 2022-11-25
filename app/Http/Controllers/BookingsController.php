@@ -146,11 +146,11 @@ $bookingData = array(
 	$customer = DB::table('customer')->where('ID', $cusID)->first();
 	//dd($bkng);
 	$booking['requestid'] = $bid;
-	$booking['POL'] = $bkng->POL;
-	$booking['POD'] = $bkng->POD;
+	$booking['POL'] =  $bkng->POL;
+	$booking['POD'] =  $bkng->POD;
     $booking['ContainerCount'] = $bkng->ContainerCount;
     $booking['commodity'] = $bkng->commodity;
-    $booking['SellRate'] = $bkng->SellRate;
+    $booking['SellRate'] = $bkng->SellRate*$bkng->ContainerCount;
 
 	$booking['user']['name'] = $customer->name;
 	$booking['user']['email'] = $customer->email;
