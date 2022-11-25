@@ -28,16 +28,20 @@ class CustomerController extends Controller
         //     'email' => 'required|string|max:255',
         // ]);
 
-        $todo = Customer::create([
+        $customer = Customer::create([
             'name' => $request->name,
             'email' => $request->email,
             'phone' => $request->phone,
+            'companyName'=>$request->companyName,
+            'gst_certificate'=> $request->GST,
+            'pan_card'=> $request->PAN,
+            
         ]);
 
         return response()->json([
             'status' => 'success',
             'message' => 'Customer created successfully',
-            'customer' => $todo,
+            'customer' => $customer,
         ]);
     }
 
