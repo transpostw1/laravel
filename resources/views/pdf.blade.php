@@ -37,7 +37,15 @@
     <table>
         <tr>
             <td>
-                <img style="width:100px;" src="{{public_path("/image/tf.png")}}" alt="Company Logo">
+                <?php if(isset($customer['sl_logo'])){ ?>
+                <img style="width:100px;" src="{{$customer['sl_logo']}}" alt="Company Logo">
+                <?php
+                }
+                else{
+                ?>
+                <img style="width:100px;" src="{{public_path("/image/transpostlogo.png")}}" alt="Company Logo">
+                <?php }
+                ?>
             </td>
             <td>
             </td>
@@ -176,19 +184,19 @@
         <table id="charges" cellspacing="0">
             <th>
                 <tr style="background-color:black;color:black;border-radius: 4em;">
-                    <td style="color:white;width:130px;">
+                    <td style="color:white;width:150px;">
                         <b>Charges</b>
                     </td>
                     <td style="color:white;width:100px;text-align:center;">
                         <b>Basis</b>
                     </td>
-                    <td style="color:white;width:60px;text-align:center;">
+                    <td style="color:white;width:80px;text-align:center;">
                         <b>Container Type</b>
                     </td>
-                    <td style="color:white;width:60px;text-align:center;">
+                    <td style="color:white;width:80px;text-align:center;">
                         <b>Currency</b>
                     </td>
-                    <td style="color:white;width:90px;text-align:center;">
+                    <td style="color:white;width:120px;text-align:center;">
                         <b>Unit Price</b>
                     </td>
                     <td style="color:white;width:60px;text-align:center;">
