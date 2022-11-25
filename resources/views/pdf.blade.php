@@ -299,12 +299,12 @@
                                     $sum += $cust['amount'];
                                 }
 
-                            if(isset($cust['quantity'])){
-                            print("Total:".$sum*$cust['quantity']." USD");
-                            }
-                            else{
+                          //  if(isset($cust['quantity'])){
+                            //print("Total:".$sum*$cust['quantity']." USD");
+                           // }
+                           // else{
                                 print("Total:".$sum." USD");
-                            }
+                           // }
                         }
                         ?>
                     </td>
