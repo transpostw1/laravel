@@ -360,10 +360,10 @@
                     </td>
                     <td style="text-align:right;">
                         <?php if (isset($cust['sellRate']) and isset($cust['quantity']) ) {
-                            print($cust['sellRate']*$cust['quantity']);
+                            print($cust['sellRate']*$cust['quantity']."USD");
                         }
                         else{
-                            print($cust['amount']*1);
+                            print($cust['amount']*1."USD");
                         } ?>
                     </td>
                 </tr>
