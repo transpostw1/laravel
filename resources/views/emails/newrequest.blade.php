@@ -147,7 +147,7 @@ a, a:hover {
                  <li>To Port- {{$booking['POD']}}</li>
                  <li>No Of Containers - {{$booking['ContainerCount']}}</li>
                  <li> Commodity - {{$booking['commodity']}}</li>
-                 <li> Total Amount - {{$booking['SellRate']}}</li>
+                 <li> Total Freight - {{$booking['SellRate']}}</li>
                 </ul>
                 </p>  
                 <p>
