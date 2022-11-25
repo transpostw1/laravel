@@ -299,7 +299,7 @@
                                     $sum += $cust['amount'];
                                 }
                                 if(isset($cust['quantity'])){
-                                    $sum += $sum * $cust['quantity'];
+                                    $sum = $sum * $cust['quantity'];
                                     print("Total:".$sum." USD");
                                 }
                                 else{
