@@ -259,7 +259,7 @@
                     </td>
                 </tr>
                 <?php $sum = 0;
-                if(empty($customer['additionalCosts'])){
+                if(!empty($customer['additionalCosts'])){
 
                  ?>
                 <tr style="background-color:gainsboro;">
