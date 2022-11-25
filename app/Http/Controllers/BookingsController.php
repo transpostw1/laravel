@@ -146,8 +146,8 @@ $bookingData = array(
 	$customer = DB::table('customer')->where('ID', $cusID)->first();
 	//dd($bkng);
 	$booking['requestid'] = $bid;
-	$booking['POL'] =  $bkng->POL;
-	$booking['POD'] =  $bkng->POD;
+	$booking['POL'] =  $this->port_namefromID($bkng->POL);
+	$booking['POD'] =  $this->port_namefromID($bkng->POD);
     $booking['ContainerCount'] = $bkng->ContainerCount;
     $booking['commodity'] = $bkng->commodity;
     $booking['SellRate'] = $bkng->SellRate*$bkng->ContainerCount;
@@ -174,6 +174,18 @@ $bookingData = array(
         }
 
     }
+
+    public function port_namefromID($portCode){
+        $codes = Port_name::where('ID','LIKE','%'.$portCode.'%')->get();
+        if(count($codes)!==0){
+            return $codes[0]['port_name'];
+        }
+        else {
+            return 'False';
+        }
+
+    }
+
     public function port_code($portName){
         $codes = Port_name::where('port_name','LIKE','%'.$portName.'%')->get();
         if(count($codes)!==0){
