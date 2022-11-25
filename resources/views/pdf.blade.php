@@ -29,7 +29,6 @@
     #total td{
         width: 360px;
     }
-
     </style>
 </head>
 <body>
@@ -183,26 +182,26 @@
 
         <table id="charges" cellspacing="0">
             <th>
-                <tr style="background-color:black;color:black;border-radius: 4em;">
-                    <td style="color:white;width:150px;">
+                <tr style="background-color:#01a77e;color:black;border-radius: 50px;">
+                    <td style="color:white;width:150px;font-size:14px;">
                         <b>Charges</b>
                     </td>
-                    <td style="color:white;width:100px;text-align:center;">
+                    <td style="color:white;width:100px;text-align:center;font-size:14px;">
                         <b>Basis</b>
                     </td>
-                    <td style="color:white;width:80px;text-align:center;">
+                    <td style="color:white;width:80px;text-align:center;font-size:14px;">
                         <b>Container Type</b>
                     </td>
-                    <td style="color:white;width:80px;text-align:center;">
+                    <td style="color:white;width:80px;text-align:center;font-size:14px;">
                         <b>Currency</b>
                     </td>
-                    <td style="color:white;width:120px;text-align:center;">
+                    <td style="color:white;width:120px;text-align:center;font-size:14px;">
                         <b>Unit Price</b>
                     </td>
-                    <td style="color:white;width:60px;text-align:center;">
+                    <td style="color:white;width:60px;text-align:center;font-size:14px;">
                         <b>Quantity</b>
                     </td>
-                    <td style="color:white;width:130px;text-align:right;">
+                    <td style="color:white;width:130px;text-align:right;font-size:14px;">
                         <b>Amount</b>
                     </td>
                 </tr>
