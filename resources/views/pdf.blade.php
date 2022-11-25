@@ -299,8 +299,8 @@
                                     $sum += $cust['amount'];
                                 }
                                 if(isset($cust['quantity'])){
-                                    $var = $sum * $cust['quantity'];
-                                    print("Total:".$var." USD");
+                                    $sum += $sum * $cust['quantity'];
+                                    print("Total:".$sum." USD");
                                 }
                                 else{
                                     print("Total:".$sum." USD");
