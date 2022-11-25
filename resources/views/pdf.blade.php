@@ -37,12 +37,12 @@
         <tr>
             <td>
                 <?php if(isset($customer['sl_logo'])){ ?>
-                <img style="width:150px;" src="{{$customer['sl_logo']}}" alt="Company Logo">
+                <img style="width:150px;" src="{{public_path("/image/tf.png")}}" alt=" Your Company Logo">
                 <?php
                 }
                 else{
                 ?>
-                <img style="width:150px;" src="{{public_path("/image/transpostlogo.png")}}" alt="Company Logo">
+                <img style="width:150px;" src="{{public_path("/image/tf.png")}}" alt=" Your Company Logo">
                 <?php }
                 ?>
             </td>
@@ -386,10 +386,10 @@
             </tbody>
         </table>
         <div>
-        <h4><b>Remarks:</b></h4>
         <p style="font-size:12px;">
             <?php if(isset($customer['remarks'])) {
                 ?>
+                <h4><b>Remarks:</b></h4>
                 {{$customer['remarks']}}
                 <?php } ?>
         </p>
