@@ -74,7 +74,7 @@
                             print($customer['sl_name']);
                         }
                         else{
-                            print($customer['name']);
+                            print('-');
                         }
                         ?>
                     </td>
@@ -314,7 +314,7 @@
                             print($cust['chargeName']);
                         }
                         else{
-                            print('-');
+                            print($cust['name']);
                         } ?>
                     </td>
                     <td style="text-align:center;">
