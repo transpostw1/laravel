@@ -51,7 +51,7 @@ Route::controller(CustomerController::class)->group(function () {
 });
 
 Route::controller(FinanceController::class)->group(function () {
-    Route::get('freight-finance/store/', 'store');
+    Route::post('freight-finance/store/', 'store');
 
 });
 
