@@ -47,6 +47,7 @@ Route::controller(BookingsController::class)->group(function () {
 
 Route::controller(CustomerController::class)->group(function () {
     Route::post('customer/store/', 'store');
+    Route::post('customer/updatekyc/', 'updatekyc');
 
 });
 
