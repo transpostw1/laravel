@@ -55,7 +55,25 @@ class CustomerController extends Controller
             'KYC' => $kyc_status
         ]);
     }
+    public function updatekyc(Request $request){
+        $ID = $request->customerID;
+        
+        $message = 'Account Created, Please complete your KYC to Access All features.';
+        
 
+        $customer = Customer::find($ID);
+        $customer->gst = $request->gst;
+        $customer->pan = $request->pan;
+        $customer->save();
+        $kyc_status = True;
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Kyc updated successfully',
+            'KYC' => $kyc_status,
+        ]);
+
+
+    }
     public function show($id)
     {
         $todo = Customer::find($id);
