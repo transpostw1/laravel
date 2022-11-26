@@ -62,8 +62,8 @@ class CustomerController extends Controller
         
 
         $customer = Customer::find($ID);
-        $customer->gst = $request->gst;
-        $customer->pan = $request->pan;
+        $customer->gst_certificate = $request->gst;
+        $customer->pan_card = $request->pan;
         $customer->save();
         $kyc_status = True;
         return response()->json([
