@@ -62,6 +62,7 @@ class CustomerController extends Controller
         
 
         $customer = Customer::find($ID);
+        dd($customer);
         $customer->gst_certificate = $request->gst;
         $customer->pan_card = $request->pan;
         $customer->save();
