@@ -40,6 +40,7 @@ class RatesController extends Controller
         $rates = Rates::with('rate_surcharge:amount,currency', 'surcharge:Code,Name,Term')->where('from_port', 'like', '%'.$request->from_port.'%')
                 ->where('to_port', $request->to_port)
                 ->whereBetween('expiry_date', [$startDate, $endDate])
+                ->orderBy("_20gp")
                 ->get();
 
         // dd($rates);
