@@ -398,7 +398,7 @@
                 ?>
                 @foreach ($customer['remarks']['blocks'] as $remarks)
                 <h4><b>Remarks:</b></h4>
-                {{$remarks['text']}}
+                <p style="font-size:12px;">{{$remarks['text']}}</p>
                 @endforeach
                 <?php } ?>
 
