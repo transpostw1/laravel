@@ -396,8 +396,9 @@
         <p style="font-size:12px;">
             <?php if(!empty($customer['remarks'])) {
                 ?>
+                @foreach ($customer['remarks'] as $remarks)
                 <h4><b>Remarks:</b></h4>
-                {{$customer['remarks']}}
+                {{$remarks['text']}}
                 <?php } ?>
         </p>
         </div>
