@@ -400,6 +400,7 @@
                 <h4><b>Remarks:</b></h4>
                 {{$remarks['text']}}
                 <?php } ?>
+                @endforeach
         </p>
         </div>
         <div style="text-align: center;">
