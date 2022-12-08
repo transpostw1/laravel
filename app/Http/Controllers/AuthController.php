@@ -5,68 +5,87 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
+use App\Models\Customer;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
+
 
 class AuthController extends Controller
 {
 
-    // public function __construct()
-    // {
-    //     $this->middleware('auth:api', ['except' => ['login','register']]);
-    // }
+    public function __construct()
+     {
+         $this->middleware('auth:api', ['except' => ['login','register']]);
+     }
 
     public function login(Request $request)
     {
         $request->validate([
-            'email' => 'required|string|email',
-            'password' => 'required|string',
+            'email' => 'required',
+            'password' => 'required',
         ]);
+        $email = $request->email;
+        $password = $request->password;
         $credentials = $request->only('email', 'password');
-
-
-        $token = Auth::attempt($credentials);
-        if (!$token) {
-            return response()->json([
-                'status' => 'error',
-                'message' => 'Unauthorized',
-            ], 401);
-        }
-
-        $user = Auth::user();
-        return response()->json([
+        $user = User::where('email', '=', $email)->first();
+        if (Hash::check($password, $user->password))
+        {
+    return response()->json([
                 'status' => 'success',
-                'user' => $user,
-                'authorisation' => [
-                    'token' => $token,
-                    'type' => 'bearer',
-                ]
+                'user' => $credentials,
+                'token' => $user->remember_token,
             ]);
+}
+else{
+    return response()->json([
+        'status' => 'error',
+        'message' => 'Unauthorized',
+    ], 401);
+}
+
 
     }
 
     public function register(Request $request){
+        $request->validate([
+            'username' => 'required|string|max:255',
+            'password' => 'required|string',
+             'email' => 'required|string|email|max:255|unique:users',
+             'phone' => 'required|string|min:6',
+             'companyName' => 'required|string|max:255',
+             'customer_type' => 'required|string|max:255',
+             'gst_certificate' => 'required|string|max:255',
+             'pan_card' => 'required|string|max:255',
+         ]);
+         if (DB::table('tb_users')->where('email', $request->email)->exists()) {
+            $error = 'Email Id already exist';
+            return response()->json($error);
+         }
+         else{
 
-        // $request->validate([
-        //     'name' => 'required|string|max:255',
-        //     'email' => 'required|string|email|max:255|unique:users',
-        //     'password' => 'required|string|min:6',
-        // ]);
-        // dd($request);
-        $user = User::create([
-            'name' => $request->name,
+         $user = User::create([
+            'username' => $request->username,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'remember_token' => Str::random(60),
         ]);
+        $customer = Customer::create([
+            'name' => $request->companyName,
+            'email' => $request->email,
+            'phone' => $request->phone,
+            'customer_type' => $request->customer_type,
+            'contact_person' => $request->username,
+            'gst_certificate' => $request->gst_certificate,
+            'pan_card' => $request->pan_card,
 
-        $token = Auth::login($user);
-        return response()->json([
-            'status' => 'success',
-            'message' => 'User created successfully',
-            'user' => $user,
-            'authorisation' => [
-                'token' => $token,
-                'type' => 'bearer',
-            ]
         ]);
+        $token = Auth::login($user);
+        $user->save();
+        $customer->save();
+        return response()->json([
+            'token' => $token,
+        ]);
+    }
     }
 
     public function logout()

@@ -183,6 +183,8 @@ return [
         Illuminate\View\ViewServiceProvider::class,
         Barryvdh\DomPDF\ServiceProvider::class,
         Meneses\LaravelMpdf\LaravelMpdfServiceProvider::class,
+        Tymon\JWTAuth\Providers\LaravelServiceProvider::class,
+
         /*
          * Package Service Providers...
          */
@@ -211,7 +213,7 @@ return [
 
     'aliases' => Facade::defaultAliases()->merge([
         // 'ExampleClass' => App\Example\ExampleClass::class,
-        'PDF' => Meneses\LaravelMpdf\Facades\LaravelMpdf::class
+        'PDF' => Meneses\LaravelMpdf\Facades\LaravelMpdf::class,
     ])->toArray(),
 
 ];

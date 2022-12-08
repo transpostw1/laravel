@@ -9,6 +9,7 @@ use App\Http\Controllers\BookingsController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\PortsController;
 use App\Http\Controllers\FinanceController;
+use App\Http\Controllers\TrackingController;
 //use App\Http\Controllers\SendEmailController;
 
 Route::controller(AuthController::class)->group(function () {
@@ -53,6 +54,11 @@ Route::controller(CustomerController::class)->group(function () {
 
 Route::controller(FinanceController::class)->group(function () {
     Route::post('freight-finance/store/', 'store');
+
+});
+
+Route::controller(TrackingController::class)->group(function () {
+    Route::post('tracking', 'tracking');
 
 });
 
