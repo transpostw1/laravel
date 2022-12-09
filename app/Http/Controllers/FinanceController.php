@@ -19,9 +19,16 @@ class FinanceController extends Controller
     'annual_turnover'=> $request->annual_turnover,
     'product'=> $request->product,
     'yoc'=> $request->yoc
-
 );
-
+    $isShipper= $request->isShipper;
+    $isForwarder= $request->isForwarder;
+        if($isShipper==TRUE){
+            $customer_type = 'Shipper';
+        }
+        else{
+            $customer_type = 'Forwarder';
+        }
+        $FinanceData['customer_type'] = $customer_type;
         $finance = Freight_finance::create($FinanceData);
         return response()->json([
             'status' => 'success',

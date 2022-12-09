@@ -62,7 +62,7 @@ else{
             'username' => 'required|string|max:255',
             'password' => 'required|string',
              'email' => 'required|string|email|max:255|unique:users',
-             'phone' => 'required|string|min:6',
+             'phone' => 'required|string',
              'companyName' => 'required|string|max:255',
              'customer_type' => 'required|string|max:255',
          ]);
