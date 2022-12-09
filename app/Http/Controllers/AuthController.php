@@ -28,11 +28,22 @@ class AuthController extends Controller
         $password = $request->password;
         $credentials = $request->only('email', 'password');
         $user = User::where('email', '=', $email)->first();
+        $customer = DB::table('customer')->select('name','email','phone','contact_person','gst_certificate','pan_card')->where('email', '=', $email)->first();
+        if($customer->gst_certificate!=NULL && $customer->pan_card!=NULL){
+            $message = 'Customer Created Successfully, KYC Submitted.';
+            $kyc_status = True;
+        }
+        else{
+            $message = 'Account Created, Please complete your KYC to Access All features.';
+            $kyc_status = False;
+        }
         if (Hash::check($password, $user->password))
         {
     return response()->json([
                 'status' => 'success',
-                'user' => $credentials,
+                'customer' => $customer,
+                'message' => $message,
+                'KYC' => $kyc_status,
                 'token' => $user->remember_token,
             ]);
 }
@@ -54,8 +65,6 @@ else{
              'phone' => 'required|string|min:6',
              'companyName' => 'required|string|max:255',
              'customer_type' => 'required|string|max:255',
-             'gst_certificate' => 'required|string|max:255',
-             'pan_card' => 'required|string|max:255',
          ]);
          if (DB::table('tb_users')->where('email', $request->email)->exists()) {
             $error = 'Email Id already exist';
@@ -79,11 +88,24 @@ else{
             'pan_card' => $request->pan_card,
 
         ]);
-        $token = Auth::login($user);
+        $token1 = Auth::login($user);
+        $token = $user['remember_token'];
         $user->save();
         $customer->save();
+        if($request->gst_certificate && $request->pan_card){
+            $message = 'Customer Created Successfully, KYC Submitted.';
+            $kyc_status = True;
+        }
+        else{
+            $message = 'Account Created, Please complete your KYC to Access All features.';
+            $kyc_status = False;
+        }
         return response()->json([
             'token' => $token,
+            'status' => 'success',
+            'message' => $message,
+            'customer' => $customer,
+            'KYC' => $kyc_status
         ]);
     }
     }

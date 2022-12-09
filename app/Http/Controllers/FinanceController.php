@@ -9,7 +9,7 @@ class FinanceController extends Controller
 {
     public function store(Request $request)
     {
-$FinanceData = array(
+    $FinanceData = array(
     'name'=> $request->name,
     'commodity_name'=> $request->commodity_name,
     'company_name'=> $request->company_name,
