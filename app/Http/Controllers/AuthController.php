@@ -76,7 +76,7 @@ else{
             'username' => $request->username,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'remember_token' => Str::random(60),
+            //'remember_token' => Str::random(60),
         ]);
         $customer = Customer::create([
             'name' => $request->companyName,
@@ -88,8 +88,9 @@ else{
             'pan_card' => $request->pan_card,
 
         ]);
-        $token1 = Auth::login($user);
-        $token = $user['remember_token'];
+        $token = Auth::login($user);
+        $user->remember_token = $token;
+        //$token = $user['remember_token'];
         $user->save();
         $customer->save();
         if($request->gst_certificate && $request->pan_card){

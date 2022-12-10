@@ -12,6 +12,7 @@ class FinanceController extends Controller
         $isShipper= $request->isShipper;
     $isForwarder= $request->isForwarder;
 
+
     if($isShipper==TRUE){
         $customer_type = 'Shipper';
         $finance = Freight_finance::create([
