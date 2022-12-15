@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Models\Customer;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
+use Illuminate\Support\Carbon;
 
 
 class AuthController extends Controller
@@ -39,7 +40,9 @@ class AuthController extends Controller
         }
         if (Hash::check($password, $user->password))
         {
-    return response()->json([
+            DB::table('tb_users')->where('email', '=', $email)->update(['last_login' => Carbon::now()]);
+
+            return response()->json([
                 'status' => 'success',
                 'customer' => $customer,
                 'message' => $message,

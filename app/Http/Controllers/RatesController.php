@@ -5,11 +5,14 @@ namespace App\Http\Controllers;
 use App\Models\Rates;
 use App\Models\Surcharge;
 use App\Models\Rate_surcharge;
+use App\Models\Search_history;
 use App\Models\Port_name;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use GuzzleHttp\Client;
 use PDF;
+use Illuminate\Support\Facades\DB;
 use kamermans\OAuth2\GrantType\ClientCredentials;
 use kamermans\OAuth2\OAuth2Middleware;
 use kamermans\OAuth2\GrantType\PasswordCredentials;
@@ -17,6 +20,7 @@ use GuzzleHttp\HandlerStack;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\Auth;
 class RatesController extends Controller
 {
     /**
@@ -100,8 +104,41 @@ class RatesController extends Controller
                     }
                     $rate['total'] = $rate["_".$cargo_type] + $sum;
    }
-               return response()->json($rates);
+   $token = $request->token;
+   if($token=NULL){
+    $user = DB::table('tb_users')->select('username','email','remember_token')->where('remember_token','=',$token)->get();
+    if($user->isNotEmpty()){
+        $customer = DB::table('customer')->select('name','email','phone','contact_person')->where('email','=',$user[0]->email)->get();
+        if($user->isNotEmpty() && $customer->isNotEmpty()){
+            $searchhistory = Search_history::create([
+                'name' => $user[0]->username,
+                'phone' => $customer[0]->phone,
+                'email' => $user[0]->email,
+                'companyName' => $customer[0]->name,
+                'contact_person' => $customer[0]->contact_person,
+                'from_port' => $request->from_port,
+                'to_port' => $request->to_port,
+                //'remember_token' => Str::random(60),
+            ]);
+            $searchhistory->save();
+            return response()->json($rates);
+        }
     }
+    else{
+        $searchhistory = Search_history::create([
+            'name' => 'anonymous',
+            'from_port' => $request->from_port,
+            'to_port' => $request->to_port,
+            //'remember_token' => Str::random(60),
+        ]);
+        $searchhistory->save();
+        return response()->json($rates);
+    }
+    }
+    else{
+        return response()->json($rates);
+    }
+}
 
     public function port_code($portName){
         return $portName;
