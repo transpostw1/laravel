@@ -36,7 +36,7 @@ class CustomerController extends Controller
             'gst_certificate'=> $request->gst,
             'pan_card'=> $request->pan,
             'businessType'=> $request->businessType
-            
+
         ]);
 
         if($request->gst && $request->pan){
@@ -47,7 +47,7 @@ class CustomerController extends Controller
             $message = 'Account Created, Please complete your KYC to Access All features.';
             $kyc_status = False;
         }
-       
+
         return response()->json([
             'status' => 'success',
             'message' => $message,
@@ -57,9 +57,9 @@ class CustomerController extends Controller
     }
     public function updatekyc(Request $request){
         $ID = $request->customerID;
-        
+
         $message = 'Account Created, Please complete your KYC to Access All features.';
-        
+
 
         $customer = Customer::find($ID);
         //dd($customer);

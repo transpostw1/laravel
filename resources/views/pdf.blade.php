@@ -396,9 +396,12 @@
         <p style="font-size:12px;">
             <?php if(!empty($customer['remarks'])) {
                 ?>
+                @foreach ($customer['remarks']['blocks'] as $remarks)
                 <h4><b>Remarks:</b></h4>
-                {{$customer['remarks']}}
+                <p style="font-size:12px;">{{$remarks['text']}}</p>
+                @endforeach
                 <?php } ?>
+
         </p>
         </div>
         <div style="text-align: center;">

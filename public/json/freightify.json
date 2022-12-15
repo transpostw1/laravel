@@ -1,0 +1,170 @@
+{
+    "locations": [
+        {
+            "id": 1,
+            "name": "Koper",
+            "state": "Koper",
+            "country": "Slovenia",
+            "countryCode": "SI",
+            "locode": "SIKOP",
+            "lat": 45.54694,
+            "lng": 13.72944
+        },
+        {
+            "id": 2,
+            "name": "Damietta",
+            "state": "Damietta Governorate",
+            "country": "Egypt",
+            "countryCode": "EG",
+            "locode": "EGDAM",
+            "lat": 31.41648,
+            "lng": 31.81332
+        },
+        {
+            "id": 3,
+            "name": "Karachi",
+            "state": "Sindh",
+            "country": "Pakistan",
+            "countryCode": "PK",
+            "locode": "PKKHI",
+            "lat": 24.8608,
+            "lng": 67.0104
+        }
+    ],
+    "schedule": {
+        "originInland": {
+            "location": 1,
+            "date": "2022-10-24 15:45:00",
+            "actual": true
+        },
+        "originPol": {
+            "location": 1,
+            "date": "2022-10-25 12:37:00",
+            "actual": true
+        },
+        "destinationPod": {
+            "location": 3,
+            "date": "2022-12-11 08:00:00",
+            "actual": false
+        },
+        "destinationInland": {
+            "location": null,
+            "date": null,
+            "actual": null
+        }
+    },
+    "vessels": [
+        {
+            "id": 1,
+            "name": "JONATHAN P",
+            "imo": 8901389,
+            "callSign": "3EKU8",
+            "mmsi": 0,
+            "flag": "PA"
+        },
+        {
+            "id": 2,
+            "name": "YANTIAN EXPRESS",
+            "imo": 9229831,
+            "callSign": "DPCK",
+            "mmsi": 211367460,
+            "flag": "DE"
+        }
+    ],
+    "container": {
+        "number": "FANU1639456",
+        "isoCode": "45G1",
+        "sailingInfo": [
+            {
+                "location": 1,
+                "description": "Gate out empty",
+                "status": "CEP",
+                "date": "2022-10-24 15:45:00",
+                "eventStatus": true,
+                "type": "land",
+                "vessel": null,
+                "voyage": ""
+            },
+            {
+                "location": 1,
+                "description": "Arrival in",
+                "status": "CGI",
+                "date": "2022-10-25 12:37:00",
+                "eventStatus": true,
+                "type": "land",
+                "vessel": null,
+                "voyage": ""
+            },
+            {
+                "location": 1,
+                "description": "Loaded",
+                "status": "CLL",
+                "date": "2022-10-30 02:21:00",
+                "eventStatus": true,
+                "type": "sea",
+                "vessel": 1,
+                "voyage": "526S"
+            },
+            {
+                "location": 1,
+                "description": "Vessel departed",
+                "status": "VDL",
+                "date": "2022-10-30 12:36:00",
+                "eventStatus": true,
+                "type": "sea",
+                "vessel": 1,
+                "voyage": "526S"
+            },
+            {
+                "location": 2,
+                "description": "Vessel arrived",
+                "status": "VAT",
+                "date": "2022-11-13 08:00:00",
+                "eventStatus": true,
+                "type": "sea",
+                "vessel": 1,
+                "voyage": "526S"
+            },
+            {
+                "location": 2,
+                "description": "Discharged",
+                "status": "CDT",
+                "date": "2022-11-13 10:48:00",
+                "eventStatus": true,
+                "type": "sea",
+                "vessel": 1,
+                "voyage": "526S"
+            },
+            {
+                "location": 2,
+                "description": "Loaded",
+                "status": "CLT",
+                "date": "2022-11-17 09:48:00",
+                "eventStatus": true,
+                "type": "sea",
+                "vessel": 2,
+                "voyage": "2240E"
+            },
+            {
+                "location": 2,
+                "description": "Vessel departed",
+                "status": "VDT",
+                "date": "2022-11-17 18:10:00",
+                "eventStatus": true,
+                "type": "sea",
+                "vessel": 2,
+                "voyage": "2240E"
+            },
+            {
+                "location": 3,
+                "description": "Vessel arrival",
+                "status": "VAD",
+                "date": "2022-12-11 08:00:00",
+                "eventStatus": false,
+                "type": "sea",
+                "vessel": 2,
+                "voyage": "2240E"
+            }
+        ]
+    }
+}

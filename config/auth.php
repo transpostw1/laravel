@@ -20,13 +20,18 @@ return [
 
 
     'guards' => [
+        'web' => [
+            'driver' => 'session',
+            'provider' => 'users',
+        ],
+
         'api' => [
                 'driver' => 'jwt',
                 'provider' => 'users',
         ],
 
     ],
-    
+
     /*
     |--------------------------------------------------------------------------
     | User Providers
@@ -47,6 +52,10 @@ return [
     'providers' => [
         'users' => [
             'driver' => 'eloquent',
+            'model' => App\Models\User::class,
+        ],
+        'adldap' => [
+            'driver' => 'adldap',
             'model' => App\Models\User::class,
         ],
 
