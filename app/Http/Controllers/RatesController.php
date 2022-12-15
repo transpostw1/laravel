@@ -138,6 +138,13 @@ class RatesController extends Controller
     }
     }
     else{
+        $searchhistory = Search_history::create([
+            'name' => 'anonymous',
+            'from_port' => $request->from_port,
+            'to_port' => $request->to_port,
+            //'remember_token' => Str::random(60),
+        ]);
+        $searchhistory->save();
         return response()->json($rates);
         exit();
     }
