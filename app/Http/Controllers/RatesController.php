@@ -105,7 +105,7 @@ class RatesController extends Controller
                     $rate['total'] = $rate["_".$cargo_type] + $sum;
    }
    $token = $request->token;
-   if($token=NULL){
+   if($token!=NULL){
     $user = DB::table('tb_users')->select('username','email','remember_token')->where('remember_token','=',$token)->get();
     if($user->isNotEmpty()){
         $customer = DB::table('customer')->select('name','email','phone','contact_person')->where('email','=',$user[0]->email)->get();
@@ -122,6 +122,7 @@ class RatesController extends Controller
             ]);
             $searchhistory->save();
             return response()->json($rates);
+            exit();
         }
     }
     else{
@@ -133,10 +134,12 @@ class RatesController extends Controller
         ]);
         $searchhistory->save();
         return response()->json($rates);
+        exit();
     }
     }
     else{
         return response()->json($rates);
+        exit();
     }
 }
 
