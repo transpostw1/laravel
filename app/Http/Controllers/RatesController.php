@@ -71,8 +71,9 @@ class RatesController extends Controller
                  //dd($rates);
                 $from_port_code =  $this->port_code($request->from_port);
                 $to_port_code =  $this->port_code($request->to_port);
-                $cargotype = 'DRY 40';
-                $equipmentSize = '40';
+                $csize = substr($cargo_type, -4, 2);
+                $cargotype = 'DRY '.$csize;
+                $equipmentSize = $csize;
                // $cma_live_data = $this->cma_rates($from_port_code, $to_port_code);
 
 
@@ -117,10 +118,55 @@ class RatesController extends Controller
                $i=0;
                 foreach($getonelinerates->data as $r){
 
-                 $onelinerates['id'] = 'ONE'.rand(3,100);
-                  $onelinerates['base_rate'] = $r->totalPrice;
-                  $onelinerates['Margin'] = 0;
-                  $onelinerates['expiry_date'] = $r->departureDateEstimated;
+
+        // "sl_name": "HAPAG",
+        // "from_port": "INNSA",
+        // "to_port": "DEHAM",
+        // "_20gp": 1400,
+        // "Margin": 0,
+        // "FAF": "",
+        // "seal_charge": "",
+        // "ECC": "",
+        // "service_mode": "",
+        // "direct_via": "",
+        // "via_port": "",
+        // "transit_time": "",
+        // "expiry_date": "2022-12-31 00:00:00",
+        // "sl_logo": "https://launchindia.org/transpost/logos/hepag.png",
+        // "remarks": "",
+        // "terms": "",
+        // "commodity": "",
+        // "id": "TRA3390",
+        // "base_rate": 1400,
+        // "cargo_size": "20gp",
+        // "additionalCosts": [],
+        // "total": 1400
+
+
+        $onelinerates['sl_name'] = 'ONE LIVE';
+        $onelinerates['from_port'] = $from_port_code;
+        $onelinerates['to_port'] = $to_port_code;
+        $onelinerates['_20gp'] = $equipmentSize;
+        $onelinerates['Margin'] = 0;
+        $onelinerates['FAF'] = "";
+        $onelinerates['seal_charge'] = "";
+        $onelinerates['ECC'] = "";
+        $onelinerates['service_mode'] = "";
+        $onelinerates['direct_via']  = "";
+        $onelinerates['via_port'] = "";
+        $onelinerates['transit_time'] = "";
+        $onelinerates['expiry_date'] = $r->departureDateEstimated;
+        $onelinerates['sl_logo'] = "http://launchindia.org/transpost/logos/ONE_live_logo.png";
+        $onelinerates['remarks'] = "";
+        $onelinerates['terms'] = "";
+        $onelinerates['id'] = 'ONE'.rand(3,100);
+        $onelinerates['base_rate'] = $r->totalPrice;
+        $onelinerates['cargo_size'] = '_'.$csize.'gp';
+        $onelinerates['additionalCosts'] = array();
+        $onelinerates['total'] = $r->totalPrice;
+
+        $onelinerates['Margin'] = 0;
+        $onelinerates['expiry_date'] = $r->departureDateEstimated;
 
              $rates->push($onelinerates);
                  $i++;
