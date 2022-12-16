@@ -71,7 +71,11 @@ class RatesController extends Controller
                  //dd($rates);
                 $from_port_code =  $this->port_code($request->from_port);
                 $to_port_code =  $this->port_code($request->to_port);
+                $cargotype = 'DRY 40';
+                $equipmentSize = '40';
                // $cma_live_data = $this->cma_rates($from_port_code, $to_port_code);
+
+
 
                foreach($rates as $rate){
                 $stringID = $rate['ID'];
@@ -103,7 +107,26 @@ class RatesController extends Controller
                         $rate['surcharge'] = NULL;
                     }
                     $rate['total'] = $rate["_".$cargo_type] + $sum;
+
    }
+
+
+   /// adding online rates
+   $getonelinerates = $this->oneline_rates($from_port_code, $to_port_code,$cargotype,$equipmentSize);
+             //dd(count($getonelinerates->data));
+               $i=0;
+                foreach($getonelinerates->data as $r){
+
+                 $onelinerates['id'] = 'ONE'.rand(3,100);
+                  $onelinerates['base_rate'] = $r->totalPrice;
+                  $onelinerates['Margin'] = 0;
+                  $onelinerates['expiry_date'] = $r->departureDateEstimated;
+
+             $rates->push($onelinerates);
+                 $i++;
+                }
+  //---- end adding online rates
+
    $token = $request->token;
    if($token!=NULL){
     $user = DB::table('tb_users')->select('username','email','remember_token')->where('remember_token','=',$token)->get();
@@ -295,6 +318,31 @@ class RatesController extends Controller
   //$pdf->SetTitle('Tranpost');
         //return view('pdf', ['customer' => $customer]);
         return response()->json($filename);
+    }
+
+    public function oneline_rates($pol, $pod, $equipnmentName, $equipmentSize){
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, 'http://146.190.53.191:3000/process_post');
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_POST, 1);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, 'pol='.$pol.'&pod='.$pod.'&equipnmentName='.$equipnmentName.'&equipmentSize='.$equipmentSize);
+
+        $headers = array();
+        $headers[] = 'Content-Type: application/x-www-form-urlencoded';
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+
+        $result = curl_exec($ch);
+        if (curl_errno($ch)) {
+            echo 'Error:' . curl_error($ch);
+        }
+        $response = json_decode($result);
+        curl_close($ch);
+        return $response;
+
+    }
+
+    public function cargotype($cargo_type){
+
     }
      /* @return \Illuminate\Http\Response
      */
