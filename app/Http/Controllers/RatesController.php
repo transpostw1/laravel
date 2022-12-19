@@ -92,6 +92,7 @@ class RatesController extends Controller
                 $rate['id'] = 'TRA'.$stringID;
                 $rate['base_rate'] = $rate["_".$cargo_type];
                 $rate['Margin'] = 0;
+                $rate['vesselName'] = 'Will be updated on confirmation of booking';
                 $rate['cargo_size'] = $cargo_type;
                 $rateArr = array();
 
@@ -122,10 +123,9 @@ class RatesController extends Controller
    /// adding online rates
    $getonelinerates = $this->oneline_rates($from_port_code, $to_port_code,$cargotype,$equipmentSize,$equipmentIsoCode,$equipmentONECntrTpSz);
              //dd(count($getonelinerates->data));
-
-               $i=0;
+            $i=0;
                 foreach($getonelinerates->data as $r){
-
+                    //dd($r->freightInfos[0]->departures[0]->transportName);
 
         // "sl_name": "HAPAG",
         // "from_port": "INNSA",
@@ -150,12 +150,12 @@ class RatesController extends Controller
         // "additionalCosts": [],
         // "total": 1400
 
-
         $onelinerates['sl_name'] = 'ONE LIVE';
         $onelinerates['from_port'] = $from_port_code;
         $onelinerates['to_port'] = $to_port_code;
         $onelinerates['_20gp'] = $equipmentSize;
         $onelinerates['Margin'] = 0;
+        $onelinerates['vesselName'] = $r->freightInfos[0]->departures[0]->transportName;
         $onelinerates['FAF'] = "";
         $onelinerates['seal_charge'] = "";
         $onelinerates['ECC'] = "";
