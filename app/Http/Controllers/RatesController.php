@@ -74,6 +74,14 @@ class RatesController extends Controller
                 $csize = substr($cargo_type, -4, 2);
                 $cargotype = 'DRY '.$csize;
                 $equipmentSize = $csize;
+                if($equipmentSize == 20){
+                    $equipmentIsoCode ="22G1";
+                    $equipmentONECntrTpSz ="D2";
+                   }
+                   else{
+                    $equipmentIsoCode = "42G1";
+                    $equipmentONECntrTpSz = "D4";
+                   }
                // $cma_live_data = $this->cma_rates($from_port_code, $to_port_code);
 
 
@@ -111,10 +119,10 @@ class RatesController extends Controller
 
    }
 
-
    /// adding online rates
-   $getonelinerates = $this->oneline_rates($from_port_code, $to_port_code,$cargotype,$equipmentSize);
+   $getonelinerates = $this->oneline_rates($from_port_code, $to_port_code,$cargotype,$equipmentSize,$equipmentIsoCode,$equipmentONECntrTpSz);
              //dd(count($getonelinerates->data));
+
                $i=0;
                 foreach($getonelinerates->data as $r){
 
@@ -168,6 +176,7 @@ class RatesController extends Controller
         $onelinerates['Margin'] = 0;
         $onelinerates['expiry_date'] = $r->departureDateEstimated;
 
+                    //$onerates = array_unique($onelinerates);
              $rates->push($onelinerates);
                  $i++;
                 }
@@ -366,12 +375,13 @@ class RatesController extends Controller
         return response()->json($filename);
     }
 
-    public function oneline_rates($pol, $pod, $equipnmentName, $equipmentSize){
+    public function oneline_rates($pol, $pod, $equipnmentName, $equipmentSize, $equipmentIsoCode, $equipmentONECntrTpSz){
         $ch = curl_init();
+        //dd($equipmentSize);
         curl_setopt($ch, CURLOPT_URL, 'http://146.190.53.191:3000/process_post');
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($ch, CURLOPT_POST, 1);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, 'pol='.$pol.'&pod='.$pod.'&equipnmentName='.$equipnmentName.'&equipmentSize='.$equipmentSize);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, 'pol='.$pol.'&pod='.$pod.'&equipnmentName='.$equipnmentName.'&equipmentSize='.$equipmentSize.'&equipmentIsoCode='.$equipmentIsoCode.'&equipmentONECntrTpSz='.$equipmentONECntrTpSz);
 
         $headers = array();
         $headers[] = 'Content-Type: application/x-www-form-urlencoded';
@@ -381,6 +391,7 @@ class RatesController extends Controller
         if (curl_errno($ch)) {
             echo 'Error:' . curl_error($ch);
         }
+        //dd($ch);
         $response = json_decode($result);
         curl_close($ch);
         return $response;
