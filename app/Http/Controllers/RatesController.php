@@ -125,7 +125,7 @@ class RatesController extends Controller
              //dd(count($getonelinerates->data));
             $i=0;
                 foreach($getonelinerates->data as $r){
-                    //dd($r->freightInfos[0]->departures[0]->transportName);
+                   //+ dd($r->freightInfos[0]->originCharges);
 
         // "sl_name": "HAPAG",
         // "from_port": "INNSA",
@@ -168,10 +168,11 @@ class RatesController extends Controller
         $onelinerates['remarks'] = "";
         $onelinerates['terms'] = "";
         $onelinerates['id'] = 'ONE'.rand(3,100);
-        $onelinerates['base_rate'] = $r->totalPrice;
+        $onelinerates['base_rate'] = $r->freightInfos[0]->freightCharges[0]->totalAmountInUSD;
         $onelinerates['cargo_size'] = '_'.$csize.'gp';
+        //$onelinerates['additionalCosts'] = $r->freightInfos[0]->originCharges;
         $onelinerates['additionalCosts'] = array();
-        $onelinerates['total'] = $r->totalPrice;
+        $onelinerates['total'] = $r->freightInfos[0]->freightCharges[0]->totalAmountInUSD;
 
         $onelinerates['Margin'] = 0;
         $onelinerates['expiry_date'] = $r->departureDateEstimated;
