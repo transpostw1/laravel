@@ -206,7 +206,8 @@ class RatesController extends Controller
     }
     else{
         $searchhistory = Search_history::create([
-            'name' => 'anonymous',
+            'name' => $user[0]->username,
+            'email' => $user[0]->email,
             'from_port' => $request->from_port,
             'to_port' => $request->to_port,
             //'remember_token' => Str::random(60),
