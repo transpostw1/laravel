@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 use Carbon\Carbon;
 use GuzzleHttp\Client;
 use PDF;
+use DateTime;
 use Illuminate\Support\Facades\DB;
 use kamermans\OAuth2\GrantType\ClientCredentials;
 use kamermans\OAuth2\OAuth2Middleware;
@@ -92,31 +93,76 @@ class RatesController extends Controller
                 $rate['id'] = 'TRA'.$stringID;
                 $rate['base_rate'] = $rate["_".$cargo_type];
                 $rate['Margin'] = 0;
+                $rate['online_rates'] = FALSE;
                 $rate['vesselName'] = 'Will be updated on confirmation of booking';
                 $rate['cargo_size'] = $cargo_type;
                 $rateArr = array();
-
+                $freight = array();
+                $freightdb= array();
+                $freightdb[0]['chargeCode'] = "OFT";
+                $freightdb[0]['chargeName'] = "BASIC OCEAN FREIGHT";
+                $freightdb[0]['chargeTarget'] = "Freight";
+                $freightdb[0]['totalAmountInUSD'] = $rate['base_rate'];
+                $freightdb[0]['chargeCurrency'] = "USD";
+                $origin = array();
+                $destination = array();
+                $departures = array();
 
                     if(isset($rate['surcharge'])){
                         $surcharge = $rate['surcharge'];
                         $surchargeRate = $rate['rate_surcharge'];
                         $sum =0;
                         for ($i=0; $i < count($rate['surcharge']); $i++) {
-                            $rateArr[$i]['id'] = $i;
-                            $rateArr[$i]['code'] = $surcharge[$i]->Code;
-                            $rateArr[$i]['name'] = $surcharge[$i]->Name;
-                            $rateArr[$i]['amount'] = $surchargeRate[$i]->amount;
-                            $sum += $surchargeRate[$i]->amount;
-                            $rateArr[$i]['currency'] = $surchargeRate[$i]->currency;
+
+                            if( $surcharge[$i]->Term == 'Freight'){
+                                $freight[$i]['chargeCode'] = $surcharge[$i]->Code;
+                                $freight[$i]['chargeName'] = $surcharge[$i]->Name;
+                                $freight[$i]['chargeTarget'] = $surcharge[$i]->Term;
+                                $freight[$i]['totalAmountInUSD'] = $surchargeRate[$i]->amount;
+                                $sum += $surchargeRate[$i]->amount;
+                                $freight[$i]['chargeCurrency'] = $surchargeRate[$i]->currency;
+                            }
+                            elseif( $surcharge[$i]->Term == "Origin"){
+                                $origin[0]['chargeCode'] = $surcharge[$i]->Code;
+                                $origin[0]['chargeName'] = $surcharge[$i]->Name;
+                                $origin[0]['chargeTarget'] = $surcharge[$i]->Term;
+                                $origin[0]['totalAmountInUSD'] = $surchargeRate[$i]->amount;
+                                $sum += $surchargeRate[$i]->amount;
+                                $origin[0]['chargeCurrency'] = $surchargeRate[$i]->currency;
+                            }
+                            elseif( $surcharge[$i]->Term == "Destination"){
+                                $destination[0]['chargeCode'] = $surcharge[$i]->Code;
+                                $destination[0]['chargeName'] = $surcharge[$i]->Name;
+                                $destination[0]['chargeTarget'] = $surcharge[$i]->Term;
+                                $destination[0]['totalAmountInUSD'] = $surchargeRate[$i]->amount;
+                                $sum += $surchargeRate[$i]->amount;
+                                $destination[0]['chargeCurrency'] = $surchargeRate[$i]->currency;
+                            }
+                            else{
+                             $rateArr[$i]['chargeCode'] = $surcharge[$i]->Code;
+                             $rateArr[$i]['chargeName'] = $surcharge[$i]->Name;
+                             $rateArr[$i]['chargeTarget'] = $surcharge[$i]->Term;
+                             $rateArr[$i]['totalAmountInUSD'] = $surchargeRate[$i]->amount;
+                             $sum += $surchargeRate[$i]->amount;
+                             $rateArr[$i]['chargeCurrency'] = $surchargeRate[$i]->currency;
+                            }
                         }
                         unset($rate['surcharge']);
                         unset($rate['rate_surcharge']);
                         $rate['additionalCosts'] = $rateArr;
+                        $rate['freightCharges'] = array_merge($freightdb,$freight);
+                        $rate['originCharges'] = $origin;
+                        $rate['destinationCharges'] = $destination;
+                        $rate['vgmCutoff'] = '';
+                        $rate['docCutoff'] = '';
+                        $rate['cyCutoff'] = '';
+                        $rate['departures'] = $departures;
+
                     }
                     else{
                         $rate['surcharge'] = NULL;
                     }
-                    $rate['total'] = $rate["_".$cargo_type] + $sum;
+                    $rate['totalPrice'] = $rate["_".$cargo_type] + $sum;
 
    }
 
@@ -154,15 +200,20 @@ class RatesController extends Controller
         $onelinerates['from_port'] = $from_port_code;
         $onelinerates['to_port'] = $to_port_code;
         $onelinerates['_20gp'] = $equipmentSize;
-        $onelinerates['Margin'] = 0;
+        // $onelinerates['Margin'] = 0;
+        $onelinerates['online_rates'] = TRUE;
         $onelinerates['vesselName'] = $r->freightInfos[0]->departures[0]->transportName;
-        $onelinerates['FAF'] = "";
-        $onelinerates['seal_charge'] = "";
-        $onelinerates['ECC'] = "";
-        $onelinerates['service_mode'] = "";
+        // $onelinerates['FAF'] = "";
+        // $onelinerates['seal_charge'] = "";
+        // $onelinerates['ECC'] = "";
+        $onelinerates['service_mode'] = $r->freightInfos[0]->serviceName;;
         $onelinerates['direct_via']  = "";
         $onelinerates['via_port'] = "";
-        $onelinerates['transit_time'] = "";
+        $date1 = new DateTime($r->departureDateEstimated);
+        $date2 = new DateTime($r->arrivalDateEstimated);
+        $transit_time=date_diff($date1,$date2);
+        $onelinerates['transit_time'] = $transit_time->format("%a days");
+        // dd($transit_time->format("%a days"));
         $onelinerates['expiry_date'] = $r->departureDateEstimated;
         $onelinerates['sl_logo'] = "http://launchindia.org/transpost/logos/ONE_live_logo.png";
         $onelinerates['remarks'] = "";
@@ -170,12 +221,42 @@ class RatesController extends Controller
         $onelinerates['id'] = 'ONE'.rand(3,100);
         $onelinerates['base_rate'] = $r->freightInfos[0]->freightCharges[0]->totalAmountInUSD;
         $onelinerates['cargo_size'] = '_'.$csize.'gp';
-        //$onelinerates['additionalCosts'] = $r->freightInfos[0]->originCharges;
-        $onelinerates['additionalCosts'] = array();
-        $onelinerates['total'] = $r->freightInfos[0]->freightCharges[0]->totalAmountInUSD;
+        //$freightcharges = $r->freightInfos[0];
+        //dd($freightcharges);
+        //$origincharges = $r->freightInfos[0]->originCharges;
+        //$destinationcharges = $r->freightInfos[0]->destinationCharges;
+        if(empty($r->freightInfos[0]->freightCharges)){
+            $freightcharges = array();
+        }
+        else{
+            $freightcharges = $r->freightInfos[0]->freightCharges;
+        }
+        if(empty($r->freightInfos[0]->originCharges)){
+            $origincharges = array();
+        }
+        else{
+            $origincharges = $r->freightInfos[0]->originCharges;
+        }
+        if(empty($r->freightInfos[0]->destinationCharges)){
+            $destinationcharges = array();
+        }
+        else{
+            $destinationcharges = $r->freightInfos[0]->destinationCharges;
+        }
+        $onelinerates['additionalCosts'] = array_merge($freightcharges, $origincharges, $destinationcharges);
 
-        $onelinerates['Margin'] = 0;
-        $onelinerates['expiry_date'] = $r->departureDateEstimated;
+        $onelinerates['freightCharges'] = $freightcharges;
+        $onelinerates['originCharges'] = $origincharges;
+        $onelinerates['destinationCharges'] = $destinationcharges;
+
+        //$onelinerates['additionalCosts'] = array();
+        $onelinerates['totalPrice'] = $r->totalPrice;
+
+        $onelinerates['vgmCutoff']= $r->freightInfos[0]->vgmCutoff;
+        $onelinerates['docCutoff']= $r->freightInfos[0]->docCutoff;
+        $onelinerates['cyCutoff']= $r->freightInfos[0]->cyCutoff;
+        $onelinerates['departures'] = $r->freightInfos[0]->departures;
+
 
                     //$onerates = array_unique($onelinerates);
              $rates->push($onelinerates);
