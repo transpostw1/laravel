@@ -186,7 +186,7 @@ class RatesController extends Controller
         // "via_port": "",
         // "transit_time": "",
         // "expiry_date": "2022-12-31 00:00:00",
-        // "sl_logo": "https://launchindia.org/transpost/logos/hepag.png",
+        // "sl_logo": "https://backend.transpost.co/logos/hepag.png",
         // "remarks": "",
         // "terms": "",
         // "commodity": "",
@@ -215,7 +215,7 @@ class RatesController extends Controller
         $onelinerates['transit_time'] = $transit_time->format("%a days");
         // dd($transit_time->format("%a days"));
         $onelinerates['expiry_date'] = $r->departureDateEstimated;
-        $onelinerates['sl_logo'] = "http://launchindia.org/transpost/logos/ONE_live_logo.png";
+        $onelinerates['sl_logo'] = "https://backend.transpost.co/logos/ONE_live_logo.png";
         $onelinerates['remarks'] = "";
         $onelinerates['terms'] = "";
         $onelinerates['id'] = 'ONE'.rand(3,100);
@@ -405,7 +405,7 @@ class RatesController extends Controller
                     $livedata[$i]['via_port'] = "";
                     $livedata[$i]['transit_time'] = "";
                     $livedata[$i]['expiry_date'] = $res->validityto;
-                    $livedata[$i]['sl_logo'] =  "http://launchindia.org/transpost/logos/cma_live.png";
+                    $livedata[$i]['sl_logo'] =  "https://backend.transpost.co/logos/cma_live.png";
                     $livedata[$i]['remarks'] =  "<li>Origin - Charges payable at Export</li>
                                                  <li>Destination - Charges payable at Import</li>";
                     $livedata[$i]['terms'] =  "<h2>Access the link below to understand Terms and Conditions - CMA CGM
