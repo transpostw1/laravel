@@ -474,13 +474,13 @@ class RatesController extends Controller
         //$customer = json_decode($data, true);
         //dd($customer);
         $pdf = PDF::loadView('pdf', ['customer' => $request]);
-        $string = Str::random(8);
-       Storage::disk('quotes')->put($string.'.pdf', $pdf->output());
-        $filename = ($string.'.pdf');
+        $str = Str::random(8);
+       Storage::disk('quotes')->put($str.'.pdf', $pdf->output());
+        $filename = ($str.'.pdf');
         //$pdf->SetTitle('Tranpost');
-
-        return $pdf->stream($filename);
-        //return response()->json($filename);
+        //return $pdf->stream($filename);
+        //return view('pdf', ['customer' => $request]);
+        return response()->json($filename);
     }
 
     public function oneline_rates($pol, $pod, $equipnmentName, $equipmentSize, $equipmentIsoCode, $equipmentONECntrTpSz){

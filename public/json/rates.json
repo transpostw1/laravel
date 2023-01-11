@@ -1,5 +1,5 @@
 {
-    "quoteId": "ONE97",
+    "quoteId": "ONE60",
     "sum_buy": 1631.56,
     "sum_sell": 1631.56,
     "isEditing": true,
@@ -8,16 +8,16 @@
     "to_port": "DEHAM",
     "_20gp": "20",
     "online_rates": true,
-    "vesselName": "NORTHERN PRACTISE",
+    "vesselName": "BUDAPEST EXPRESS",
     "service_mode": "INDIAN OCEAN SERVICE",
     "direct_via": "",
     "via_port": "",
-    "transit_time": "38 days",
-    "expiry_date": "2023-01-22",
+    "transit_time": "24 days",
+    "expiry_date": "2023-01-28",
     "sl_logo": "https://backend.transpost.co/logos/ONE_live_logo.png",
     "remarks": "",
     "terms": "",
-    "id": "ONE97",
+    "id": "ONE60",
     "base_rate": 832,
     "cargo_size": "_20gp",
     "additionalCosts": [
@@ -333,55 +333,111 @@
       }
     ],
     "totalPrice": 1631.56,
-    "vgmCutoff": "2023-01-20 06:00",
-    "docCutoff": "2023-01-19 00:00",
-    "cyCutoff": "2023-01-21 00:00",
+    "vgmCutoff": "2023-01-26 18:00",
+    "docCutoff": "2023-01-25 00:00",
+    "cyCutoff": "2023-01-27 12:00",
+    "customLegs": [
+        {
+
+          "id": "1673423728383",
+          "legName": "Test1",
+          "customCharge": [
+            {
+              "chargeId": "1673423728383",
+              "chargeName": "Test 1",
+              "chargeType": "CN",
+              "chargeTarget": "1673423728383",
+              "totalAmountInUSD": 0,
+              "buyRate": 0,
+              "sellRate": 0,
+              "netBuyRate": 0,
+              "netSellRate": 0,
+              "quantity":1
+
+            }
+          ]
+        },
+        {
+          "id": "1673428398672",
+          "legName": "Test2",
+          "customCharge": [
+            {
+              "chargeId": "1673428398672",
+              "chargeName": "Test 1",
+              "chargeType": "CN",
+              "chargeTarget": "1673428398672",
+              "totalAmountInUSD": 0,
+              "buyRate": 0,
+              "sellRate": 0,
+              "netBuyRate": 0,
+              "netSellRate": 0,
+              "quantity":1
+            }
+          ]
+        },
+        {
+          "id": "1673428415738",
+          "legName": "Test3",
+          "customCharge": [
+            {
+              "chargeId": "1673428415738",
+              "chargeName": "Test 1",
+              "chargeType": "CN",
+              "chargeTarget": "1673428415738",
+              "totalAmountInUSD": 0,
+              "buyRate": 0,
+              "sellRate": 0,
+              "netBuyRate": 0,
+              "netSellRate": 0,
+              "quantity":1
+            }
+          ]
+        },
+        {
+          "id": "1673428417400",
+          "legName": "Test4",
+          "customCharge": [
+            {
+              "chargeId": "1673428417400",
+              "chargeName": "Test1",
+              "chargeType": "CN",
+              "chargeTarget": "1673428417400",
+              "totalAmountInUSD": 0,
+              "buyRate": 0,
+              "sellRate": 0,
+              "netBuyRate": 0,
+              "netSellRate": 0,
+              "quantity":1
+            },
+            {
+              "chargeId": "1673428420482",
+              "chargeName": "Test 2 ",
+              "chargeType": "CN",
+              "chargeTarget": "1673428417400",
+              "totalAmountInUSD": 0,
+              "buyRate": 0,
+              "sellRate": 0,
+              "netBuyRate": 0,
+              "netSellRate": 0,
+              "quantity":1
+            }
+          ]
+        }
+    ],
     "departures": [
       {
         "sequence": 1,
         "transportType": "Ocean Vessel",
-        "transportName": "NORTHERN PRACTISE",
-        "departureDateEstimated": "2023-01-22 07:00",
-        "conveyanceNumber": "032W",
+        "transportName": "BUDAPEST EXPRESS",
+        "departureDateEstimated": "2023-01-28 16:00",
+        "conveyanceNumber": "3304W",
         "departureLoc": "INNSA",
-        "departureTerminal": "NHAVA SHEVA (GTI (GATEWAY TERMINALS INDIA))",
-        "arrivalDateEstimated": "2023-01-26 01:00",
-        "arrivalLoc": "AEJEA",
-        "arrivalTerminal": "JEBEL ALI (DP WORLD JEBEL ALI - TERMINAL 2)",
-        "transitTimeInHrs": 92,
-        "departureOpusLoc": "INNSA",
-        "arrivalOpusLoc": "AEJEA",
-        "serviceCode": "IGS"
-      },
-      {
-        "sequence": 2,
-        "transportType": "TS_SHUTTLE",
-        "transportName": "",
-        "departureDateEstimated": "2023-01-26 09:00",
-        "conveyanceNumber": "",
-        "departureLoc": "AEJEA",
-        "departureTerminal": "JEBEL ALI (DP WORLD JEBEL ALI - TERMINAL 2)",
-        "arrivalDateEstimated": "2023-01-26 15:00",
-        "arrivalLoc": "AEJEA",
-        "arrivalTerminal": "JEBEL ALI (DP WORLD JEBEL ALI - TERMINAL 3)",
-        "transitTimeInHrs": 6,
-        "departureOpusLoc": "AEJEA",
-        "arrivalOpusLoc": "AEJEA",
-        "serviceCode": ""
-      },
-      {
-        "sequence": 3,
-        "transportType": "Ocean Vessel",
-        "transportName": "OSAKA EXPRESS",
-        "departureDateEstimated": "2023-01-30 13:00",
-        "conveyanceNumber": "3305W",
-        "departureLoc": "AEJEA",
-        "departureTerminal": "JEBEL ALI (DP WORLD JEBEL ALI - TERMINAL 3)",
-        "arrivalDateEstimated": "2023-03-01 07:00",
+        "departureTerminal": "NHAVA SHEVA (NHAVA SHEVA INTERNATIONAL GATEWAY T)",
+        "arrivalDateEstimated": "2023-02-21 23:30",
         "arrivalLoc": "DEHAM",
         "arrivalTerminal": "HAMBURG, HH (CTA (CONTAINER TERMINAL ALTENWERDER))",
-        "transitTimeInHrs": 717,
-        "departureOpusLoc": "AEJEA",
+        "transitTimeInHrs": 591,
+        "departureOpusLoc": "INNSA",
         "arrivalOpusLoc": "DEHAM",
         "serviceCode": "IOS"
       }

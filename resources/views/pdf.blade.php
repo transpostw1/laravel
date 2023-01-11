@@ -67,7 +67,7 @@
             <tbody>
                 <tr>
                     <td>
-                        <b>Carrier Name</b>
+                        <b>Carrier Name:</b>
                     </td>
                     <td>
                         <?php if(isset($customer['sl_name'])){
@@ -79,7 +79,7 @@
                         ?>
                     </td>
                     <td>
-                        <b>Origin</b>
+                        <b>Origin:</b>
                     </td>
                     <td>
                         <?php if(isset($customer['from_port'])){
@@ -91,7 +91,7 @@
                         ?>
                     </td>
                     <td>
-                        <b>Destination</b>
+                        <b>Destination:</b>
                     </td>
                     <td>
                         <?php if(isset($customer['to_port'])){
@@ -105,7 +105,7 @@
                 </tr>
                 <tr>
                     <td>
-                        <b>Cargo Type</b>
+                        <b>Cargo Type:</b>
                     </td>
                     <td>
                         <?php if(isset($customer['cargo_size'])){
@@ -117,7 +117,7 @@
                         ?>
                     </td>
                     <td>
-                        <b>Service Type</b>
+                        <b>Service Type:</b>
                     </td>
                     <td>
                         <?php if(isset($customer['service_mode'])){
@@ -129,7 +129,7 @@
                         ?>
                     </td>
                     <td>
-                        <b>Transit Time</b>
+                        <b>Transit Time:</b>
                     </td>
                     <td>
                         <?php if(isset($customer['transit_time'])){
@@ -143,7 +143,7 @@
                 </tr>
                 <tr>
                     <td>
-                        <b>Free Days</b>
+                        <b>Free Days:</b>
                     </td>
                     <td>
                         <?php if(isset($customer['free_days'])){
@@ -155,7 +155,7 @@
                         ?>
                     </td>
                     <td>
-                        <b>Sailing Date</b>
+                        <b>Sailing Date:</b>
                     </td>
                     <td>
                         <?php if(isset($customer['sailing_date'])){
@@ -167,7 +167,7 @@
                         ?>
                     </td>
                     <td>
-                        <b>Expiry Date</b>
+                        <b>Expiry Date:</b>
                     </td>
                     <td>
                         <?php $d = $customer['expiry_date'];
@@ -228,7 +228,19 @@
 
                     </td>
                     <td style="text-align:right;">
-                        Total:{{$customer['base_rate']}} USD
+                        <?php $sum = 0;
+                        foreach($customer['freightCharges'] as $freight){
+                                if(isset($freight['quantity'])){
+                                    $sum += $freight['totalAmountInUSD'] * $freight['quantity'] ;
+                                }
+                                else{
+                                    $sum += $freight['totalAmountInUSD'] * 1 ;
+                                }
+                            }
+                            print("Total:".$sum." USD");
+
+
+                        ?>
                     </td>
                 </tr>
                 <?php
@@ -263,7 +275,7 @@
                             print('USD');
                         }
                         else{
-                            print('-');
+                            print('USD');
                         }
                         ?>
                     </td>
@@ -349,7 +361,7 @@
                             print('USD');
                         }
                         else{
-                            print('-');
+                            print('USD');
                         }
                         ?>
                     </td>
@@ -357,7 +369,13 @@
                         {{$origin['totalAmountInUSD']}}
                     </td>
                     <td style="text-align:center;">
-                        {{$origin['quantity']}}
+                        <?php if(isset($origin['quantity'])){
+                            print($origin['quantity']);
+                        }
+                        else{
+                            print('1');
+                        }
+                        ?>
                     </td>
                     <td style="text-align:right;">
                         {{$origin['totalAmountInUSD']}} USD
@@ -429,7 +447,7 @@
                             print('USD');
                         }
                         else{
-                            print('-');
+                            print('USD');
                         }
                         ?>
                     </td>
@@ -437,7 +455,13 @@
                         {{$destination['totalAmountInUSD']}}
                     </td>
                     <td style="text-align:center;">
-                        {{$destination['quantity']}}
+                        <?php if(isset($destination['quantity'])){
+                            print($destination['quantity']);
+                        }
+                        else{
+                            print('1');
+                        }
+                        ?>
                     </td>
                     <td style="text-align:right;">
                         {{$destination['totalAmountInUSD']}} USD
@@ -445,13 +469,12 @@
                 </tr>
                 <?php }} ?>
 
-              <!--  <?php $sum = 0;
-                if(!empty($customer['additionalCosts'])){
-
-                 ?> -->
-              <!--  <tr style="background-color:gainsboro;">
+               <?php $sum = 0;
+                if(!empty($customer['customLegs'])){ ?>
+                 <?php foreach ($customer['customLegs'] as $leg) { ?>
+                <tr style="background-color:gainsboro;">
                     <td>
-                    ::Origin Charges::
+                        ::{{$leg['legName']}}::
                     </td>
                     <td style="text-align:center;">
 
@@ -469,28 +492,62 @@
 
                     </td>
                     <td style="text-align:right;">
-                        <?php
-                        foreach($customer['additionalCosts'] as $cust){
-                                if (isset($cust['sellRate'])) {
-                                    $sum += $cust['sellRate'];
-                                }
-                                else{
-                                    $sum += $cust['totalAmount'];
-                                }
-                                if(isset($cust['quantity'])){
-                                    $sum = $sum * $cust['quantity'];
-                                    print("Total:".$sum." USD");
-                                }
-                                else{
-                                    print("Total:".$sum." USD");
-                                }
+                        <?php foreach($leg['customCharge'] as $leg1) {
+                                if(isset($leg1['netSellRate'])){
+                                $sum += $leg1['netSellRate'] * $leg1['quantity'] ;
                             }
-
-
+                            else{
+                                $sum += $leg1['netSellRate'] * 1 ;
+                            }
+                        }
+                        print("Total:".$sum." USD");
+                         ?>
+                    </td>
+                </tr>
+                <?php foreach($leg['customCharge'] as $customcharge) { ?>
+                <tr>
+                    <td>
+                       <?php print($customcharge['chargeName']); ?>
+                    </td>
+                    <td style="text-align:center;">
+                        <?php if(isset($customcharge['chargeType'])){
+                            print($customcharge['chargeType']);
+                        }
+                        else{
+                            print('per equipment');
+                        }
                         ?>
                     </td>
-                </tr> -->
-               <!-- <?php } ?> -->
+                    <td style="text-align:center;">
+                        <?php if(isset($customer['cargo_size'])){
+                            print($customer['cargo_size']);
+                        }
+                        else{
+                            print('-');
+                        }
+                        ?>
+                    </td>
+                    <td style="text-align:center;">
+                        <?php if(isset($customcharge['chargeCurrency'])){
+                            print('USD');
+                        }
+                        else{
+                            print('USD');
+                        }
+                        ?>
+                    </td>
+                    <td style="text-align:center;">
+                        {{$customcharge['netSellRate']}}
+                    </td>
+                    <td style="text-align:center;">
+                        {{$customcharge['quantity']}}
+                    </td>
+                    <td style="text-align:right;">
+                        {{$customcharge['netSellRate']}} USD
+                    </td>
+                </tr>
+                <?php } ?>
+               <?php } } ?>
                <!-- <?php if(isset($customer['additionalCosts'])){ ?>
                 @foreach ($customer['additionalCosts'] as $cust)
                 <tr style="border-radius: 100px;">
