@@ -478,7 +478,8 @@ class RatesController extends Controller
        Storage::disk('quotes')->put($string.'.pdf', $pdf->output());
         $filename = ($string.'.pdf');
         //$pdf->SetTitle('Tranpost');
-        return view('pdf', ['customer' => $request]);
+
+        return $pdf->stream($filename);
         //return response()->json($filename);
     }
 
