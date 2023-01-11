@@ -187,7 +187,7 @@ class RatesController extends Controller
         // "via_port": "",
         // "transit_time": "",
         // "expiry_date": "2022-12-31 00:00:00",
-        // "sl_logo": "https://launchindia.org/transpost/logos/hepag.png",
+        // "sl_logo": "https://backend.transpost.co/logos/hepag.png",
         // "remarks": "",
         // "terms": "",
         // "commodity": "",
