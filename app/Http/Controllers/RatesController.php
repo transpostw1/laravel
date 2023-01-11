@@ -106,6 +106,7 @@ class RatesController extends Controller
                 $freightdb[0]['chargeCurrency'] = "USD";
                 $freightdb[0]['chargeId'] = 0;
                 $freightdb[0]['chargeType'] = 'CN';
+                $freightdb[0]['quantity'] = 1;
                 $origin = array();
                 $destination = array();
                 $departures = array();
