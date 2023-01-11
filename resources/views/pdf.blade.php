@@ -254,7 +254,7 @@
                     </td>
                     <td style="text-align:center;">
                         <?php if(isset($freight['chargeCurrency'])){
-                            print($freight['chargeCurrency']);
+                            print('USD');
                         }
                         else{
                             print('-');
@@ -262,13 +262,13 @@
                         ?>
                     </td>
                     <td style="text-align:center;">
-                        {{$freight['chargeAmount']}}
+                        {{$freight['totalAmountInUSD']}}
                     </td>
                     <td style="text-align:center;">
                         {{$freight['quantity']}}
                     </td>
                     <td style="text-align:right;">
-                        {{$freight['chargeAmount']}} USD
+                        {{$freight['totalAmountInUSD']}} USD
                     </td>
                 </tr>
                 <?php }} ?>
@@ -297,10 +297,10 @@
                         <?php
                         foreach($customer['originCharges'] as $origin){
                                 if(isset($origin['quantity'])){
-                                    $sum += $origin['totalAmount'] * $origin['quantity'] ;
+                                    $sum += $origin['totalAmountInUSD'] * $origin['quantity'] ;
                                 }
                                 else{
-                                    $sum += $origin['totalAmount'] * 1 ;
+                                    $sum += $origin['totalAmountInUSD'] * 1 ;
                                 }
                             }
                             print("Total:".$sum." USD");
@@ -334,7 +334,7 @@
                     </td>
                     <td style="text-align:center;">
                         <?php if(isset($origin['chargeCurrency'])){
-                            print($origin['chargeCurrency']);
+                            print('USD');
                         }
                         else{
                             print('-');
@@ -342,13 +342,13 @@
                         ?>
                     </td>
                     <td style="text-align:center;">
-                        {{$origin['chargeAmount']}}
+                        {{$origin['totalAmountInUSD']}}
                     </td>
                     <td style="text-align:center;">
                         {{$origin['quantity']}}
                     </td>
                     <td style="text-align:right;">
-                        {{$origin['chargeAmount']}} USD
+                        {{$origin['totalAmountInUSD']}} USD
                     </td>
                 </tr>
                 <?php }} ?>
@@ -377,10 +377,10 @@
                         <?php
                         foreach($customer['destinationCharges'] as $destination){
                                 if(isset($destination['quantity'])){
-                                    $sum += $destination['totalAmount'] * $destination['quantity'] ;
+                                    $sum += $destination['totalAmountInUSD'] * $destination['quantity'] ;
                                 }
                                 else{
-                                    $sum += $destination['totalAmount'] * 1 ;
+                                    $sum += $destination['totalAmountInUSD'] * 1 ;
                                 }
                             }
                             print("Total:".$sum." USD");
@@ -414,7 +414,7 @@
                     </td>
                     <td style="text-align:center;">
                         <?php if(isset($destination['chargeCurrency'])){
-                            print($destination['chargeCurrency']);
+                            print('USD');
                         }
                         else{
                             print('-');
@@ -422,13 +422,13 @@
                         ?>
                     </td>
                     <td style="text-align:center;">
-                        {{$destination['chargeAmount']}}
+                        {{$destination['totalAmountInUSD']}}
                     </td>
                     <td style="text-align:center;">
                         {{$destination['quantity']}}
                     </td>
                     <td style="text-align:right;">
-                        {{$destination['chargeAmount']}} USD
+                        {{$destination['totalAmountInUSD']}} USD
                     </td>
                 </tr>
                 <?php }} ?>
