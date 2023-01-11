@@ -187,15 +187,13 @@ class RatesController extends Controller
         // "via_port": "",
         // "transit_time": "",
         // "expiry_date": "2022-12-31 00:00:00",
-        // "sl_logo": "https://backend.transpost.co/logos/hepag.png",
+        // "sl_logo": "https://launchindia.org/transpost/logos/hepag.png",
         // "remarks": "",
         // "terms": "",
         // "commodity": "",
         // "id": "TRA3390",
-        // "base_rate": 1400,
-        // "cargo_size": "20gp",
-        // "additionalCosts": [],
-        // "total": 1400
+                // "sl_logo": "https://backend.transpost.co/logos/hepag.png",
+
 
         $onelinerates['sl_name'] = 'ONE LIVE';
         $onelinerates['from_port'] = $from_port_code;
