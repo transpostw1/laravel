@@ -1,0 +1,51 @@
+{
+    "quoteId": "TRA891",
+    "sum_buy": 394,
+    "sum_sell": 350,
+    "isEditing": true,
+    "sl_name": "Emirates Shipping Line",
+    "from_port": "INNSA",
+    "to_port": "AEJEA",
+    "_20gp": 350,
+    "Margin": 0,
+    "FAF": "",
+    "seal_charge": "",
+    "ECC": "",
+    "service_mode": "",
+    "direct_via": "",
+    "via_port": "",
+    "transit_time": "",
+    "expiry_date": "2022-11-30 00:00:00",
+    "sl_logo": "http://launchindia.org/transpost/logos/cosco_logo.png",
+    "remarks": "",
+    "terms": "",
+    "commodity": "FAK",
+    "id": "TRA891",
+    "base_rate": 350,
+    "cargo_size": "20gp",
+    "additionalCosts": [
+        {
+            "id": 1,
+            "code": "CON",
+            "name": "Congestion Surcharge",
+            "amount": 12,
+            "currency": "USD"
+        },
+        {
+            "id": 2,
+            "code": "DHC",
+            "name": "Handling Charge - Destination",
+            "amount": 20,
+            "currency": "USD",
+            "chargeName": "Handling Charge - Destination",
+            "buyRate": 20,
+            "sellRate": 20,
+            "netBuyRate": 20,
+            "netSellRate": 20,
+            "quantity": 1
+        }
+    ],
+    "total": 394
+}
+
+

@@ -48,7 +48,7 @@ class RatesController extends Controller
                 ->orderBy("_20gp")
                 ->get();
 
-        // dd($rates);
+        //dd($rates);
               $surcharges = $rates->pluck( 'surcharge' );
 
 
@@ -104,6 +104,7 @@ class RatesController extends Controller
                 $freightdb[0]['chargeTarget'] = "FREIGHT";
                 $freightdb[0]['totalAmountInUSD'] = $rate['base_rate'];
                 $freightdb[0]['chargeCurrency'] = "USD";
+                $freightdb[0]['chargeId'] = 0;
                 $origin = array();
                 $destination = array();
                 $departures = array();
@@ -123,7 +124,7 @@ class RatesController extends Controller
                                 $freight[$i]['chargeCurrency'] = $surchargeRate[$i]->currency;
                             }
                             elseif( $surcharge[$i]->Term == "Origin"){
-                                $origin[0]['chargeCode'] = $surcharge[$i]->Code;
+                               $origin[0]['chargeCode'] = $surcharge[$i]->Code;
                                 $origin[0]['chargeName'] = $surcharge[$i]->Name;
                                 $origin[0]['chargeTarget'] = $surcharge[$i]->Term;
                                 $origin[0]['totalAmountInUSD'] = $surchargeRate[$i]->amount;
@@ -225,23 +226,48 @@ class RatesController extends Controller
         //dd($freightcharges);
         //$origincharges = $r->freightInfos[0]->originCharges;
         //$destinationcharges = $r->freightInfos[0]->destinationCharges;
+        //dd($r->freightInfos[0]->originCharges);
+        //$originCharges = $r->freightInfos[0]->originCharges;
+        //for($i=0;$i<count($originCharges);$i++){
+           // $abc = $originCharges[$i];
+           //$abc->id = $i;
+           //$originCharges[$i] = $abc;
+       // }
+       // dd($originCharges);
+
+
         if(empty($r->freightInfos[0]->freightCharges)){
             $freightcharges = array();
         }
         else{
             $freightcharges = $r->freightInfos[0]->freightCharges;
+            for($i=0;$i<count($freightcharges);$i++){
+                $abc = $freightcharges[$i];
+               $abc->chargeId = $i;
+               $freightcharges[$i] = $abc;
+            }
         }
         if(empty($r->freightInfos[0]->originCharges)){
             $origincharges = array();
         }
         else{
             $origincharges = $r->freightInfos[0]->originCharges;
+            for($i=0;$i<count($origincharges);$i++){
+                $abc = $origincharges[$i];
+               $abc->chargeId = $i;
+               $origincharges[$i] = $abc;
+            }
         }
         if(empty($r->freightInfos[0]->destinationCharges)){
             $destinationcharges = array();
         }
         else{
             $destinationcharges = $r->freightInfos[0]->destinationCharges;
+            for($i=0;$i<count($destinationcharges);$i++){
+                $abc = $destinationcharges[$i];
+               $abc->chargeId = $i;
+               $destinationcharges[$i] = $abc;
+            }
         }
         $onelinerates['additionalCosts'] = array_merge($freightcharges, $origincharges, $destinationcharges);
 
@@ -446,14 +472,14 @@ class RatesController extends Controller
     }
     public function pdf(Request $request)
     {
-        //$data = file_get_contents(public_path() . "/json/rates.json");
-        //$customer = json_decode($data, true);
+        $data = file_get_contents(public_path() . "/json/rates.json");
+        $customer = json_decode($data, true);
         //dd($customer);
-        $pdf = PDF::loadView('pdf', ['customer' => $request]);
+        $pdf = PDF::loadView('pdf', ['customer' => $customer]);
         $string = Str::random(8);
        Storage::disk('quotes')->put($string.'.pdf', $pdf->output());
         $filename = ($string.'.pdf');
-  //$pdf->SetTitle('Tranpost');
+        //$pdf->SetTitle('Tranpost');
         //return view('pdf', ['customer' => $customer]);
         return response()->json($filename);
     }

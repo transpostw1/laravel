@@ -231,12 +231,17 @@
                         Total:{{$customer['base_rate']}} USD
                     </td>
                 </tr>
+                <?php
+                if(!empty($customer['freightCharges'])){
+                 ?>
+                 <?php
+                 foreach($customer['freightCharges'] as $freight){ ?>
                 <tr>
                     <td>
-                        Basic Ocean Freight
+                       <?php print($freight['chargeName']); ?>
                     </td>
                     <td style="text-align:center;">
-                        per equipment
+                        <?php print($freight['chargeType']); ?>
                     </td>
                     <td style="text-align:center;">
                         <?php if(isset($customer['cargo_size'])){
@@ -248,29 +253,191 @@
                         ?>
                     </td>
                     <td style="text-align:center;">
-                        <?php if(isset($cust['currency'])){
-                            print($cust['currency']);
+                        <?php if(isset($freight['chargeCurrency'])){
+                            print($freight['chargeCurrency']);
                         }
                         else{
-                            print('USD');
+                            print('-');
                         }
                         ?>
                     </td>
                     <td style="text-align:center;">
-                        {{$customer['base_rate']}}
+                        {{$freight['chargeAmount']}}
                     </td>
                     <td style="text-align:center;">
-                        1
+                        {{$freight['quantity']}}
                     </td>
                     <td style="text-align:right;">
-                        {{$customer['base_rate']}} USD
+                        {{$freight['chargeAmount']}} USD
                     </td>
                 </tr>
+                <?php }} ?>
                 <?php $sum = 0;
+                if(!empty($customer['originCharges'])){ ?>
+                    <tr style="background-color:gainsboro;">
+                    <td>
+                    ::Origin Charges::
+                    </td>
+                    <td style="text-align:center;">
+
+                    </td>
+                    <td style="text-align:center;">
+
+                    </td>
+                    <td style="text-align:center;">
+
+                    </td>
+                    <td style="text-align:center;">
+
+                    </td>
+                    <td style="text-align:center;">
+
+                    </td>
+                    <td style="text-align:right;">
+                        <?php
+                        foreach($customer['originCharges'] as $origin){
+                                if(isset($origin['quantity'])){
+                                    $sum += $origin['totalAmount'] * $origin['quantity'] ;
+                                }
+                                else{
+                                    $sum += $origin['totalAmount'] * 1 ;
+                                }
+                            }
+                            print("Total:".$sum." USD");
+
+
+                        ?>
+                    </td>
+                </tr>
+
+                 <?php }?>
+                <?php
+                if(!empty($customer['originCharges'])){
+                 ?>
+                 <?php
+                 foreach($customer['originCharges'] as $origin){ ?>
+                <tr>
+                    <td>
+                       <?php print($origin['chargeName']); ?>
+                    </td>
+                    <td style="text-align:center;">
+                        <?php print($origin['chargeType']); ?>
+                    </td>
+                    <td style="text-align:center;">
+                        <?php if(isset($customer['cargo_size'])){
+                            print($customer['cargo_size']);
+                        }
+                        else{
+                            print('-');
+                        }
+                        ?>
+                    </td>
+                    <td style="text-align:center;">
+                        <?php if(isset($origin['chargeCurrency'])){
+                            print($origin['chargeCurrency']);
+                        }
+                        else{
+                            print('-');
+                        }
+                        ?>
+                    </td>
+                    <td style="text-align:center;">
+                        {{$origin['chargeAmount']}}
+                    </td>
+                    <td style="text-align:center;">
+                        {{$origin['quantity']}}
+                    </td>
+                    <td style="text-align:right;">
+                        {{$origin['chargeAmount']}} USD
+                    </td>
+                </tr>
+                <?php }} ?>
+                <?php $sum = 0;
+                if(!empty($customer['destinationCharges'])){ ?>
+                    <tr style="background-color:gainsboro;">
+                    <td>
+                    ::Destination Charges::
+                    </td>
+                    <td style="text-align:center;">
+
+                    </td>
+                    <td style="text-align:center;">
+
+                    </td>
+                    <td style="text-align:center;">
+
+                    </td>
+                    <td style="text-align:center;">
+
+                    </td>
+                    <td style="text-align:center;">
+
+                    </td>
+                    <td style="text-align:right;">
+                        <?php
+                        foreach($customer['destinationCharges'] as $destination){
+                                if(isset($destination['quantity'])){
+                                    $sum += $destination['totalAmount'] * $destination['quantity'] ;
+                                }
+                                else{
+                                    $sum += $destination['totalAmount'] * 1 ;
+                                }
+                            }
+                            print("Total:".$sum." USD");
+
+
+                        ?>
+                    </td>
+                </tr>
+
+                 <?php }?>
+                 <?php
+                if(!empty($customer['destinationCharges'])){
+                 ?>
+                 <?php
+                 foreach($customer['destinationCharges'] as $destination){ ?>
+                <tr>
+                    <td>
+                       <?php print($destination['chargeName']); ?>
+                    </td>
+                    <td style="text-align:center;">
+                        <?php print($destination['chargeType']); ?>
+                    </td>
+                    <td style="text-align:center;">
+                        <?php if(isset($customer['cargo_size'])){
+                            print($customer['cargo_size']);
+                        }
+                        else{
+                            print('-');
+                        }
+                        ?>
+                    </td>
+                    <td style="text-align:center;">
+                        <?php if(isset($destination['chargeCurrency'])){
+                            print($destination['chargeCurrency']);
+                        }
+                        else{
+                            print('-');
+                        }
+                        ?>
+                    </td>
+                    <td style="text-align:center;">
+                        {{$destination['chargeAmount']}}
+                    </td>
+                    <td style="text-align:center;">
+                        {{$destination['quantity']}}
+                    </td>
+                    <td style="text-align:right;">
+                        {{$destination['chargeAmount']}} USD
+                    </td>
+                </tr>
+                <?php }} ?>
+
+              <!--  <?php $sum = 0;
                 if(!empty($customer['additionalCosts'])){
 
-                 ?>
-                <tr style="background-color:gainsboro;">
+                 ?> -->
+              <!--  <tr style="background-color:gainsboro;">
                     <td>
                     ::Origin Charges::
                     </td>
@@ -296,7 +463,7 @@
                                     $sum += $cust['sellRate'];
                                 }
                                 else{
-                                    $sum += $cust['amount'];
+                                    $sum += $cust['totalAmount'];
                                 }
                                 if(isset($cust['quantity'])){
                                     $sum = $sum * $cust['quantity'];
@@ -310,9 +477,9 @@
 
                         ?>
                     </td>
-                </tr>
-                <?php } ?>
-                <?php if(isset($customer['additionalCosts'])){ ?>
+                </tr> -->
+               <!-- <?php } ?> -->
+               <!-- <?php if(isset($customer['additionalCosts'])){ ?>
                 @foreach ($customer['additionalCosts'] as $cust)
                 <tr style="border-radius: 100px;">
                     <td>
@@ -353,7 +520,7 @@
                             print($cust['sellRate']);
                         }
                         else{
-                            print($cust['amount']);
+                            print($cust['totalAmount']);
                         } ?>
                     </td>
                     <td style="text-align:center;">
@@ -370,13 +537,13 @@
                             print($var." USD");
                         }
                         else{
-                            $var = $cust['amount']*1;
+                            $var = $cust['totalAmount']*1;
                             print($var." USD");
                         } ?>
                     </td>
                 </tr>
                 @endforeach
-                <?php } ?>
+                <?php } ?> -->
             </tbody>
         </table>
         <table id="total">
@@ -386,7 +553,7 @@
                         <p style="font-size:10px;">Note: Taxes and Foreign conversion charges are additional</p>
                     </td>
                     <td style="text-align:right;">
-                        <b>Total Cost - <?php $total = $customer['base_rate'] + $sum; print($total); ?> USD</b>
+                        <b>Total Cost - {{$customer['sum_sell']}} USD</b>
                         <p style="font-size:10px;"> *May include Additional Locals & Taxes</p>
                     </td>
                 </tr>
