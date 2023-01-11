@@ -105,8 +105,6 @@ class RatesController extends Controller
                 $freightdb[0]['totalAmountInUSD'] = $rate['base_rate'];
                 $freightdb[0]['chargeCurrency'] = "USD";
                 $freightdb[0]['chargeId'] = 0;
-                $freightdb[0]['chargeType'] = 'CN';
-                $freightdb[0]['quantity'] = 1;
                 $origin = array();
                 $destination = array();
                 $departures = array();
@@ -121,8 +119,6 @@ class RatesController extends Controller
                                 $freight[$i]['chargeCode'] = $surcharge[$i]->Code;
                                 $freight[$i]['chargeName'] = $surcharge[$i]->Name;
                                 $freight[$i]['chargeTarget'] = $surcharge[$i]->Term;
-                                $freightdb[0]['chargeType'] = 'CN';
-                                $freightdb[0]['quantity'] = 1;
                                 $freight[$i]['totalAmountInUSD'] = $surchargeRate[$i]->amount;
                                 $sum += $surchargeRate[$i]->amount;
                                 $freight[$i]['chargeCurrency'] = $surchargeRate[$i]->currency;

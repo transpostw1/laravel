@@ -241,7 +241,13 @@
                        <?php print($freight['chargeName']); ?>
                     </td>
                     <td style="text-align:center;">
-                        <?php print($freight['chargeType']); ?>
+                        <?php if(isset($freight['chargeType'])){
+                            print($freight['chargeType']);
+                        }
+                        else{
+                            print('CN');
+                        }
+                        ?>
                     </td>
                     <td style="text-align:center;">
                         <?php if(isset($customer['cargo_size'])){
@@ -265,7 +271,13 @@
                         {{$freight['totalAmountInUSD']}}
                     </td>
                     <td style="text-align:center;">
-                        {{$freight['quantity']}}
+                        <?php if(isset($freight['quantity'])){
+                            print($freight['quantity']);
+                        }
+                        else{
+                            print('1');
+                        }
+                        ?>
                     </td>
                     <td style="text-align:right;">
                         {{$freight['totalAmountInUSD']}} USD
