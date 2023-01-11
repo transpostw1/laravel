@@ -478,8 +478,8 @@ class RatesController extends Controller
        Storage::disk('quotes')->put($string.'.pdf', $pdf->output());
         $filename = ($string.'.pdf');
         //$pdf->SetTitle('Tranpost');
-        //return view('pdf', ['customer' => $customer]);
-        return response()->json($filename);
+        return view('pdf', ['customer' => $request]);
+        //return response()->json($filename);
     }
 
     public function oneline_rates($pol, $pod, $equipnmentName, $equipmentSize, $equipmentIsoCode, $equipmentONECntrTpSz){
